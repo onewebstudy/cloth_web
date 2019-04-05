@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>创建工单</title>
+	<link rel="shortcut  icon" type="image/x-icon" href="/iext/favicon.ico" media="screen"  />
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../build/css/bootstrap.css">
+    <link rel="stylesheet" href="../build/css/index.css">
+    <link rel="stylesheet" href="../build/css/style.css">
+    <link rel="stylesheet" href="../build/css/main.css">
+    <link href="../build/css/blue.css" rel="stylesheet">
+	<script src="../build/js/jquery-1.11.3.min.js"></script>
+	<script src="../build/js/art-template.js"></script>
+</head>
+<body>
+	<div class="link">
+	</div>
+	<div class="head">
+	</div>
+	<div class="indexbody">
+		<div class="bread">
+			<a href="../views/index.html">首页</a>>><a href="../views/workorder.html">创建工单</a>
+		</div>
+		<div class="searchdiv clearfix">
+			<span class="addproduct" onclick="addproduct()"><img>添加产品</span>
+			<div class="searchnum">
+				<span>订单号：</span>
+				<input type="text" placeholder="请输入订单号" id="orderid" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5\.]/g,'')">
+			</div>
+		</div>
+		<div class="tablediv">
+			<table>
+				<tr>
+					<th style="width: 10%;">序号</th>
+					<th style="width: 10%;">路径</th>
+					<th style="width: 15%;">货号</th>
+					<th style="width: 15%;">单品货号</th>
+					<th style="width: 15%;">印花</th>
+					<th style="width: 10%;">尺寸</th>
+					<th style="width: 10%;">数量</th>
+					<th style="width: 10%;">工艺</th>
+					<th style="width: 10%;">操作</th>
+				</tr>
+			</table>
+			<div class="establish"><button onclick="creatworkorder()">创 建</button></div>
+		</div>
+	</div>
+<!-- 图片信息 -->
+<div class="modal fade tipModal hiddenimg" id="imgshow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog" style="width:447px;height:291px;">
+      <div class="modal-content">
+      	<img class="maximg" src="../build/img/background.png">
+      </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+</div><!-- /.modal弹框 myModal-delete删除 -->
+<!-- 新建工单 -->
+<div class="modal fade tipModal" id="addmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog" style="width:365px;">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img src="../build/img/win_close.png"></button>
+            <div class="modal-title" style="padding-top: 14px;padding-left: 16px;color: #666;font-weight:bold;">添加产品<span class="inforn">填写产品信息</span></div>
+         </div>
+         <div class="modal-body clearfix bottomlen" style="padding-bottom:0;">
+         	<div class="inforbody clearfix">
+         		<div class="leftadd">
+					<p><span>货号：</span><input type="text" placeholder="请输入货号" id="itemnum" ></p>
+         			<p><span>印花：</span><input type="text" placeholder="请输入印花" id="stname" onkeyup="changeserch()"><input type="hidden" id="stid"></p>
+         			<div class="printul" id="printul">
+         				
+         			</div>
+         			<p><span>尺寸：</span><input type="text" placeholder="请输入尺寸" id="size" onkeyup="changeserch(),value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5\.]/g,'')">
+         			</p>
+					 <p><span>数量：</span><input type="number" placeholder="请输入印花数量" id="num"></p>
+					 <p><span>工艺：</span><select id="type"><option value="1">A</option><option value="2">B</option><option value="3">C</option><option value="4">D</option></select></p>
+					 <p><span>路径：</span><input type="text" placeholder="请输入路径" id="filepath" disabled="disabled"></p>
+					 <p><span>单品：</span><input type="text" placeholder="请输入单品" id="itemnums" ></p>
+         		</div>
+         	</div>
+         </div>
+         <div class="btdiv clearfix">
+			<span class="modalimgerror"></span>
+			<button class="btn btn-blue yesbtn" onclick="addimgs()">确定</button>
+			<a class="btn btn-default nobtn" data-dismiss="modal"  aria-hidden="true">取 消</a>
+		</div>
+      </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+</div><!-- /.modal弹框 myModal-delete删除 -->
+<script type="text/html" id="imglistli">
+	<ul>
+		{{each list as value}}
+		<li onclick="clickli(this)">{{value.stname}},{{value.size}}
+			<input type="hidden" class="liimggurl" value="{{value.filepath}}">
+			<input type="hidden" class="liimggsize" value="{{value.size}}">
+			<input type="hidden" class="listid" value="{{value.stid}}">
+			<input type="hidden" class="listname" value="{{value.stname}}"></li>
+		{{/each}}
+	</ul>
+</script>
+<!-- 新建印花 -->
+<div class="modal fade tipModal" id="addprintmo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog" style="width:375px;">
+		<div class="modal-content">
+				<div class="modal-header">
+				   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img src="../build/img/win_close.png"></button>
+				   <div class="modal-title" style="padding-top: 14px;padding-left: 16px;color: #666;font-weight:bold;">新建印花<span class="inforn">填写印花信息</span></div>
+				</div>
+				<div class="modal-body clearfix bottomlen" style="padding-bottom:0;">
+					<div class="inforbody clearfix">
+						<div class="leftadd">
+							<p><span>印花：</span><input type="text" placeholder="请输入印花" id="imgname"></p>
+							<div>
+								<span style="position: relative;top: -116px;">尺寸：</span>
+								<div class="sizediv">
+									<span class="active">90</span>
+									<span>100</span>
+									<span>110</span>
+									<span>120</span>
+									<span>130</span>
+									<span>140</span>
+									<span>150</span>
+									<span>XS</span>
+									<span>S</span>
+									<span>M</span>
+									<span>L</span>
+									<span>XL</span>
+									<span>2XL</span>
+									<span>3XL</span>
+									<span>4XL</span>
+									<input type="text" placeholder="自定义" class="sizeinput" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5\.]/g,'')" id="imgsize">
+								</div>
+							</div>
+							<p style="position: relative"><span>路径：</span><input type="text" placeholder="请选择路径" id="imgidea"><input id="fileSlect" class="filestyle" type="file" accept="ai"></p>
+							<input type="hidden" id="imgpath"></input>
+							<p><span>x轴：</span><input type="text" placeholder="请输入x轴" id="imgx" style="margin-left: 6px;"></p>
+							<p><span>y轴：</span><input type="text" placeholder="请输入y轴" id="imgy" style="margin-left: 6px;"></p>
+							<p><span>角度：</span><input type="text" placeholder="请输入角度" id="imgangle" value="{{angle}}"></p>
+						</div>
+						<div class="rightadd">
+						</div>
+					</div>
+				</div>
+				<div class="btdiv clearfix">
+					<span class="modalimgerror"></span>
+				   <button class="btn btn-blue yesbtn" onclick="fuzhiimg()">确定</button>
+				   <a class="btn btn-default nobtn" data-dismiss="modal"  aria-hidden="true">取 消</a>
+			   </div>
+			 </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+</div><!-- /.modal弹框 myModal-delete删除 -->
+<!-- clone -->
+<table style="display:none;" class="clonetr">
+	<tr class="workkill">
+		<input type="hidden" class="tdstid">
+		<td class="num"></td>
+		<td class="exeurl"></td>
+		<td class="cargono"></td>
+		<td class="cargonos"></td>
+		<td class="imgname"></td>
+		<td class="imgsize"></td>
+		<td class="number"></td>
+		<td class="type"></td>
+		<input type="hidden" class="typenum">
+		<td><span class="delectework">删除</span></td>
+	</tr>
+</table>
+<script src="../build/js/bootstrap.js"></script>
+<script src="../build/js/jquery.icheck.min.js"></script>
+<script src="../build/js/main.js"></script>
+<script>
+var imgpath2="";
+var imgsizes=["90"];
+function givemeurl(url){
+	imgpath2 = url;
+}
+var arr_tip_userid = new Array();
+var orderid = getQueryString('orderid');
+if(orderid==null){
+	orderid='';
+}
+$(function(){
+	$('.link').load('../views/link.html');
+	$('.head').load('../views/header2.html');
+	$('#orderid').val(orderid);
+	$('.form-checkbox input').iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+        increaseArea: '20%'
+    });
+	 /*全选  取消全选*/
+     var flagChecked=false;
+    var checkboxnum=$('.tablediv .form-checkbox').size()-1;
+    $('.tablediv .form-checkbox').on('ifChecked',function(e){
+        if($(this).hasClass('checkbox-all')){
+			$('.tablediv .form-checkbox').iCheck('check');
+			arr_tip_userid=[];
+			flagChecked=true;
+			$('.tablediv .form-checkbox').each(function(i){
+				if(i!=0){
+					arr_tip_userid.push($(this).find('input').val());
+				}
+			})
+        }else{
+        	if(checkboxnum==$('.tablediv input[name="square-checkbox"]:checked').size()){
+				arr_tip_userid=[];
+				$('.tablediv .form-checkbox').iCheck('check');
+			}else{
+				var input = $(this).find('input');
+				var val = input.val();
+				arr_tip_userid.push(val);
+			}
+		}
+    });
+    $('.tablediv .form-checkbox').on('ifUnchecked',function(e){
+    	if($(this).hasClass('checkbox-all')&&flagChecked){
+			$('.tablediv .form-checkbox').not('.checkbox-all').iCheck('uncheck');
+			flagChecked=false;
+			arr_tip_userid=[];
+    	}else{
+			flagChecked=false;
+			var input = $(this).find('input');
+	    	var val = input.val();
+	    	for (var i=0;i<arr_tip_userid.length;i++) {
+	    		if (arr_tip_userid[i] == val) {
+					arr_tip_userid.remove(val);
+	    			break;
+	    		}
+	    	}
+			$('.checkbox-all').iCheck('uncheck');
+		}
+    });
+})
+$('.tablediv td').hover(function(){
+	$(this).parents('tr').find('td').css('background',' #E7F3FC');
+},function(){
+	$(this).parents('tr').find('td').css('background',' #FFF')
+});
+//新增工单
+function addproduct(){
+	$('#addmodal').find('input').val('');
+	$('#addmodal').find('#imgid').attr('src','../build/img/pic.png');
+	$('#addmodal').modal('show');
+}
+//检查弹窗
+function checkall(){
+	var itemnum = $('#itemnum').val();
+	var itemnums = $('#itemnums').val();
+	var stname = $('#stname').val();
+	var size = $('#size').val();
+	var num = $('#num').val();
+	if(!itemnum){
+		$('#addmodal').find('.modalimgerror').html('货号不能为空');
+		return false;
+	}
+	if(!itemnums){
+		$('#addmodal').find('.modalimgerror').html('单品货号不能为空');
+		return false;
+	}
+	else if(!stname){
+		$('#addmodal').find('.modalimgerror').html('印花不能为空');
+		return false;
+	}
+	else if(!size){
+		$('#addmodal').find('.modalimgerror').html('尺寸不能为空');
+		return false;
+	}
+	else if(!num){
+		$('#addmodal').find('.modalimgerror').html('数目不能为空');
+		return false;
+	}else {
+		return true;
+	}
+}
+//确定添加
+function addimgs(){
+	if(checkall()){
+		var filepath = $('#filepath').val();
+		if(!filepath){
+			$('#addmodal').modal('hide');
+			confirmdelete('','shshimgs','印花尚未存在，现在快速创建印花？');
+		}else {
+			$('#addmodal').modal('hide');
+			savetr();
+		}
+	}
+	
+}
+//
+//隐藏大图
+$('.hiddenimg').click(function(){
+	$('#imgshow').modal('hide');
+})
+//显示大图
+function toshowbig(_this){
+	var imgurl = $(_this).find('.maximgurl').val();
+	$('#imgshow').find('.maximg').attr('src',imgurl);
+	$('#imgshow').modal('show');
+}
+//展示列表
+function showlist(text,size){
+	var myDate = new Date();
+	$.ajax({
+		url:headurl+"/StampController/stampnamelist?URL="+myDate.getMinutes()+myDate.getSeconds(),
+		data:{text:text,size:size},
+		success:function(data){
+			var data = eval('(' + data + ')');
+			if(data.success==1){
+			var html = template('imglistli',data.body);
+			document.getElementById('printul').innerHTML = html;
+			if(data.body.list.length>0){
+				$('.printul').css('display','block');
+			}
+			}else {
+					tipError(data.msg);
+				}
+		}
+	})
+}
+//点击li
+function clickli(_this){
+	var imgurl = $(_this).find('.liimggurl').val();
+	var imgsize = $(_this).find('.liimggsize').val();
+	var stid = $(_this).find('.listid').val();
+	var stname = $(_this).find('.listname').val();
+	$('#filepath').val(imgurl);
+	$('#size').val(imgsize);
+	$('#stid').val(stid);
+	$('#stname').val(stname);
+	$('.printul').css('display','none');
+}
+//失去焦点，结果消失
+// $('#stname').blur(function(){
+// 	$('.printul').css('display','none');
+// })
+$('#addmodal').find('input').focus(function(){
+	$('.printul').css('display','none');
+})
+$('#stname').focus(function(){
+	$('.printul').css('display','none');
+	var text=$('#stname').val();
+	var size = $('#size').val();
+	showlist(text,size);
+})
+function changeserch(){
+	$('#filepath').val('');
+	$('#stid').val('');
+	$('.printul').css('display','none');
+	var text=$('#stname').val();
+	var size = $('#size').val();
+	showlist(text,size);
+}
+//上传印花
+function shshimgs(){
+	imgsizes=["90"];
+	$('#addprintmo').find('input').val('');
+	$('.modalimgerror').html('');
+	$('#addprintmo').modal('show');
+	$('#addprintmo').find('.sizediv').find('span').click(function(){
+		if($(this).hasClass('active')){
+			$(this).removeClass('active');
+			imgsizes.remove($(this).html());
+		}else{
+			$(this).addClass('active');
+			imgsizes.push($(this).html());
+		}
+	})
+	$('#addprintmo').find('.sizediv').find('span').removeClass('active');
+	$('#addprintmo').find('.sizediv').children("span:first-child").addClass('active');
+}
+function clearspan(_this){
+	$(_this).siblings().removeClass('active');
+}
+function fuzhiimg(){
+	var name = $.trim($('#imgname').val());
+	var rfurl = $('#imgidea').val();
+	//var size = $('#addprintmo').find('.sizediv').find('span.active').html();
+	var imgx = $.trim($('#imgx').val());
+	var imgy = $.trim($('#imgy').val());
+	var size = $.trim($('#imgsize').val());
+	var angle = $.trim($('#imgangle').val());
+	if(size){
+		for(var i=0;i<imgsizes.length;i++){
+			if(imgsizes[i]==size){
+				$('.modalimgerror').html('印花尺寸不能一样');
+				return false;
+			}
+		}
+		imgsizes.push(size);
+	}
+	if(!angle){
+		angle=0;
+	}
+	// if(!size){
+	// 	size = $('#imgsize').val();
+	// }
+	if(imgsizes.length <= 0){
+		$('.modalimgerror').html('印花尺寸不能为空');
+		return false;
+	}
+	if(!name){
+		$('.modalimgerror').html('印花名字不能为空');
+		return false;
+	}
+	if(name.length>20){
+		$('.modalimgerror').html('印花名字不能超过20个字');
+		return false;
+	}
+	if(!rfurl){
+		$('.modalimgerror').html('印花文件路径不能为空');
+		return false;
+	}
+	if(!imgx){
+		$('.modalimgerror').html('信息标识码位置不能为空');
+		return false;
+	}
+	if(!imgy){
+		$('.modalimgerror').html('信息标识码位置不能为空');
+		return false;
+	}
+	if(!checkFloat(imgx)){
+		$('.modalimgerror').html('信息标识码位置必须为数字');
+		return false;
+	}
+	if(!checkFloat(imgy)){
+		$('.modalimgerror').html('信息标识码位置必须为数字');
+		return false;
+	}
+	if(!checkFloat(angle)){
+		$('.modalimgerror').html('角度必须为数字');
+		return false;
+	}
+	for(var i =0 ;i<imgsizes.length;i++){
+		window.external.copyimg(rfurl,imgsizes[i]);
+	}
+	$("#imgpath").val(imgpath2);
+	saveimg();
+}
+//保存印花
+function saveimg(){
+	var name = $.trim($('#imgname').val());
+	var rfurl = $('#imgidea').val();
+	//var size = $('#addprintmo').find('.sizediv').find('span.active').html();
+	var imgx = $.trim($('#imgx').val());
+	var imgy = $.trim($('#imgy').val());
+	var imgpath = $('#imgpath').val();
+	var angle = $.trim($('#imgangle').val());
+	for(var i =0;i<imgsizes.length;i++){
+		if(i==0){
+			var sizestr="?size="+imgsizes[i];
+		}else{
+			sizestr +="&size="+imgsizes[i];
+		}
+	}
+	$('#addprintmo').modal('hide');
+	$.ajax({
+		url:headurl+"/StampController/uploadImgInfo"+sizestr,
+		type:'post',
+		data:{name:name,filepath:imgpath,x:imgx,y:imgy,angle:angle},
+		success:function(data){
+			var data = eval('(' + data + ')');
+			if(data.success==1){
+				tipSuccess('添加印花成功');
+				$('#addprintmo').find('input').val('');
+				$('#addmodal').find('.modalimgerror').html('');
+				$('#addmodal').modal('show');
+			}else {
+					tipError(data.msg);
+				}
+		}
+	})
+	
+}
+//保存tr
+function savetr(){
+	var itemnum = $('#itemnum').val();
+	var itemnums = $('#itemnums').val();
+	var stname = $('#stname').val();
+	var size = $('#size').val();
+	var num = $('#num').val();
+	var filepath = $('#filepath').val();
+	var type = $('#type').val();
+	var stid = $('#stid').val();
+	var number = $('.tablediv').find('tr').length;
+	if(type == 1){
+		var typenum = "A";
+	}else if (type == 2){
+		var typenum = "B";
+	}else if (type == 3){
+		var typenum = "C";
+	}else if (type == 4){
+		var typenum = "D";
+	}
+	$('.clonetr .num').html(number);
+	$('.clonetr .exeurl').html(filepath);
+	$('.clonetr .cargono').html(itemnum);
+	$('.clonetr .cargonos').html(itemnums);
+	$('.clonetr .imgname').html(stname);
+	$('.clonetr .imgsize').html(size);
+	$('.clonetr .number').html(num);
+	$('.clonetr .type').html(typenum);
+	$('.clonetr .typenum').val(type);
+	$('.clonetr').find('.tdstid').val(stid);
+	$('.tablediv table').append($('.clonetr tr').clone(true));
+}
+//删除行
+$('.delectework').click(function(){
+	$(this).parents('tr').remove();
+})
+//创建工单
+function creatworkorder(){
+	var plan={};
+	var orderid = $('#orderid').val();
+	if(!orderid){
+		tipError('请输入订单号');
+		return false;
+	}
+	if($('.tablediv').find('.workkill').length<=0){
+		tipError('产品为空');
+		return false;
+	}
+	var url ="";
+	$('.tablediv').find('.workkill').each(function(){
+		var stid = $(this).find('.tdstid').val();
+		var itemnum = $(this).find('.cargono').html();
+		var oneitemnum = $(this).find('.cargonos').html();
+		var stname = $(this).find('.imgname').html();
+		var size = $(this).find('.imgsize').html();
+		var num = $(this).find('.number').html();
+		var type = $(this).find('.typenum').val();
+		url +="&stids="+stid;
+		url +="&itemnums="+itemnum;
+		url +="&cargonumbers="+oneitemnum;
+		url +="&stnames="+stname;
+		url +="&sizes="+size;
+		url +="&nums="+num;
+		url +="&types="+type;
+	});
+	var url = encodeURI(url);
+	$.ajax({
+		url:headurl+"/OrderController/addWorkOrder?orderid="+orderid+url,
+		type:"post",
+		success:function(data){
+			var data = eval('(' + data + ')');
+			if(data.success==1){
+				tipSuccess('创建成功！','gotoindex');
+			}else {
+					tipError(data.msg);
+				}
+		}
+	})
+}
+function gotoindex(){
+	location.href="../views/index.html";
+}
+/*Ajax上传至后台并返回文件的url*/
+function bindAvatar2() {
+    $("#fileSlect").change(function () {
+	$('#addprintmo').find('.modalimgerror').html('');
+    var formData=new FormData();
+    //formData.append("csrfmiddlewaretoken",csrf);
+	formData.append('file', $("#fileSlect")[0].files[0]);  /*获取上传的图片对象*/
+	$('#imgidea').val($("#fileSlect")[0].value);
+ })
+}
+$(function () {
+	bindAvatar2();
+});
+</script>
+</body>
+</html>

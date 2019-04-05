@@ -1,0 +1,327 @@
+<!doctype html>
+<html style="width:102mm;height:180mm;min-width:100mm;">
+<head>
+<meta charset="utf-8">
+<title>快递单</title>
+<link href="../build/css/bootstrap.css" rel="stylesheet">
+<link rel="stylesheet" href="../build/css/index.css">
+<link rel="stylesheet" href="../build/css/style.css">
+<link rel="stylesheet" href="../build/css/main.css">
+<script src="../build/js/jquery-1.11.3.min.js"></script>
+<script src="../build/js/art-template.js"></script>
+<style>
+.mybody {
+margin: 0px;
+padding: 0px;
+font-size: 10pt;
+font-family: "Microsoft YaHei";
+width:100mm;
+height:180mm;
+border:1mm solid #000;
+background:#fff;
+color:#000;
+margin-left:1mm;
+}
+p {
+    margin:0;
+}
+.p1 {
+    font-size:12pt;
+    text-align:right;
+    border-bottom:1pt solid #000;
+    height:9mm;
+    padding-right:7pt;
+    line-height: 9mm;
+}
+.p2 {
+    font-size:36pt;
+    text-align:center;
+    border-bottom:1pt solid #000;
+    height:15mm;
+    line-height: 15mm;
+    font-weight:bold;
+}
+.p3 {
+    font-size:18pt;
+    border-bottom:1pt solid #000;
+    height:10mm;
+    line-height: 10mm;
+}
+.p3 .packland {
+    font-weight:bold;
+    width:74mm;
+    float:left;
+    padding-left:2mm;
+}
+.p3 .time {
+    font-size:10pt;
+    width:24mm;
+    float:left;
+    padding-left:2mm;
+}
+.p4 {
+    height:18mm;
+    border-bottom:1pt solid #000;
+}
+.p4 .pleft4{
+    width:8mm;
+    float:left;
+    height:18mm;
+    text-align: center;
+    padding-top: 4mm;
+    border-right:1pt solid #000;
+}
+.p4 .pright4{
+    height:18mm;
+    padding: 1.2mm;
+    overflow: hidden;
+}
+.p4 .pright4>span {
+    padding-left:1.2mm;
+}
+.p4 .pright4 .getarea {
+    padding-top: 1.2mm;
+    display: inline-block;
+}
+.p5 {
+    height:12mm;
+    border-bottom:1pt solid #000;
+}
+.p5 .pleft5{
+    width:8mm;
+    float:left;
+    height:12mm;
+    text-align: center;
+    padding-top: 1mm;
+    border-right:1pt solid #000;
+}
+.p5 .pright5{
+    height:12mm;
+    padding: 1.2mm;
+    overflow: hidden;
+}
+.p5 .pright5>span {
+    padding-left:1.2mm;
+}
+.p6 {
+    height:27mm;
+    border-bottom:1pt solid #000;
+    padding:2.5mm;
+}
+.p6 img {
+    width:100%;
+    height:100%;
+}
+.p7 {
+    height:18mm;
+    border-bottom:1mm solid #000;
+}
+.p7 .pleft7{
+    width:40mm;
+    float:left;
+    height:18mm;
+    font-size:8pt;
+    padding-top: 1mm;
+    border-right:1pt solid #000;
+    line-height: 10pt;
+    padding-left:1.2mm;
+}
+.p7 .pright7{
+    height:18mm;
+    padding: 1.2mm;
+    overflow: hidden;
+}
+.p7 .pright7>span {
+    padding-left:1.2mm;
+}
+.pright7 .name {
+    margin-bottom:4mm;
+}
+.pright7 p .time {
+    margin-right: 28mm;
+}
+.p8 {
+    height:15mm;
+    border-bottom:1pt solid #000;
+    padding:1.2mm;
+    padding-left:42mm;
+}
+.p8 img {
+    width:100%;
+    height:100%;
+}
+.p9 {
+    height:25mm;
+}
+.p9 .pleft9{
+    width:8mm;
+    float:left;
+    height:25mm;
+    text-align: center;
+    padding-top: 6mm;
+    border-right:1pt solid #000;
+}
+.p9 .pright9{
+    height:25mm;
+    padding: 1.2mm;
+    overflow: hidden;
+}
+.p9 .pright9 p {
+    padding-bottom: 1mm;
+}
+.p6 #imgcode {
+    height:15mm;
+}
+.p8 #imgcode2 {
+    height:8mm;
+}
+.p6 div {
+    font-weight:bold;
+    font-size:18pt;
+    text-align: center;
+}
+.p6 div span {
+    margin: 0 5mm;
+    letter-spacing: 1mm;
+}
+.p8 div {
+    font-weight:bold;
+    font-size:10pt;
+    text-align: center;
+}
+.p8 div span {
+    margin: 0px 3mm;
+    letter-spacing: 0.5mm;
+}
+</style>
+</head>
+<body class="mybody">
+<div class="link"></div>
+<div id="kuaididan"></div>
+<script type="text/html" id="moban">
+    <p class="p1">标准快递</p>
+    <p class="p2">{{bigmenber.mark}}</p>
+    <div class="p3 clearfix">
+        <div class="packland">{{bigmenber.bagAddr}}</div>
+        <div class="time">{{time}}</div>
+    </div>
+    <div class="p4 clearfix">
+        <div class="pleft4">收<br>件</div>
+        <div class="pright4">
+            <span>{{receiver.name}}</span>
+            <span>{{receiver.mobile}}</span>
+            <br>
+            <span class="getarea">{{receiver.province}}{{receiver.city}}{{receiver.county}}{{receiver.address}}</span>
+        </div>
+    </div>
+    <div class="p5 clearfix">
+        <div class="pleft5">寄<br>件</div>
+        <div class="pright5">
+            <span>{{sender.name}}</span>
+            <span>{{sender.phone}}</span>
+            <br>
+            <span>{{sender.province}}{{sender.city}}{{sender.county}}{{sender.address}}</span>
+        </div>
+    </div>
+    <div class="p6">
+        <img id="imgcode">
+        <div><span>{{str1}}</span><span>{{str2}}</span><span>{{str3}}</span></div>
+    </div>
+    <div class="p7 clearfix">
+        <div class="pleft7">您对此单的签收，代表您已经验货，确认商品信息无误，包装完好，没有划痕，破损等表面质量问题。</div>
+        <div class="pright7">
+            <p class="name">签收人：</p>
+            <p>
+                <span class="time">时 间：</span>
+                <span>已验视</span>
+            </p>
+        </div>
+    </div>
+    <div class="p8">
+        <img id="imgcode2">
+        <div><span>{{str1}}</span><span>{{str2}}</span><span>{{str3}}</span></div>
+    </div>
+    <div class="p4 clearfix">
+        <div class="pleft4">收<br>件</div>
+        <div class="pright4">
+            <span>{{receiver.name}}</span>
+            <span>{{receiver.mobile}}</span>
+            <br>
+            <span class="getarea">{{receiver.province}}{{receiver.city}}{{receiver.county}}{{receiver.address}}</span>
+        </div>
+    </div>
+    <div class="p5 clearfix">
+        <div class="pleft5">寄<br>件</div>
+        <div class="pright5">
+            <span>{{sender.name}}</span>
+            <span>{{sender.phone}}</span>
+            <br>
+            <span>{{sender.province}}{{sender.city}}{{sender.county}}{{sender.address}}</span>
+        </div>
+    </div>
+    <div class="p9 clearfix">
+        <div class="pleft9">备<br><br>注</div>
+        <div class="pright9">
+            <p>{{sender.desc}}</p>
+        </div>
+    </div>
+</script>
+<script src="../build/js/bootstrap.js"></script>
+<script src="../build/js/jquery.icheck.min.js"></script>
+<script src="../build/js/main.js"></script>
+<script src="../build/js/JsBarcode.all.js"></script>
+<script type="text/javascript">
+    var boid = getQueryString('boid');
+    if(boid==null){
+        boid='';
+    }
+    $(function(){
+        $('.link').load('../views/link.html');
+        var myDate = new Date();
+        $.ajax({
+            url:headurl+"/OrderController/getlogisticsn?boid="+boid+"&URL="+myDate.getMinutes()+myDate.getSeconds(),
+            success:function(data){
+                var data = eval('(' + data + ')');
+                if(data.success==1){
+                data.body.str1=data.body.menber.substring(0,4);
+                data.body.str2=data.body.menber.substring(4,8);
+                data.body.str3=data.body.menber.substring(8,12);
+                var html = template('moban',data.body);
+                document.getElementById('kuaididan').innerHTML = html;
+                options=  { 
+                    width: 2,//较细处条形码的宽度
+                    height: 100, //条形码的宽度，无高度直接设置项，由位数决定，可以通过CSS去调整，见下
+                    quite: 10, 
+                    format: "CODE128",
+                    displayValue: false,//是否在条形码下方显示文字
+                    backgroundColor:"#fff", 
+                    lineColor:"#000"//条形码颜色
+                    }
+                $("#imgcode").JsBarcode(data.body.menber,options);
+                $("#imgcode2").JsBarcode(data.body.menber,options);
+                //addWaterMarker("hahah");
+                }else {
+                        tipError(data.msg);
+                    }
+            }
+        })
+       
+    })
+    function addWaterMarker(str){
+        var can = document.createElement('canvas');
+        var body = document.body;
+        body.appendChild(can);
+        can.width=400;
+        can.height=600;
+        can.style.display='none';
+        var cans = can.getContext('2d');
+        cans.font = "bold 36pt Microsoft JhengHei"; 
+        cans.fillStyle = "rgba(17, 17, 17, 0.40)";
+        cans.textAlign = 'left'; 
+        cans.textBaseline = 'Middle';
+        cans.fillText(str,can.width/3,can.height/4);
+        body.style.backgroundImage="url("+can.toDataURL("image/png")+")";
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!-- 确认是否删除 -->
+<div class="modal fade tipModal" id="confirmdelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog" style="margin-top:200px;">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"  aria-hidden="true"><img src="../build/img/win_close.png"></button>
+            <div class="modal-title" style="padding-top: 14px;padding-left: 16px;color: #666;">提示</div>
+         </div>
+         <div class="modal-body" style="padding-left: 40px;">
+         	<div class="tipModal-img"><img src="../build/img/tip_inf.png" alt="">系统提示</div>
+			<p class="tipModal-msg" id="confirmdeletemsg">确认要删除吗？</p>
+         	<div style="margin-top:50px;" class="clearfix">
+         		<button class="btn btn-blue yesbtn" id="confirmdeletebtn">确 定</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         		<a class="btn btn-default nobtn" data-dismiss="modal"  aria-hidden="true">取 消</a>
+        	</div>
+         </div>
+      </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+</div><!-- /.modal弹框 myModal-delete删除 -->
+
+<!-- 成功提示框 -->
+<div class="modal fade tipModal" id="tipSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"  aria-hidden="true"><img src="../build/img/win_close.png"></button>
+            <div class="modal-title" style="padding-top: 14px;padding-left: 16px;color: #666;">提示</div>
+         </div>
+         <div class="modal-body">
+         	<div class="tipModal-img"><img src="../build/img/tip_success.png" alt="">系统提示</div>
+			<p class="tipModal-msg" id="msgSuccess" style="padding-left: 31px;font-size: 12px;">操作成功</p>
+			<!-- <div style="margin-top:50px;" class="clearfix">
+				<button class="btn btn-blue yesbtn" id="tipSuccess-btn">确定</button>
+			</div> -->
+         </div>
+      </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+</div><!-- /.modal弹框 myModal-delete删除 -->
+
+<!-- 错误提示框 -->
+<div style="z-index: 1000000;" class="modal fade tipModal" id="tipError" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog" style="width:300px;">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"  aria-hidden="true"><img src="../build/img/win_close.png"></button>
+            <div class="modal-title" style="padding-top: 14px;padding-left: 16px;color: #666;">提示</div>
+         </div>
+         <div class="modal-body">
+         	<div class="tipModal-img"><img src="../build/img/tip_inf.png" alt="">系统提示</div>
+			<p class="tipModal-msg" id="msgError">操作失败</p>
+         </div>
+      </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+</div><!-- /.modal弹框 myModal-错误 -->
+
+<!-- 扫码贴标信息 -->
+<div class="modal fade tipModal" id="sweepcode" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   
+</div><!-- /.modal弹框 myModal-delete删除 -->
+<script id="labelsmodal" type="text/html">
+<div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img src="../build/img/win_close.png"></button>
+            <div class="modal-title" style="padding-top: 14px;padding-left: 16px;color: #666;font-weight:bold;">扫码贴标</div>
+            {{if workstatus==4}}<div class="sweepover"><img src="../build/img/check.png"><span>贴标数量已经达标！</span></div>{{/if}}
+         </div>
+         <div class="modal-body clearfix bottomlen" style="padding:0;">
+         	<div class="sweepbody">
+         		<p>
+         			<span>订单号：</span>
+         			<span id="boid">{{orderid}}</span>
+				 </p>
+				 <p>
+					<span>卖家备注：</span>
+					<span>{{if remark}}{{remark}}{{else}}无{{/if}}</span>
+				</p>
+         		<table class="sweeptable">
+					{{each list as value}}
+         			<tr {{if roid == value.roid}}class="active"{{/if}}>
+         				<td style="width:30%;">{{if value.ptype==1}}A{{/if}}{{if value.ptype==2}}B{{/if}}{{value.itemnum}}</td>
+         				<td style="width:30%;">{{value.stname}}</td>
+         				<td style="width:10%;">{{value.size}}</td>
+         				<td style="width:30%;"><img src="../build/img/label.png"><span class="activespan">{{if value.labelnum}}{{value.labelnum}}{{else}}0{{/if}}</span> / {{value.num}}</td>
+					 </tr>
+					 {{/each}}
+         		</table>
+         	</div>
+         </div>
+         <div class="btdiv clearfix">
+			<button class="btn btn-blue yesbtn" data-dismiss="modal" aria-hidden="true">确定</button>
+		</div>
+      </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+</script>
+<!-- 扫码分拣信息 -->
+<div class="modal fade tipModal" id="sortcode" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   
+</div><!-- /.modal弹框 myModal-delete删除 -->
+<script type="text/html" id="pickmodal">
+	<div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img src="../build/img/win_close.png"></button>
+            <div class="modal-title" style="padding-top: 14px;padding-left: 16px;color: #666;font-weight:bold;">扫码分拣</div>
+            {{if workstatus==4}}<div class="sweepover"><img src="../build/img/check.png"><span>分拣数量已经达标！</span></div>{{/if}}
+         </div>
+         <div class="modal-body clearfix bottomlen" style="padding:0;">
+         	<div class="sweepbody">
+				<p>
+					<span>订单号：</span>
+					<span id="boid">{{orderid}}</span>
+				</p>
+				<p>
+					<span>卖家备注：</span>
+					<span>{{if remark}}{{remark}}{{else}}无{{/if}}</span>
+				</p>
+				<table class="sweeptable">
+					{{each list as value}}
+					<tr {{if roid == value.roid}}class="active"{{/if}}>
+						<td style="width:30%;">{{if value.ptype==1}}A{{/if}}{{if value.ptype==2}}B{{/if}}{{value.itemnum}}</td>
+						<td style="width:30%;">{{value.stname}}</td>
+						<td style="width:10%;">{{value.size}}</td>
+						<td style="width:30%;"><img src="../build/img/hand.png"><span class="activespan">{{if value.picknum}}{{value.picknum}}{{else}}0{{/if}}</span> / {{value.num}}</td>
+					</tr>
+					{{/each}}
+				</table>
+         	</div>
+		 </div>
+         <div class="btdiv clearfix">
+			<button class="btn btn-blue yesbtn" data-dismiss="modal" aria-hidden="true">确定</button>
+		</div>
+      </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+</script>
+<script>
+	var modaltype=0;
+$(function(){
+})
+/*删除提示*/
+function confirmdelete(id,callfun,msg){
+	if($.trim(msg)!=''){
+		$('#confirmdeletemsg').html(msg);
+	}
+	$("#confirmdelete").modal('show');
+	$("#confirmdeletebtn").unbind('click');
+	$("#confirmdeletebtn").bind('click',function(){
+		var toWaitTime=1;
+		var reWaitTime;
+		function towait2() {
+	 	if(toWaitTime == 0){
+			window[callfun].call(this,id);
+	 		$('#tipSuccess').modal('hide');
+	 	}else{
+	 		toWaitTime--; 
+	 		reWaitTime=setTimeout(function() {  towait2()  },  500) ;
+	 	}
+	};
+	towait2();
+		$("#confirmdelete").modal('hide');
+	})	
+}
+/* 成功提示 */
+ function tipSuccess(msg,callback){
+	$('#msgSuccess').html(msg);
+	$('#tipSuccess').modal('show');
+	//$('#tipSuccess-btn').unbind('click');
+	var toWaitTime=2;
+	var reWaitTime;
+	function towait() {
+	 	if(toWaitTime == 0){
+	 		tipSuccessnext();
+	 		$('#tipSuccess').modal('hide');
+	 	}else{
+	 		toWaitTime--; 
+	 		reWaitTime=setTimeout(function() {  towait()  },  1000) ;
+	 	}
+	};
+	towait();
+	function tipSuccessnext(){
+		if(callback){
+			window[callback].call(this);
+		}
+		$('#tipSuccess').modal('hide');
+	}
+}
+ /* 失败提示 */
+ function tipError(msg,callback){
+	$('#msgError').html(msg);
+	$('#tipError').modal('show');
+	//$('#tipError-btn').unbind('click');
+	var toWaitTime=2;
+	var reWaitTime;
+	function towait() {
+	 	if(toWaitTime == 0){
+	 		tipErrornext();
+	 		$('#tipSuccess').modal('hide');
+	 	}else{
+	 		toWaitTime--; 
+	 		reWaitTime=setTimeout(function() {  towait()  },  1000) ;
+	 	}
+	};
+	towait();
+	function tipErrornext(){
+		if(callback){
+			window[callback].call(this);
+		}
+		$('#tipError').modal('hide');
+	};
+}
+ /* 失败提示 */
+ function tipError1(msg,callback){
+	modaltype++;
+	$('#msgError').html(msg);
+	 if(modaltype==1){
+		$('#tipError').modal('show');
+		//$('#tipError-btn').unbind('click');
+		var toWaitTime=2;
+		var reWaitTime;
+		function towait() {
+			if(toWaitTime == 0){
+				modaltype =0;
+				tipErrornext();
+				$('#tipSuccess').modal('hide');
+			}else{
+				toWaitTime--; 
+				reWaitTime=setTimeout(function() {  towait()  },  1000) ;
+			}
+		};
+		towait();
+		function tipErrornext(){
+			if(callback){
+				window[callback].call(this);
+			}
+			$('#tipError').modal('hide');
+		};
+	 }
+}
+$("#tipError").bind('hide.bs.modal',function(){
+  $(".modal-backdrop").remove();
+ })
+ $("#sweepcode").bind('hide.bs.modal',function(){
+  $(".modal-backdrop").remove();
+ })
+ $("#sortcode").bind('hide.bs.modal',function(){
+  $(".modal-backdrop").remove();
+ })
+</script>

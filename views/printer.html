@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>测试web页面</title>
+    <link rel="stylesheet" href="../build/css/index.css">
+    <link rel="stylesheet" href="../build/css/bootstrap.css">
+    <link rel="stylesheet" href="../build/css/index.css">
+    <link rel="stylesheet" href="../build/css/style.css">
+	<link rel="stylesheet" href="../build/css/main.css">
+    <script src="../build/js/jquery-1.11.3.min.js"></script>
+    <script src="../build/js/bootstrap.js"></script>
+    <script src="../build/js/main.js"></script>
+    <script src="../build/js/JsBarcode.all.js"></script>
+    <script src="../build/js/printReceipt.js"></script>
+    <script src="../build/js/art-template.js"></script>
+</head>
+<body style="margin:8px;margin-top:2px;">
+    <iframe frameborder="0" scrolling="scrolling" src="" name="myifrm" id="myifrm" style="height:180mm;width: 102mm;">
+    </iframe>
+    <input class="p__" name="Button1" type="button" value="打印试试！" onclick="print(1);" style="width: 301px"/>
+
+<script type="text/javascript">
+var boid = getQueryString('boid');
+if(boid==null){
+    boid='';
+}
+$(function(){
+    initPrintActiveX();
+    $("#myifrm").attr("src","../views/moban.html?boid="+boid);
+    var toWaitTime=2;
+    var reWaitTime;
+    function towait2() {
+        if(toWaitTime == 0){
+            print(1);
+            //closePageForm();
+        }else{
+            toWaitTime--; 
+            reWaitTime=setTimeout(function() {  towait2()  },  1000) ;
+        }
+    };
+    towait2();
+    //initPrintActiveX();
+    //print(1);
+    //closePageForm();
+})
+function closePageForm(){
+        window.opener=null;
+        window.open('','_self');
+        window.close();
+    }
+</script>
+</body>
+    
+</html>

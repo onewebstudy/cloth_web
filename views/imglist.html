@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<!-- saved from url=(0016)http://localhost -->  
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>印花图片库</title>
+	<link rel="shortcut  icon" type="image/x-icon" href="/iext/favicon.ico" media="screen"  />
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../build/css/bootstrap.css">
+    <link rel="stylesheet" href="../build/css/index.css">
+    <link rel="stylesheet" href="../build/css/style.css">
+	<link rel="stylesheet" href="../build/css/main.css">
+	<link rel="stylesheet" href="../build/css/pageNav.css">
+    <link href="../build/css/blue.css" rel="stylesheet">
+	<script src="../build/js/jquery-1.11.3.min.js"></script>
+	<script src="../build/js/art-template.js"></script>
+</head>
+<body>
+	<div class="link">
+	</div>
+	<div class="head">
+	</div>
+	<div class="indexbody" id="indexbody">
+		
+	</div>
+	<script id="executions" type="text/html">
+	<div class="bread">
+			<a href="../views/index.html">首页</a>>><a href="../views/imglist.html">印花图片库</a>
+		</div>
+		<div class="searchdiv clearfix">
+			<!-- <span class="production" onclick="ifproduction()" style="margin-right: 16px;"><img src="../build/img/delete.png">删除</span> -->
+			<span class="production" onclick="exportimg()"><img src="../build/img/publish.png">上传印花</span>
+			<span class="production" onclick="ifproduction()" style="margin-left:16px;"><img src="../build/img/stop.png">删除</span>
+			<span class="production" onclick="exportimgs()" style="margin-left:16px;"><img src="../build/img/publish.png">批量上传</span>
+			<div class="searchmin">
+				x值:
+				<input type="text" placeholder="x值" id="xx" value="{{xx}}" style="margin-left: 8px;width: 80px;">
+				y值：
+				<input type="text" placeholder="y值" id="yy" value="{{yy}}"style="margin-left: 8px;width: 80px;">
+				<input type="text" placeholder="根据印花名字搜索" id="text" value="{{text}}">
+				<img src="../build/img/search.png" class="searchimg" onclick="search()">
+			</div>
+		</div>
+		<div class="tablediv">
+			<table>
+				<tr>
+					<th  style="width: 5%;"><div class="form-checkbox checkbox-all"><input type="checkbox"  name="square-checkbox"></div></th>
+					<th style="width: 10%;">序号</th>
+					<th style="width: 10%;">路径</th>
+					<th style="width: 20%;">印花名称</th>
+					<th style="width: 10%;">尺寸</th>
+					<th style="width: 5%;">x轴</th>
+					<th style="width: 5%;">y轴</th>
+					<th style="width: 10%;">角度</th>
+					<th style="width: 10%;">上传时间</th>
+					<th style="width: 10%;">操作</th>
+				</tr>
+				{{if pagelist.total>0}}
+				{{each pagelist.result as value i}}
+				<tr>
+					<td>
+						<div class="form-checkbox">
+	                   		<input type="checkbox"  name="square-checkbox"  class="form-radio" value="{{value.stid}}" >
+	                   	</div>
+					</td>
+					<td>{{i+1}}</td>
+					<td>{{value.filepath}}</td>
+					<td>{{value.stname}}</td>
+					<td>{{value.size}}</td>
+					<td>{{value.x}}</td>
+					<td>{{value.y}}</td>
+					<td>{{value.angle}}</td>
+					<td>{{value.createtime}}</td>
+					<td><span class="delectework" style="margin-right:8px;" onclick="eaitimg({{value.stid}})">编辑</span><span class="delectework" onclick="confirmdelete('{{value.stid}}','delectimg','是否要删除印花？')">删除</span></td>
+				</tr>
+				{{/each}}
+				{{/if}}
+			</table>
+			{{if pagelist.total>0}}<nav aria-label="Page navigation" class="page-nav-outer" id="PageNavId"></nav>{{/if}}
+			{{if pagelist.total<=0}}
+				<div class="emptyContent">
+					<img src="../build/img/no_no.png">
+					<p>暂无印花相关内容</p>
+				</div>
+			{{/if}}
+		</div>
+	</script>
+	
+		
+<!-- 图片信息 -->
+<div class="modal fade tipModal hiddenimg" id="imgshow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog" style="width:447px;height:291px;">
+      <div class="modal-content">
+      	<img class="maximg" src="">
+      </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+</div><!-- /.modal弹框 myModal-delete删除 -->
+<!-- 新建印花 -->
+<div class="modal fade tipModal" id="addprintmo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   
+</div><!-- /.modal弹框 myModal-delete删除 -->
+<script type="text/html" id="imgdetail">
+	<div class="modal-dialog" style="width:375px;">
+		<div class="modal-content">
+		   <div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img src="../build/img/win_close.png"></button>
+			  <div class="modal-title" style="padding-top: 14px;padding-left: 16px;color: #666;font-weight:bold;">新建印花<span class="inforn">填写印花信息</span></div>
+		   </div>
+		   <div class="modal-body clearfix bottomlen" style="padding-bottom:0;">
+			   <div class="inforbody clearfix">
+				   <div class="leftadd">
+					   <input type="hidden" id="editstid" value="{{stid}}">
+					   <p><span>印花：</span><input type="text" placeholder="请输入印花" id="imgname" value="{{name}}"></p>
+					   <div>
+						   <span style="position: relative;top: -116px;">尺寸：</span>
+						   <div class="sizediv">
+							   <span class="active">90</span>
+							   <span>100</span>
+							   <span>110</span>
+							   <span>120</span>
+							   <span>130</span>
+							   <span>140</span>
+							   <span>150</span>
+							   <span>XS</span>
+							   <span>S</span>
+							   <span>M</span>
+							   <span>L</span>
+							   <span>XL</span>
+							   <span>2XL</span>
+							   <span>3XL</span>
+							   <span>4XL</span>
+							   <input type="text" placeholder="自定义" class="sizeinput" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5\.]/g,'')" id="imgsize"value="{{size}}">
+						   </div>
+					   </div>
+					   <p style="position: relative"><span>路径：</span><input type="text" placeholder="请选择路径" id="imgidea" value="{{filepath}}"><input id="fileSlect" class="filestyle" type="file" accept="ai"></p>
+					   <input type="hidden" id="imgpath" value="{{filepath}}"></input>
+					   <p><span>x轴：</span><input type="text" placeholder="请输入x轴" id="imgx" style="margin-left: 6px;"value="{{x}}"></p>
+					   <p><span>y轴：</span><input type="text" placeholder="请输入y轴" id="imgy" style="margin-left: 6px;"value="{{y}}"></p>
+					   <p><span>角度：</span><input type="text" placeholder="请输入角度" id="imgangle" value="{{angle}}"></p>
+				   </div>
+				   <div class="rightadd">
+				   </div>
+			   </div>
+		   </div>
+		   <div class="btdiv clearfix">
+			   <span class="modalimgerror"></span>
+			  <button class="btn btn-blue yesbtn" onclick="fuzhiimg()">确定</button>
+			  <a class="btn btn-default nobtn" data-dismiss="modal"  aria-hidden="true">取 消</a>
+		  </div>
+		</div><!-- /.modal-content -->
+	 </div><!-- /.modal-dialog -->
+</script>
+<!-- 批量新建印花 -->
+<div class="modal fade tipModal" id="ssprintmo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" style="width:375px;">
+		<div class="modal-content">
+		   <div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img src="../build/img/win_close.png"></button>
+			  <div class="modal-title" style="padding-top: 14px;padding-left: 16px;color: #666;font-weight:bold;">新建印花<span class="inforn">填写印花信息</span></div>
+		   </div>
+		   <div class="modal-body clearfix bottomlen" style="padding-bottom:0;">
+			   <div class="inforbody clearfix">
+				   <div class="leftadd">
+					   <p style="position: relative"><span>路径：</span><input type="text" placeholder="请选择路径" id="imgideas" value="" onclick="browseFolder()"></p>
+				   </div>
+				   <div class="rightadd">
+				   </div>
+			   </div>
+		   </div>
+		   <div class="btdiv clearfix">
+			   <span class="modalimgerror"></span>
+			  <button class="btn btn-blue yesbtn" onclick="fuzhiimgs()">确定</button>
+			  <a class="btn btn-default nobtn" data-dismiss="modal"  aria-hidden="true">取 消</a>
+		  </div>
+		</div><!-- /.modal-content -->
+	 </div><!-- /.modal-dialog -->
+</div><!-- /.modal弹框 myModal-delete删除 -->
+<script src="../build/js/bootstrap.js"></script>
+<script src="../build/js/jquery.icheck.min.js"></script>
+<script src="../build/js/main.js"></script>
+<script src="../build/js/pageNav.js"></script>
+<script>
+var imgpath2="";
+var imgsizes=["90"];
+var xx;
+var yy;
+function givemeurl(url){
+	imgpath2 = url;
+}
+var arr_tip_userid = new Array();
+function search(pageNum){
+	var myDate = new Date();
+	var text=$("#text").val();
+	var status=$("#status").val();
+	var type=$("#type").val();
+	$.ajax({
+		url:headurl+"/StampController/stampList?URL="+myDate.getMinutes()+myDate.getSeconds(),
+		data:{text:text,status:status,type:type,pageNum:pageNum},
+		success:function(data){
+			var data = eval('(' + data + ')');
+			if(data.success==1){
+				data.body.xx=xx;
+				data.body.yy=yy;
+			var html = template('executions',data.body);
+			document.getElementById('indexbody').innerHTML = html;
+			icheckinit();
+			if(data.body.pagelist.total>0){
+				var pageNavObj = null;//用于储存分页对象
+				pageNavObj = new PageNavCreate("PageNavId",{ pageCount:data.body.pagelist.pages, currentPage:data.body.pagelist.pageNum, perPageNum:data.body.pagelist.pageSize});
+				pageNavObj.afterClick(search);
+			}
+			}else {
+					tipError(data.msg);
+				}
+		}
+	})
+	arr_tip_userid=[];
+}
+function eaitimg(stid){
+	var myDate = new Date();
+	$.ajax({
+		url:headurl+"/StampController/detail?URL="+myDate.getMinutes()+myDate.getSeconds(),
+		data:{stid:stid},
+		success:function(data){
+			var data = eval('(' + data + ')');
+			if(data.success==1){
+			imgsizes=[];
+			var html = template('imgdetail',data.body);
+			document.getElementById('addprintmo').innerHTML = html;
+			$('#addprintmo').modal('show');
+			/*Ajax上传至后台并返回文件的url*/
+			$("#fileSlect").change(function () {
+				$('.modalimgerror').html('');
+				$('#imgidea').val($("#fileSlect")[0].value);
+			})
+			$('#addprintmo').find('.sizediv').find('span').removeClass('active');
+			$('#addprintmo').find('.sizediv').find('span').click(function(){
+				$(this).siblings().removeClass('active');
+				$(this).addClass('active');
+				imgsizes=[$(this).html()];
+				$('#addprintmo').find('.sizediv').find('input').val("");
+			})
+			$('#addprintmo').find('.sizediv').find('input').change(function(){
+				$(this).siblings().removeClass('active');
+				imgsizes=[];
+			})
+			}else {
+					tipError(data.msg);
+				}
+		}
+	})
+}
+//判断选择框是否为空
+function ifproduction(){
+	if(arr_tip_userid.length>0){
+		confirmdelete(arr_tip_userid,'delectimgs','是否要删除印花？');
+	}else{
+		tipError('请选择印花');
+	}
+}
+$(function(){
+	var myDate = new Date();
+	$('.link').load('../views/link.html');
+	$('.head').load('../views/header2.html');
+	$.ajax({
+		url:headurl+"/StampController/stampList?URL="+myDate.getMinutes()+myDate.getSeconds(),
+		success:function(data){
+			var data = eval('(' + data + ')');
+			if(data.success==1){
+			var html = template('executions',data.body);
+			document.getElementById('indexbody').innerHTML = html;
+			icheckinit();
+			if(data.body.pagelist.total>0){
+				var pageNavObj = null;//用于储存分页对象
+				pageNavObj = new PageNavCreate("PageNavId",{ pageCount:data.body.pagelist.pages, currentPage:data.body.pagelist.pageNum, perPageNum:data.body.pagelist.pageSize});
+				pageNavObj.afterClick(search);
+			}
+			}else {
+					tipError(data.msg);
+				}
+		}
+	})
+})
+$('.tablediv td').hover(function(){
+	$(this).parents('tr').find('td').css('background',' #E7F3FC');
+},function(){
+	$(this).parents('tr').find('td').css('background',' #FFF')
+});
+$('.sizediv span').click(function(){
+	$('.sizediv span').removeClass('active');
+	$(this).addClass('active');
+})
+//隐藏大图
+$('.hiddenimg').click(function(){
+	$('#imgshow').modal('hide');
+})
+//显示大图
+function toshowbig(_this){
+	var imgurl = $(_this).find('.maximgurl').val();
+	$('#imgshow').find('.maximg').attr('src',imgurl);
+	$('#imgshow').modal('show');
+}
+//上传印花
+function exportimg(){
+	xx=$("#xx").val();
+	yy=$("#yy").val();
+	imgsizes=["90"];
+	data={
+		"name":"",
+		"size":"",
+		"x":xx,
+		"y":yy,
+		"filepath":"",
+		"stid":""
+	};
+	var html = template('imgdetail',data);
+	document.getElementById('addprintmo').innerHTML = html;
+	$('.modalimgerror').html('');
+	$('#addprintmo').modal('show');
+	$('#addprintmo').find('.sizediv').find('span').click(function(){
+		if($(this).hasClass('active')){
+			$(this).removeClass('active');
+			imgsizes.remove($(this).html());
+		}else{
+			$(this).addClass('active');
+			imgsizes.push($(this).html());
+		}
+	})
+	$('#addprintmo').find('.sizediv').find('span').removeClass('active');
+	$('#addprintmo').find('.sizediv').children("span:first-child").addClass('active');
+	/*Ajax上传至后台并返回文件的url*/
+    $("#fileSlect").change(function () {
+	$('.modalimgerror').html('');
+	$('#imgidea').val($("#fileSlect")[0].value);
+ })
+}
+//批量上传印花
+function exportimgs(){
+	$('#ssprintmo').find("input").val("");
+	$('#ssprintmo').modal('show');
+}
+//选择文件夹
+function browseFolder() {
+    try {
+        var Message = "\u8bf7\u9009\u62e9\u6587\u4ef6\u5939"; //选择框提示信息
+        var Shell = new ActiveXObject("Shell.Application");
+        var Folder = Shell.BrowseForFolder(0, Message, 64, 17); //起始目录为：我的电脑
+        //var Folder = Shell.BrowseForFolder(0, Message, 0); //起始目录为：桌面
+        if (Folder != null) {
+            Folder = Folder.items(); // 返回 FolderItems 对象
+            Folder = Folder.item(); // 返回 Folderitem 对象
+            Folder = Folder.Path; // 返回路径
+            if (Folder.charAt(Folder.length - 1) != "\\") {
+                Folder = Folder + "\\";
+            }
+            $("#imgideas").val(Folder);
+            return Folder;
+        }
+    }
+    catch (e) {
+        alert(e.message);
+    }
+}
+//文件夹上传印花
+function fuzhiimgs(){
+	var filepath1 =  $("#imgideas").val();
+	if(!filepath1){
+		$("#ssprintmo").find('.modalimgerror').html('请选择文件夹');
+		return false;
+	}
+	window.external.poFileName(filepath1);
+	$('#ssprintmo').modal('hide');
+}
+//c#传到这边来
+function morepath(name,sizestring,xystring,right90){
+	var xyarr = xystring.split(",");
+	var imgx = xyarr[0];
+	var imgy = xyarr[1];
+	var imgpath = imgpath2;
+	setTimeout(function () { 
+			$.ajax({
+			url:headurl+"/StampController/uploadImgInfo",
+			type:'post',
+			data:{name:name,filepath:imgpath,x:imgx,y:imgy,size:sizestring,angle:right90},
+			success:function(data){
+				var data = eval('(' + data + ')');
+				if(data.success==1){
+						tipSuccess('添加印花成功','search');
+				}else {
+						tipError(data.msg);
+					}
+			}
+		})
+	}, 100);
+	
+}
+function clearspan(_this){
+	$(_this).siblings().removeClass('active');
+}
+function fuzhiimg(){
+	var name = $.trim($('#imgname').val());
+	var rfurl = $('#imgidea').val();
+	//var size = $('#addprintmo').find('.sizediv').find('span.active').html();
+	var imgx = $.trim($('#imgx').val());
+	var imgy = $.trim($('#imgy').val());
+	var stid = $('#editstid').val();
+	var size = $.trim($('#imgsize').val());
+	var angle = $.trim($('#imgangle').val());
+	if(size){
+		for(var i=0;i<imgsizes.length;i++){
+			if(imgsizes[i]==size){
+				$('.modalimgerror').html('印花尺寸不能一样');
+				return false;
+			}
+		}
+		imgsizes.push(size);
+	}
+	// if(!size){
+	// 	size = $('#imgsize').val();
+	// }
+	if(!angle){
+		angle=0;
+	}
+	if(imgsizes.length <= 0){
+		$('.modalimgerror').html('印花尺寸不能为空');
+		return false;
+	}
+	if(!name){
+		$('.modalimgerror').html('印花名字不能为空');
+		return false;
+	}
+	if(name.length>20){
+		$('.modalimgerror').html('印花名字不能超过20个字');
+		return false;
+	}
+	if(!rfurl){
+		$('.modalimgerror').html('印花文件路径不能为空');
+		return false;
+	}
+	if(!imgx){
+		$('.modalimgerror').html('信息标识码位置不能为空');
+		return false;
+	}
+	if(!imgy){
+		$('.modalimgerror').html('信息标识码位置不能为空');
+		return false;
+	}
+	if(!checkFloat(imgx)){
+		$('.modalimgerror').html('信息标识码位置必须为数字');
+		return false;
+	}
+	if(!checkFloat(imgy)){
+		$('.modalimgerror').html('信息标识码位置必须为数字');
+		return false;
+	}
+	if(!checkFloat(angle)){
+		$('.modalimgerror').html('角度必须为数字');
+		return false;
+	}
+	for(var i =0 ;i<imgsizes.length;i++){
+		window.external.copyimg(rfurl,imgsizes[i]);
+	}
+	$("#imgpath").val(imgpath2);
+	saveimg();
+}
+//保存印花
+function saveimg(){
+	var name = $.trim($('#imgname').val());
+	var rfurl = $('#imgidea').val();
+	//var size = $('#addprintmo').find('.sizediv').find('span.active').html();
+	var imgx = $.trim($('#imgx').val());
+	var imgy = $.trim($('#imgy').val());
+	var stid = $('#editstid').val();
+	var imgpath = $('#imgpath').val();
+	var angle = $.trim($('#imgangle').val());
+	for(var i =0;i<imgsizes.length;i++){
+		if(i==0){
+			var sizestr="?size="+imgsizes[i];
+		}else{
+			sizestr +="&size="+imgsizes[i];
+		}
+	}
+	$('#addprintmo').modal('hide');
+	$.ajax({
+		url:headurl+"/StampController/uploadImgInfo"+sizestr,
+		type:'post',
+		data:{name:name,filepath:imgpath,x:imgx,y:imgy,stid:stid,angle:angle},
+		success:function(data){
+			var data = eval('(' + data + ')');
+			if(data.success==1){
+				if(stid){
+					tipSuccess('修改印花成功','search');
+				}else{
+					tipSuccess('添加印花成功','search');
+				}
+				
+			}else {
+					tipError(data.msg);
+				}
+		}
+	})
+	
+}
+//删除印花
+function delectimg(stid){
+	$.ajax({
+		url:headurl+"/StampController/delStamp?stids="+stid,
+		type:'post',
+		success:function(data){
+			var data = eval('(' + data + ')');
+			if(data.success==1){
+				tipSuccess('删除印花成功','search');
+			}else {
+					tipError(data.msg);
+				}
+		}
+	})
+}
+//删除印花
+function delectimgs(stids){
+	var stidst="";
+	for(var i = 0;i<stids.length;i++){
+		if(i==0){
+			stidst += stids[i];
+		}else {
+			stidst += "&stids="+stids[i];
+		}
+	}
+	$.ajax({
+		url:headurl+"/StampController/delStamp?stids="+stidst,
+		type:'post',
+		success:function(data){
+			var data = eval('(' + data + ')');
+			if(data.success==1){
+				tipSuccess('删除印花成功','search');
+			}else {
+					tipError(data.msg);
+				}
+		}
+	})
+}
+//初始化选择框
+function icheckinit(){
+	$('.form-checkbox input').iCheck({
+		checkboxClass: 'icheckbox_square-blue',
+		increaseArea: '20%'
+	});
+	 /*全选  取消全选*/
+	 var flagChecked=false;
+    var checkboxnum=$('.tablediv .form-checkbox').size()-1;
+    $('.tablediv .form-checkbox').on('ifChecked',function(e){
+        if($(this).hasClass('checkbox-all')){
+			$('.tablediv .form-checkbox').iCheck('check');
+			arr_tip_userid=[];
+			flagChecked=true;
+			$('.tablediv .form-checkbox').each(function(i){
+				if(i!=0){
+					arr_tip_userid.push($(this).find('input').val());
+				}
+			})
+        }else{
+        	if(checkboxnum==$('.tablediv input[name="square-checkbox"]:checked').size()){
+				arr_tip_userid=[];
+				$('.tablediv .form-checkbox').iCheck('check');
+			}else{
+				var input = $(this).find('input');
+				var val = input.val();
+				arr_tip_userid.push(val);
+			}
+		}
+    });
+    $('.tablediv .form-checkbox').on('ifUnchecked',function(e){
+    	if($(this).hasClass('checkbox-all')&&flagChecked){
+			$('.tablediv .form-checkbox').not('.checkbox-all').iCheck('uncheck');
+			flagChecked=false;
+			arr_tip_userid=[];
+    	}else{
+			flagChecked=false;
+			var input = $(this).find('input');
+	    	var val = input.val();
+	    	for (var i=0;i<arr_tip_userid.length;i++) {
+	    		if (arr_tip_userid[i] == val) {
+					arr_tip_userid.remove(val);
+	    			break;
+	    		}
+	    	}
+			$('.checkbox-all').iCheck('uncheck');
+		}
+    });
+	var tid = 0;
+	$( "tr" ).hover( function() {
+		var _this = this;
+	   tid = setTimeout( function() {
+		   $(_this).find('.exename').css('display','block');
+	    }, 2000 );
+	}, function() {
+		$(this).find('.exename').css('display','none');
+	    clearTimeout( tid );//当在1秒内退出了hover事件就取消计时代码
+	} );
+	$('.tablediv td').hover(function(){
+		$(this).parents('tr').find('td').css('background',' #E7F3FC');
+	},function(){
+		$(this).parents('tr').find('td').css('background',' #FFF')
+	});
+	$('#text').bind('keypress',function(event){
+            if(event.keyCode == "13")    
+            {
+                search();
+            }
+        });
+}
+
+</script>
+
+
+
+</body>
+</html>
