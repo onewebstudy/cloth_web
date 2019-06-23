@@ -1,29 +1,31 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>生产执行单管理</title>
-	<link rel="shortcut  icon" type="image/x-icon" href="/iext/favicon.ico" media="screen"  />
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="../build/css/bootstrap.css">
-    <link rel="stylesheet" href="../build/css/index.css">
-    <link rel="stylesheet" href="../build/css/style.css">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+	<title>生产执行单管理</title>
+	<link rel="shortcut  icon" type="image/x-icon" href="/iext/favicon.ico" media="screen" />
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="../build/css/bootstrap.css">
+	<link rel="stylesheet" href="../build/css/index.css">
+	<link rel="stylesheet" href="../build/css/style.css">
 	<link rel="stylesheet" href="../build/css/main.css">
 	<link rel="stylesheet" href="../build/css/pageNav.css">
-    <link href="../build/css/blue.css" rel="stylesheet">
+	<link href="../build/css/blue.css" rel="stylesheet">
 	<script src="../build/js/jquery-1.11.3.min.js"></script>
 	<script src="../build/js/art-template.js"></script>
 </head>
+
 <body>
 	<div class="link">
 	</div>
 	<div class="head">
 	</div>
 	<div class="indexbody" id="indexbody">
-		
+
 	</div>
 	<script id="executions" type="text/html">
 	<div class="bread">
@@ -131,34 +133,36 @@
 			{{/if}}
 	</div>
 	</script>
-<!-- 图片信息 -->
-<div class="modal fade tipModal hiddenimg" id="imgshow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-   <div class="modal-dialog" style="width:447px;height:291px;">
-      <div class="modal-content">
-      	<img class="maximg" src="">
-      </div><!-- /.modal-content -->
-   </div><!-- /.modal-dialog -->
-</div><!-- /.modal弹框 myModal-delete删除 -->
-<!-- 进度条信息 -->
-<div class="modal fade tipModal hiddenimg" id="jindu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog" style="width:447px;height:291px;margin-top: 25%;">
-	   <div class="modal-content">
-		<div class="box">
-			<div class="tbox">
-				<div class="tiao"></div>
-			</div>
-			<div class="ok">正在导出，请稍后…</div>
-			<div class="isover"></div>
-			<div class="gotobtn"><button onclick="gotowhile()">前往文件夹</button></div>
-		</div>
-	   </div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
- </div><!-- /.modal弹框 myModal-delete删除 -->
-<!-- 停产信息 -->
-<div class="modal fade tipModal" id="stopmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-   
-</div><!-- /.modal弹框 myModal-delete删除 -->
-<script type="text/html" id="stopmodalmin">
+	<!-- 图片信息 -->
+	<div class="modal fade tipModal hiddenimg" id="imgshow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	 aria-hidden="true">
+		<div class="modal-dialog" style="width:447px;height:291px;">
+			<div class="modal-content">
+				<img class="maximg" src="">
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal弹框 myModal-delete删除 -->
+	<!-- 进度条信息 -->
+	<div class="modal fade tipModal hiddenimg" id="jindu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	 aria-hidden="true">
+		<div class="modal-dialog" style="width:447px;height:291px;margin-top: 25%;">
+			<div class="modal-content">
+				<div class="box">
+					<div class="tbox">
+						<div class="tiao"></div>
+					</div>
+					<div class="ok">正在导出，请稍后…</div>
+					<div class="isover"></div>
+					<div class="gotobtn"><button onclick="gotowhile()">前往文件夹</button></div>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal弹框 myModal-delete删除 -->
+	<!-- 停产信息 -->
+	<div class="modal fade tipModal" id="stopmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+	</div><!-- /.modal弹框 myModal-delete删除 -->
+	<script type="text/html" id="stopmodalmin">
 	<div class="modal-dialog" style="width:520px;">
       <div class="modal-content">
          <div class="modal-header">
@@ -190,207 +194,148 @@
       </div><!-- /.modal-content -->
    </div><!-- /.modal-dialog -->
 </script>
-<!--旋转-->
-<div class="modal fade tipModal hiddenimg" id="logininghow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<!--旋转-->
+	<div class="modal fade tipModal hiddenimg" id="logininghow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	 aria-hidden="true">
 		<div class="modal-dialog" style="width:400px;height:300px;margin-top: 20%;">
 			<div class="modal-content">
 				<img src="../build/img/logining.gif">
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal弹框 myModal-delete删除 -->
-<script src="../build/js/bootstrap.js"></script>
-<script src="../build/js/jquery.icheck.min.js"></script>
-<script src="../build/js/main.js"></script>
-<script src="../build/js/pageNav.js"></script>
-<script src="../build/js/JsBarcode.all.js"></script>
-<script src="../build/js/html2canvas.js"></script>
-<script>
-var arr_tip_userid = new Array();
-var woid = getQueryString('woid');
-var successnum;
-var errornums;
-var errornum;
-if(woid==null){
-	woid='';
-}
-var boid = getQueryString('boid');
-if(boid==null){
-	boid='';
-}
-//判断选择框是否为空
-function ifproduction(){
-	if(arr_tip_userid.length>0){
-		confirmdelete("",'isexporteds','是否要导出印花和标识信息图？')
-	}else{
-		tipError('请选择印花');
-	}
-}
-function search(pageNum){
-	var myDate = new Date();
-	var text=$("#text").val();
-	var status=$("#status").val();
-	var type=$("#type").val();
-	var isexport=$("#isexport").val();
-	$.ajax({
-		url:headurl+"/OrderController/runOrderList?woid="+woid+"&boid="+boid+"&URL="+myDate.getMinutes()+myDate.getSeconds(),
-		data:{text:text,status:status,type:type,pageNum:pageNum,isexport:isexport},
-		success:function(data){
-			var data = eval('(' + data + ')');
-			if(data.success==1){
-			var html = template('executions',data.body);
-			document.getElementById('indexbody').innerHTML = html;
-			icheckinit();
-			if(data.body.pagelist.total>0){
-				var pageNavObj = null;//用于储存分页对象
-				pageNavObj = new PageNavCreate("PageNavId",{ pageCount:data.body.pagelist.pages, currentPage:data.body.pagelist.pageNum, perPageNum:data.body.pagelist.pageSize});
-				pageNavObj.afterClick(search);
-			}
-			}else {
-					tipError(data.msg);
-				}
+	<script src="../build/js/bootstrap.js"></script>
+	<script src="../build/js/jquery.icheck.min.js"></script>
+	<script src="../build/js/main.js"></script>
+	<script src="../build/js/pageNav.js"></script>
+	<script src="../build/js/JsBarcode.all.js"></script>
+	<script src="../build/js/html2canvas.js"></script>
+	<script>
+		var arr_tip_userid = new Array();
+		var woid = getQueryString('woid');
+		var successnum;
+		var errornums;
+		var errornum;
+		if (woid == null) {
+			woid = '';
 		}
-	})
-	arr_tip_userid=[];
-}
-$(function(){
-	$('.link').load('../views/link.html');
-	$('.head').load('../views/header2.html');
-	var myDate = new Date();
-	$.ajax({
-		url:headurl+"/OrderController/runOrderList?woid="+woid+"&boid="+boid+"&URL="+myDate.getMinutes()+myDate.getSeconds(),
-		success:function(data){
-			var data = eval('(' + data + ')');
-			if(data.success==1){
-			var html = template('executions',data.body);
-			document.getElementById('indexbody').innerHTML = html;
-			icheckinit();
-			if(data.body.pagelist.total>0){
-				var pageNavObj = null;//用于储存分页对象
-				pageNavObj = new PageNavCreate("PageNavId",{ pageCount:data.body.pagelist.pages, currentPage:data.body.pagelist.pageNum, perPageNum:data.body.pagelist.pageSize});
-				pageNavObj.afterClick(search);
-			}
-			}else {
-					tipError(data.msg);
-				}
+		var boid = getQueryString('boid');
+		if (boid == null) {
+			boid = '';
 		}
-	})
-})
-function howmuchall(){
-	var type = $("#type").val();
-	if(!type){
-		tipError('请选择一种工艺');
-		return false;
-	}
-	var myDate = new Date();
-	$.ajax({
-		url:headurl+"/OrderController/getExportCount?type="+type+"&woid="+woid+"&URL="+myDate.getMinutes()+myDate.getSeconds(),
-		success:function(data){
-			var data = eval('(' + data + ')');
-			if(data.body.count<=0){
-				tipError("没有可以导出的合成图");
-				return false;
-			}else{
-				confirmdelete('','allprouct','有'+data.body.count+'个合成图需要导出，导出可能会花费一段时间，是否继续导出？');
-				sunnum = data.body.count;
+		//判断选择框是否为空
+		function ifproduction() {
+			if (arr_tip_userid.length > 0) {
+				confirmdelete("", 'isexporteds', '是否要导出印花和标识信息图？')
+			} else {
+				tipError('请选择印花');
 			}
 		}
-	})
-}
-function sleep(numberMillis) { 
-	var now = new Date(); 
-	var exitTime = now.getTime() + numberMillis; 
-	while (true) { 
-	now = new Date(); 
-	if (now.getTime() > exitTime) 
-	return; 
-	} 
-}
-
-//全部导出
-function allprouct(){
-	var type = $("#type").val();
-	$('#jindu').modal('show');
-	$(".ok").html("正在导出，请稍后…");
-	$('.isover').css('display',"none");
-	$('.gotobtn').css('display',"none");
-	jindunnum = 0;
-	setTimeout(function() {
-		zgi=0;
-		xh();
-	}, 0);
-	allpr=setTimeout(function() {
-	var myDate = new Date();
-		$.ajax({
-			url:headurl+"/OrderController/allExport?type="+type+"&woid="+woid+"&URL="+myDate.getMinutes()+myDate.getSeconds(),
-			async:false,
-			success:function(data){
-				var data = eval('(' + data + ')');
-				if(data.success==1){
-					var prolist = data.body.list;
-					sunnum = prolist.length;
-					successnum = prolist.length;
-					for(var i = 0;i < prolist.length;i++){
-						if(jindunnum == i){
-							var e = prolist[i].itemnum[0];
-							window.external.OpenForm2(prolist[i].roid);
-							var a = prolist[i].itemnum;
-							var c = prolist[i].size;
-							var d = prolist[i].num;
-							var g = '';
-							var b = '';
-							var x = 0;
-							var y = 0;
-							var angle = 0;
-							if(e != "E"){
-								b = prolist[i].stname;
-								g = prolist[i].filepath;
-								x = prolist[i].x;
-								y = prolist[i].y;
-								angle = prolist[i].angle;
-							}
-							
-							if(e == "A" || e == "B"){
-								if(g){
-									window.external.giveaisize(a,b,c,d,e,g,x,y,angle);
-									window.external.cexptai();
-									//changestatus(prolist[i].roid);
-								}else{
-									changestatus(prolist[i].roid);
-									add();
-								}
-							}else if(e == "D"){
-								if(g){
-									window.external.giveaisize(a,b,c,d,e,g,x,y,angle);
-									window.external.cexptyunatu();
-									for(var i = 0;i < d;i++){
-										window.external.printjs2(1,"Gprinter GP-1524T");
-									}
-								}else{
-									changestatus(prolist[i].roid);
-									add();
-								}
-							}else if (e == "C"){
-								if(g){
-									window.external.giveaisize(a,b,c,d,e,g,x,y,angle);
-									for(var i = 0;i < d;i++){
-										window.external.printjs2(1,"Gprinter GP-1524T");
-									}
-									add();
-								}else{
-									changestatus(id);
-								}
-							}else if (e == "E"){
-								window.external.giveaisize(a,b,c,d,e,g,x,y,angle);
-								for(var i = 0;i < d;i++){
-									window.external.printjs2(1,"Gprinter GP-1524T");
-								}
-								add();
-							}
-						}else{
-							whichgoto();
+		function search(pageNum) {
+			var myDate = new Date();
+			var text = $("#text").val();
+			var status = $("#status").val();
+			var type = $("#type").val();
+			var isexport = $("#isexport").val();
+			$.ajax({
+				url: headurl + "/OrderController/runOrderList?woid=" + woid + "&boid=" + boid + "&URL=" + myDate.getMinutes() + myDate.getSeconds(),
+				data: { text: text, status: status, type: type, pageNum: pageNum, isexport: isexport },
+				success: function (data) {
+					var data = eval('(' + data + ')');
+					if (data.success == 1) {
+						var html = template('executions', data.body);
+						document.getElementById('indexbody').innerHTML = html;
+						icheckinit();
+						if (data.body.pagelist.total > 0) {
+							var pageNavObj = null;//用于储存分页对象
+							pageNavObj = new PageNavCreate("PageNavId", { pageCount: data.body.pagelist.pages, currentPage: data.body.pagelist.pageNum, perPageNum: data.body.pagelist.pageSize });
+							pageNavObj.afterClick(search);
 						}
-							function whichgoto(){
-								if(jindunnum == i){
+					} else {
+						tipError(data.msg);
+					}
+				}
+			})
+			arr_tip_userid = [];
+		}
+		$(function () {
+			$('.link').load('../views/link.html');
+			$('.head').load('../views/header2.html');
+			var myDate = new Date();
+			$.ajax({
+				url: headurl + "/OrderController/runOrderList?woid=" + woid + "&boid=" + boid + "&URL=" + myDate.getMinutes() + myDate.getSeconds(),
+				success: function (data) {
+					var data = eval('(' + data + ')');
+					if (data.success == 1) {
+						var html = template('executions', data.body);
+						document.getElementById('indexbody').innerHTML = html;
+						icheckinit();
+						if (data.body.pagelist.total > 0) {
+							var pageNavObj = null;//用于储存分页对象
+							pageNavObj = new PageNavCreate("PageNavId", { pageCount: data.body.pagelist.pages, currentPage: data.body.pagelist.pageNum, perPageNum: data.body.pagelist.pageSize });
+							pageNavObj.afterClick(search);
+						}
+					} else {
+						tipError(data.msg);
+					}
+				}
+			})
+		})
+		function howmuchall() {
+			var type = $("#type").val();
+			if (!type) {
+				tipError('请选择一种工艺');
+				return false;
+			}
+			var myDate = new Date();
+			$.ajax({
+				url: headurl + "/OrderController/getExportCount?type=" + type + "&woid=" + woid + "&URL=" + myDate.getMinutes() + myDate.getSeconds(),
+				success: function (data) {
+					var data = eval('(' + data + ')');
+					if (data.body.count <= 0) {
+						tipError("没有可以导出的合成图");
+						return false;
+					} else {
+						confirmdelete('', 'allprouct', '有' + data.body.count + '个合成图需要导出，导出可能会花费一段时间，是否继续导出？');
+						sunnum = data.body.count;
+					}
+				}
+			})
+		}
+		function sleep(numberMillis) {
+			var now = new Date();
+			var exitTime = now.getTime() + numberMillis;
+			while (true) {
+				now = new Date();
+				if (now.getTime() > exitTime)
+					return;
+			}
+		}
+
+		//全部导出
+		function allprouct() {
+			var type = $("#type").val();
+			$('#jindu').modal('show');
+			$(".ok").html("正在导出，请稍后…");
+			$('.isover').css('display', "none");
+			$('.gotobtn').css('display', "none");
+			jindunnum = 0;
+			setTimeout(function () {
+				zgi = 0;
+				xh();
+			}, 0);
+			allpr = setTimeout(function () {
+				var myDate = new Date();
+				$.ajax({
+					url: headurl + "/OrderController/allExport?type=" + type + "&woid=" + woid + "&URL=" + myDate.getMinutes() + myDate.getSeconds(),
+					async: false,
+					success: function (data) {
+						var data = eval('(' + data + ')');
+						if (data.success == 1) {
+							var prolist = data.body.list;
+							sunnum = prolist.length;
+							successnum = prolist.length;
+							for (var i = 0; i < prolist.length; i++) {
+								if (jindunnum == i) {
 									var e = prolist[i].itemnum[0];
 									window.external.OpenForm2(prolist[i].roid);
 									var a = prolist[i].itemnum;
@@ -401,473 +346,546 @@ function allprouct(){
 									var x = 0;
 									var y = 0;
 									var angle = 0;
-									if(e != "E"){
+									var colorname = prolist[i].colorname;
+									var sizename = prolist[i].sizename;
+									var stylename = prolist[i].stylename;
+									if (e != "E") {
 										b = prolist[i].stname;
 										g = prolist[i].filepath;
 										x = prolist[i].x;
 										y = prolist[i].y;
 										angle = prolist[i].angle;
 									}
-									if(e == "A" || e == "B"){
-										if(g){
-											window.external.giveaisize(a,b,c,d,e,g,x,y,angle);
+
+									if (e == "A" || e == "B") {
+										if (g) {
+											window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizenam, stylename);
 											window.external.cexptai();
-										}else{
+											//changestatus(prolist[i].roid);
+										} else {
 											changestatus(prolist[i].roid);
 											add();
 										}
-									}else if(e == "D"){
-										if(g){
-											window.external.giveaisize(a,b,c,d,e,g,x,y,angle);
+									} else if (e == "D") {
+										if (g) {
+											window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizenam, stylename);
 											window.external.cexptyunatu();
-											for(var i = 0;i < d;i++){
-												window.external.printjs2(1,"Gprinter GP-1524T");
+											for (var i = 0; i < d; i++) {
+												window.external.printjs2(1, "Gprinter GP-1524T");
 											}
-										}else{
+										} else {
 											changestatus(prolist[i].roid);
 											add();
 										}
-									}else if (e == "C"){
-										if(g){
-											window.external.giveaisize(a,b,c,d,e,g,x,y,angle);
-											for(var i = 0;i < d;i++){
-												window.external.printjs2(1,"Gprinter GP-1524T");
+									} else if (e == "C") {
+										if (g) {
+											window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizenam, stylename);
+											for (var i = 0; i < d; i++) {
+												window.external.printjs2(1, "Gprinter GP-1524T");
 											}
 											add();
-										}else{
+										} else {
 											changestatus(id);
 										}
-										
-									}else if (e == "E"){
-										window.external.giveaisize(a,b,c,d,e,g,x,y,angle);
-										for(var i = 0;i < d;i++){
-											window.external.printjs2(1,"Gprinter GP-1524T");
+									} else if (e == "E") {
+										window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizenam, stylename);
+										for (var i = 0; i < d; i++) {
+											window.external.printjs2(1, "Gprinter GP-1524T");
 										}
 										add();
 									}
-							}else{
-								whichgoto();
+								} else {
+									whichgoto();
+								}
+								function whichgoto() {
+									if (jindunnum == i) {
+										var e = prolist[i].itemnum[0];
+										window.external.OpenForm2(prolist[i].roid);
+										var a = prolist[i].itemnum;
+										var c = prolist[i].size;
+										var d = prolist[i].num;
+										var g = '';
+										var b = '';
+										var x = 0;
+										var y = 0;
+										var angle = 0;
+										if (e != "E") {
+											b = prolist[i].stname;
+											g = prolist[i].filepath;
+											x = prolist[i].x;
+											y = prolist[i].y;
+											angle = prolist[i].angle;
+										}
+										if (e == "A" || e == "B") {
+											if (g) {
+												window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizenam, stylename);
+												window.external.cexptai();
+											} else {
+												changestatus(prolist[i].roid);
+												add();
+											}
+										} else if (e == "D") {
+											if (g) {
+												window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizenam, stylename);
+												window.external.cexptyunatu();
+												for (var i = 0; i < d; i++) {
+													window.external.printjs2(1, "Gprinter GP-1524T");
+												}
+											} else {
+												changestatus(prolist[i].roid);
+												add();
+											}
+										} else if (e == "C") {
+											if (g) {
+												window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizenam, stylename);
+												for (var i = 0; i < d; i++) {
+													window.external.printjs2(1, "Gprinter GP-1524T");
+												}
+												add();
+											} else {
+												changestatus(id);
+											}
+
+										} else if (e == "E") {
+											window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizenam, stylename);
+											for (var i = 0; i < d; i++) {
+												window.external.printjs2(1, "Gprinter GP-1524T");
+											}
+											add();
+										}
+									} else {
+										whichgoto();
+									}
+								}
 							}
+						} else {
+							tipError(data.msg);
 						}
 					}
-			}else {
-					tipError(data.msg);
+				})
+			}, 1000);
+		}
+		//判断是否有已导出
+		function isexporteds() {
+			var myDate = new Date();
+			for (var i = 0; i < arr_tip_userid.length; i++) {
+				if (i == 0) {
+					var roidstr = "?roids=" + arr_tip_userid[i];
+				} else {
+					roidstr += "&roids=" + arr_tip_userid[i];
 				}
 			}
-		})
-	},  1000) ;
-}
-//判断是否有已导出
-function isexporteds(){
-	var myDate = new Date();
-	for(var i = 0;i<arr_tip_userid.length;i++){
-		if(i==0){
-			var roidstr = "?roids="+arr_tip_userid[i];
-		}else{
-			roidstr += "&roids="+arr_tip_userid[i];
-		}
-	}
-	$.ajax({
-		url:headurl+"/OrderController/judgeExport"+roidstr+"&URL="+myDate.getMinutes()+myDate.getSeconds(),
-		type:"post",
-		success:function(data){
-			var data = eval('(' + data + ')');
-			if(data.success==1){
-				exporicodes(arr_tip_userid);
-			}else{
-				confirmdelete(arr_tip_userid,'exporicodes',data.msg+",是否强制导出");
-			}
-		}
-	})
-}
-//导出多个标识
-function exporicodes(roids){
-	$("#confirmdelete").modal('hide');
-	var myDate = new Date();
-	successnum =roids.length;
-	errornum = 0;
-	for(var i = 0;i<roids.length;i++){
-		window.external.OpenForm2(roids[i]);
-		$.ajax({
-			url:headurl+"/OrderController/runOrderdetail?roid="+roids[i]+"&URL="+myDate.getMinutes()+myDate.getSeconds(),
-			async:false,
-			success:function(data){
-				var data = eval('(' + data + ')');
-				if(data.success==1){
-					var e = data.body.itemnum[0];
-					var a = data.body.itemnum;
-					var c = data.body.size;
-					var d = data.body.num;
-					var g = '';
-					var b = "";
-					var x = 0;
-					var y = 0;
-					var angle = 0;
-					if(e != "E"){
-						b = data.body.stname;
-						g = data.body.filepath;
-						x = data.body.x;
-						y = data.body.y;
-						angle = data.body.angle;
+			$.ajax({
+				url: headurl + "/OrderController/judgeExport" + roidstr + "&URL=" + myDate.getMinutes() + myDate.getSeconds(),
+				type: "post",
+				success: function (data) {
+					var data = eval('(' + data + ')');
+					if (data.success == 1) {
+						exporicodes(arr_tip_userid);
+					} else {
+						confirmdelete(arr_tip_userid, 'exporicodes', data.msg + ",是否强制导出");
 					}
-					if(e == "A" || e == "B"){
-						if(g){
-							window.external.giveaisize(a,b,c,d,e,g,x,y,angle);
-							window.external.cexptai();
-						}else{
-							changestatus(roids[i]);
-						}
-					}else if(e == "D"){
-						if(g){
-							window.external.giveaisize(a,b,c,d,e,g,x,y,angle);
-							window.external.cexptyunatu();
-							for(var i = 0;i < d;i++){
-								window.external.printjs2(1,"Gprinter GP-1524T");
-							}
-						}else{
-							changestatus(roids[i]);
-						}
-					}else if (e == "C"){
-						if(g){
-							window.external.giveaisize(a,b,c,d,e,g,x,y,angle);
-							for(var i = 0;i < d;i++){
-								window.external.printjs2(1,"Gprinter GP-1524T");
-							}
-						}else{
-							changestatus(id);
-						}
-					}else if (e == "E"){
-						window.external.giveaisize(a,b,c,d,e,g,x,y,angle);
-						for(var i = 0;i < d;i++){
-							window.external.printjs2(1,"Gprinter GP-1524T");
-						}
-					}
-				}else {
-						tipError(data.msg);
-					}
-			}
-		})
-	}
-	gotowhile();
-	// if((successnum+errornum) == roids.length){
-	// 	tipSuccess("已成功导出"+successnum+"个合成图，失败了"+errornum+"个合成图","search");
-	// }
-}
-//判断是否有已导出
-function isexported(roid){
-	var myDate = new Date();
-	$.ajax({
-		url:headurl+"/OrderController/judgeExport?roids="+roid+"&URL="+myDate.getMinutes()+myDate.getSeconds(),
-		type:"post",
-		success:function(data){
-			var data = eval('(' + data + ')');
-			if(data.success==1){
-				exporicode(roid);
-			}else{
-				confirmdelete(roid,'exporicode',data.msg+",是否强制导出");
-			}
-		}
-	})
-}
-//导出标识
-function exporicode(id){
-	var myDate = new Date();
-	window.external.OpenForm2(id);
-	successnum =1;
-	errornum = 0;
-		$.ajax({
-			url:headurl+"/OrderController/runOrderdetail?roid="+id+"&URL="+myDate.getMinutes()+myDate.getSeconds(),
-			async:false,
-			success:function(data){
-				var data = eval('(' + data + ')');
-				if(data.success==1){
-					var e = data.body.itemnum[0];
-					var a = data.body.itemnum;
-					var c = data.body.size;
-					var d = data.body.num;
-					var g = '';
-					var b = '';
-					var x = 0;
-					var y = 0;
-					var angle = 0;
-					if(e != "E"){
-						b = data.body.stname;
-						g = data.body.filepath;
-						x = data.body.x;
-						y = data.body.y;
-						angle = data.body.angle;
-					}
-					if(e == "A" || e == "B"){
-						if(g){
-							window.external.giveaisize(a,b,c,d,e,g,x,y,angle);
-							window.external.cexptai();
-						}else{
-							changestatus(id);
-						}
-					}else if(e == "D"){
-						if(g){
-							window.external.giveaisize(a,b,c,d,e,g,x,y,angle);
-							window.external.cexptyunatu();
-							for(var i = 0;i < d;i++){
-								window.external.printjs2(1,"Gprinter GP-1524T");
-							}
-						}else{
-							changestatus(id);
-						}
-					}else if (e == "C"){
-						if(g){
-							window.external.giveaisize(a,b,c,d,e,g,x,y,angle);
-							for(var i = 0;i < d;i++){
-								window.external.printjs2(1,"Gprinter GP-1524T");
-							}
-						}else{
-							changestatus(id);
-						}
-					}else if (e == "E"){
-						window.external.giveaisize(a,b,c,d,e,g,x,y,angle);
-						for(var i = 0;i < d;i++){
-							window.external.printjs2(1,"Gprinter GP-1524T");
-						}
-					}
-				}else {
-						tipError(data.msg);
-					}
-			}
-		})
-		gotowhile();
-}
-//改变状态
-function changestatus(id){
-	$.ajax({
-		url:headurl+"/OrderController/changeRunOrderStatus",
-		type:'post',
-		async:false,
-		data:{roid:id},
-		success:function(data){
-			successnum = successnum - 1;
-			errornum = errornum + 1;
-		}
-	})
-}
-//停产执行单
-function stoponeex(roid){
-	var myDate = new Date();
-	$.ajax({
-		url:headurl+"/OrderController/runOrderdetail?roid="+roid+"&URL="+myDate.getMinutes()+myDate.getSeconds(),
-		success:function(data){
-			var data = eval('(' + data + ')');
-			if(data.success==1){
-			var html = template('stopmodalmin',data.body);
-			document.getElementById('stopmodal').innerHTML = html;
-			icheckinit()
-			$('#stopmodal').modal('show');
-			}else {
-					tipError(data.msg);
-				}
-		}
-	})
-}
-//确定停产
-function stopclick(roid){
-	var num = $('#stopmodal').find('.modalnum').html();
-	var minnum = $('#stopmodal').find('.stopnuminput').val();
-	if(minnum - num > 0 || minnum <= 0){
-		$('.errorttp').css('display','block');
-		return false;
-	}
-	$('#stopmodal').modal('hide');
-	$.ajax({
-		url:headurl+"/OrderController/stopRunOrder?roid="+roid,
-		data:{num:minnum},
-		type:'post',
-		success:function(data){
-			var data = eval('(' + data + ')');
-			if(data.success==1){
-				tipSuccess('停产成功','search');
-			}else {
-					tipError(data.msg);
-				}
-		}
-	})
-}
-//改变数字
-function changenum(){
-	var num = $('#stopmodal').find('.modalnum').html();
-	var minnum = $('#stopmodal').find('.stopnuminput').val();
-	if(minnum - num > 0 || minnum <= 0){
-		$('.errorttp').css('display','block');
-	}else{
-		$('.errorttp').css('display','none');
-		$('#stopmodal').find('.modalleftnum').html(num-minnum);
-	}
-}
-//隐藏大图
-$('.hiddenimg').click(function(){
-	$('#imgshow').modal('hide');
-})
-//显示大图
-function toshowbig(_this){
-	var imgurl = $(_this).find('.maximgurl').val();
-	$('#imgshow').find('.maximg').attr('src',imgurl);
-	$('#imgshow').modal('show');
-}
-//初始化选择框
-function icheckinit(){
-	arr_tip_userid=[];
-	$('.form-checkbox input').iCheck({
-		checkboxClass: 'icheckbox_square-blue',
-		increaseArea: '20%'
-	});
-	 /*全选  取消全选*/
-	 var flagChecked=false;
-    var checkboxnum=$('.tablediv .form-checkbox').size()-1;
-    $('.tablediv .form-checkbox').on('ifChecked',function(e){
-        if($(this).hasClass('checkbox-all')){
-			$('.tablediv .form-checkbox').iCheck('check');
-			arr_tip_userid=[];
-			flagChecked=true;
-			$('.tablediv .form-checkbox').each(function(i){
-				if(i!=0){
-					arr_tip_userid.push($(this).find('input').val());
 				}
 			})
-        }else{
-        	if(checkboxnum==$('.tablediv input[name="square-checkbox"]:checked').size()){
-				arr_tip_userid=[];
-				$('.tablediv .form-checkbox').iCheck('check');
-			}else{
-				var input = $(this).find('input');
-				var val = input.val();
-				arr_tip_userid.push(val);
+		}
+		//导出多个标识
+		function exporicodes(roids) {
+			$("#confirmdelete").modal('hide');
+			var myDate = new Date();
+			successnum = roids.length;
+			errornum = 0;
+			for (var i = 0; i < roids.length; i++) {
+				window.external.OpenForm2(roids[i]);
+				$.ajax({
+					url: headurl + "/OrderController/runOrderdetail?roid=" + roids[i] + "&URL=" + myDate.getMinutes() + myDate.getSeconds(),
+					async: false,
+					success: function (data) {
+						var data = eval('(' + data + ')');
+						if (data.success == 1) {
+							var e = data.body.itemnum[0];
+							var a = data.body.itemnum;
+							var c = data.body.size;
+							var d = data.body.num;
+							var g = '';
+							var b = "";
+							var x = 0;
+							var y = 0;
+							var angle = 0;
+							var colorname = data.body.colorname;
+							var sizename = data.body.sizename;
+							var stylename = data.body.stylename;
+							if (e != "E") {
+								b = data.body.stname;
+								g = data.body.filepath;
+								x = data.body.x;
+								y = data.body.y;
+								angle = data.body.angle;
+							}
+							if (e == "A" || e == "B") {
+								if (g) {
+									window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizenam, stylename);
+									window.external.cexptai();
+								} else {
+									changestatus(roids[i]);
+								}
+							} else if (e == "D") {
+								if (g) {
+									window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizenam, stylename);
+									window.external.cexptyunatu();
+									for (var i = 0; i < d; i++) {
+										window.external.printjs2(1, "Gprinter GP-1524T");
+									}
+								} else {
+									changestatus(roids[i]);
+								}
+							} else if (e == "C") {
+								if (g) {
+									window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizenam, stylename);
+									for (var i = 0; i < d; i++) {
+										window.external.printjs2(1, "Gprinter GP-1524T");
+									}
+								} else {
+									changestatus(id);
+								}
+							} else if (e == "E") {
+								window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizenam, stylename);
+								for (var i = 0; i < d; i++) {
+									window.external.printjs2(1, "Gprinter GP-1524T");
+								}
+							}
+						} else {
+							tipError(data.msg);
+						}
+					}
+				})
+			}
+			gotowhile();
+			// if((successnum+errornum) == roids.length){
+			// 	tipSuccess("已成功导出"+successnum+"个合成图，失败了"+errornum+"个合成图","search");
+			// }
+		}
+		//判断是否有已导出
+		function isexported(roid) {
+			var myDate = new Date();
+			$.ajax({
+				url: headurl + "/OrderController/judgeExport?roids=" + roid + "&URL=" + myDate.getMinutes() + myDate.getSeconds(),
+				type: "post",
+				success: function (data) {
+					var data = eval('(' + data + ')');
+					if (data.success == 1) {
+						exporicode(roid);
+					} else {
+						confirmdelete(roid, 'exporicode', data.msg + ",是否强制导出");
+					}
+				}
+			})
+		}
+		//导出标识
+		function exporicode(id) {
+			var myDate = new Date();
+			window.external.OpenForm2(id);
+			successnum = 1;
+			errornum = 0;
+			$.ajax({
+				url: headurl + "/OrderController/runOrderdetail?roid=" + id + "&URL=" + myDate.getMinutes() + myDate.getSeconds(),
+				async: false,
+				success: function (data) {
+					var data = eval('(' + data + ')');
+					if (data.success == 1) {
+						var e = data.body.itemnum[0];
+						var a = data.body.itemnum;
+						var c = data.body.size;
+						var d = data.body.num;
+						var g = '';
+						var b = '';
+						var x = 0;
+						var y = 0;
+						var angle = 0;
+						var colorname = data.body.colorname;
+						var sizename = data.body.sizename;
+						var stylename = data.body.stylename;
+						if (e != "E") {
+							b = data.body.stname;
+							g = data.body.filepath;
+							x = data.body.x;
+							y = data.body.y;
+							angle = data.body.angle;
+						}
+						if (e == "A" || e == "B") {
+							if (g) {
+								window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizenam, stylename);
+								window.external.cexptai();
+							} else {
+								changestatus(id);
+							}
+						} else if (e == "D") {
+							if (g) {
+								window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizenam, stylename);
+								window.external.cexptyunatu();
+								for (var i = 0; i < d; i++) {
+									window.external.printjs2(1, "Gprinter GP-1524T");
+								}
+							} else {
+								changestatus(id);
+							}
+						} else if (e == "C") {
+							if (g) {
+								window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizenam, stylename);
+								for (var i = 0; i < d; i++) {
+									window.external.printjs2(1, "Gprinter GP-1524T");
+								}
+							} else {
+								changestatus(id);
+							}
+						} else if (e == "E") {
+							window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizenam, stylename);
+							for (var i = 0; i < d; i++) {
+								window.external.printjs2(1, "Gprinter GP-1524T");
+							}
+						}
+					} else {
+						tipError(data.msg);
+					}
+				}
+			})
+			gotowhile();
+		}
+		//改变状态
+		function changestatus(id) {
+			$.ajax({
+				url: headurl + "/OrderController/changeRunOrderStatus",
+				type: 'post',
+				async: false,
+				data: { roid: id },
+				success: function (data) {
+					successnum = successnum - 1;
+					errornum = errornum + 1;
+				}
+			})
+		}
+		//停产执行单
+		function stoponeex(roid) {
+			var myDate = new Date();
+			$.ajax({
+				url: headurl + "/OrderController/runOrderdetail?roid=" + roid + "&URL=" + myDate.getMinutes() + myDate.getSeconds(),
+				success: function (data) {
+					var data = eval('(' + data + ')');
+					if (data.success == 1) {
+						var html = template('stopmodalmin', data.body);
+						document.getElementById('stopmodal').innerHTML = html;
+						icheckinit()
+						$('#stopmodal').modal('show');
+					} else {
+						tipError(data.msg);
+					}
+				}
+			})
+		}
+		//确定停产
+		function stopclick(roid) {
+			var num = $('#stopmodal').find('.modalnum').html();
+			var minnum = $('#stopmodal').find('.stopnuminput').val();
+			if (minnum - num > 0 || minnum <= 0) {
+				$('.errorttp').css('display', 'block');
+				return false;
+			}
+			$('#stopmodal').modal('hide');
+			$.ajax({
+				url: headurl + "/OrderController/stopRunOrder?roid=" + roid,
+				data: { num: minnum },
+				type: 'post',
+				success: function (data) {
+					var data = eval('(' + data + ')');
+					if (data.success == 1) {
+						tipSuccess('停产成功', 'search');
+					} else {
+						tipError(data.msg);
+					}
+				}
+			})
+		}
+		//改变数字
+		function changenum() {
+			var num = $('#stopmodal').find('.modalnum').html();
+			var minnum = $('#stopmodal').find('.stopnuminput').val();
+			if (minnum - num > 0 || minnum <= 0) {
+				$('.errorttp').css('display', 'block');
+			} else {
+				$('.errorttp').css('display', 'none');
+				$('#stopmodal').find('.modalleftnum').html(num - minnum);
 			}
 		}
-    });
-    $('.tablediv .form-checkbox').on('ifUnchecked',function(e){
-    	if($(this).hasClass('checkbox-all')&&flagChecked){
-			$('.tablediv .form-checkbox').not('.checkbox-all').iCheck('uncheck');
-			flagChecked=false;
-			arr_tip_userid=[];
-    	}else{
-			flagChecked=false;
-			var input = $(this).find('input');
-	    	var val = input.val();
-	    	for (var i=0;i<arr_tip_userid.length;i++) {
-	    		if (arr_tip_userid[i] == val) {
-					arr_tip_userid.remove(val);
-	    			break;
-	    		}
-	    	}
-			$('.checkbox-all').iCheck('uncheck');
+		//隐藏大图
+		$('.hiddenimg').click(function () {
+			$('#imgshow').modal('hide');
+		})
+		//显示大图
+		function toshowbig(_this) {
+			var imgurl = $(_this).find('.maximgurl').val();
+			$('#imgshow').find('.maximg').attr('src', imgurl);
+			$('#imgshow').modal('show');
 		}
-    });
-	var tid = 0;
-	$( "tr" ).hover( function() {
-		var _this = this;
-	   tid = setTimeout( function() {
-		   $(_this).find('.exename').css('display','block');
-	    }, 2000 );
-	}, function() {
-		$(this).find('.exename').css('display','none');
-	    clearTimeout( tid );//当在1秒内退出了hover事件就取消计时代码
-	} );
-	$('.tablediv td').hover(function(){
-		$(this).parents('tr').find('td').css('background',' #E7F3FC');
-	},function(){
-		$(this).parents('tr').find('td').css('background',' #FFF')
-	});
-	$('.allover').on('ifChecked',function(e){
-			$('.allover').iCheck('check');
-			var num = $('#stopmodal').find('.modalnum').html();
-			$('#stopmodal').find('.stopnuminput').val(num);
-			changenum();
-	});
-	$('#text').bind('keypress',function(event){
-            if(event.keyCode == "13")    
-            {
-                search();
-            }
-        });
-} 
-//打印标识
-function oneprinte(roid){
-	var myDate = new Date();
-	window.external.OpenForm(roid);
-	$.ajax({
-		url:headurl+"/OrderController/runOrderdetail?roid="+roid+"&URL="+myDate.getMinutes()+myDate.getSeconds(),
-		success:function(data){
-			var data = eval('(' + data + ')');
-			if(data.success==1){
-				var e = data.body.itemnum[0];
-				var a = data.body.itemnum;
-				var b = data.body.stname;
-				var c = data.body.size;
-				var d = data.body.num;
-				window.external.givesize(a,b,c,d,e);
-				window.external.printjs(1,"Gprinter GP-1524T");
-				search();
-			}else {
-					tipError(data.msg);
+		//初始化选择框
+		function icheckinit() {
+			arr_tip_userid = [];
+			$('.form-checkbox input').iCheck({
+				checkboxClass: 'icheckbox_square-blue',
+				increaseArea: '20%'
+			});
+			/*全选  取消全选*/
+			var flagChecked = false;
+			var checkboxnum = $('.tablediv .form-checkbox').size() - 1;
+			$('.tablediv .form-checkbox').on('ifChecked', function (e) {
+				if ($(this).hasClass('checkbox-all')) {
+					$('.tablediv .form-checkbox').iCheck('check');
+					arr_tip_userid = [];
+					flagChecked = true;
+					$('.tablediv .form-checkbox').each(function (i) {
+						if (i != 0) {
+							arr_tip_userid.push($(this).find('input').val());
+						}
+					})
+				} else {
+					if (checkboxnum == $('.tablediv input[name="square-checkbox"]:checked').size()) {
+						arr_tip_userid = [];
+						$('.tablediv .form-checkbox').iCheck('check');
+					} else {
+						var input = $(this).find('input');
+						var val = input.val();
+						arr_tip_userid.push(val);
+					}
 				}
+			});
+			$('.tablediv .form-checkbox').on('ifUnchecked', function (e) {
+				if ($(this).hasClass('checkbox-all') && flagChecked) {
+					$('.tablediv .form-checkbox').not('.checkbox-all').iCheck('uncheck');
+					flagChecked = false;
+					arr_tip_userid = [];
+				} else {
+					flagChecked = false;
+					var input = $(this).find('input');
+					var val = input.val();
+					for (var i = 0; i < arr_tip_userid.length; i++) {
+						if (arr_tip_userid[i] == val) {
+							arr_tip_userid.remove(val);
+							break;
+						}
+					}
+					$('.checkbox-all').iCheck('uncheck');
+				}
+			});
+			var tid = 0;
+			$("tr").hover(function () {
+				var _this = this;
+				tid = setTimeout(function () {
+					$(_this).find('.exename').css('display', 'block');
+				}, 2000);
+			}, function () {
+				$(this).find('.exename').css('display', 'none');
+				clearTimeout(tid);//当在1秒内退出了hover事件就取消计时代码
+			});
+			$('.tablediv td').hover(function () {
+				$(this).parents('tr').find('td').css('background', ' #E7F3FC');
+			}, function () {
+				$(this).parents('tr').find('td').css('background', ' #FFF')
+			});
+			$('.allover').on('ifChecked', function (e) {
+				$('.allover').iCheck('check');
+				var num = $('#stopmodal').find('.modalnum').html();
+				$('#stopmodal').find('.stopnuminput').val(num);
+				changenum();
+			});
+			$('#text').bind('keypress', function (event) {
+				if (event.keyCode == "13") {
+					search();
+				}
+			});
 		}
-	})
-}
-	//$('#jindu').modal('show');
-	var zgi=0;
-	var jindunnum = 0;
-	var sunnum = 100;
-    /*add——创建tbx下的div加文字和变宽度的方法*/
-    function add(){
-		jindunnum ++;
-		//$(".tiao").css("width",parseInt(jindunnum/sunnum*100)+"%");
-		//$(".tiao").html(parseInt(jindunnum/sunnum*100)+"%")
-		if(zgi == sunnum){
-		if(jindunnum >= sunnum){
-			$(".tiao").css("width",parseInt(jindunnum/sunnum*100)+"%");
-			$(".tiao").html(parseInt(jindunnum/sunnum*100)+"%");
-			errornums = sunnum -successnum;
-			$('.isover').html("已成功导出"+successnum+"个合成图，失败了"+errornums+"个合成图");
-			$('.isover').css('display',"block");
-			$('.gotobtn').css('display',"block");
-			$(".ok").html("加载完成");
-			return;
+		//打印标识
+		function oneprinte(roid) {
+			var myDate = new Date();
+			window.external.OpenForm(roid);
+			$.ajax({
+				url: headurl + "/OrderController/runOrderdetail?roid=" + roid + "&URL=" + myDate.getMinutes() + myDate.getSeconds(),
+				success: function (data) {
+					var data = eval('(' + data + ')');
+					if (data.success == 1) {
+						var e = data.body.itemnum[0];
+						var a = data.body.itemnum;
+						var b = data.body.stname;
+						var c = data.body.size;
+						var d = data.body.num;
+
+						var colorname = data.body.colorname;
+						var sizename = data.body.sizename;
+						var stylename = data.body.stylename;
+						window.external.givesize(a, b, c, d, e, colorname, sizename, stylename);
+						window.external.printjs(1, "Gprinter GP-1524T");
+						search();
+					} else {
+						tipError(data.msg);
+					}
+				}
+			})
 		}
-	}
-	}
-	function zdadd(zgi){
-	var tiao =$(".tiao");
-	if(zgi == sunnum){
-		var xy= parseInt(Math.random()*10+90);
-		tiao.css("width",xy+"%").html(xy+"%");
-	}else{
-		tiao.css("width",parseInt(zgi/sunnum*100)+"%").html(parseInt(zgi/sunnum*100)+"%");
-	}
-	
-}
-	function xh(){
-	if(zgi > sunnum){
-		$(".tiao").css("width",parseInt(jindunnum/sunnum*100)+"%");
-			$(".tiao").html(parseInt(jindunnum/sunnum*100)+"%");
-			errornums = sunnum -successnum;
-			$('.isover').html("已成功导出"+successnum+"个合成图，失败了"+errornums+"个合成图");
-			$('.isover').css('display',"block");
-			$('.gotobtn').css('display',"block");
-			$(".ok").html("加载完成");
-			return;
+		//$('#jindu').modal('show');
+		var zgi = 0;
+		var jindunnum = 0;
+		var sunnum = 100;
+		/*add——创建tbx下的div加文字和变宽度的方法*/
+		function add() {
+			jindunnum++;
+			//$(".tiao").css("width",parseInt(jindunnum/sunnum*100)+"%");
+			//$(".tiao").html(parseInt(jindunnum/sunnum*100)+"%")
+			if (zgi == sunnum) {
+				if (jindunnum >= sunnum) {
+					$(".tiao").css("width", parseInt(jindunnum / sunnum * 100) + "%");
+					$(".tiao").html(parseInt(jindunnum / sunnum * 100) + "%");
+					errornums = sunnum - successnum;
+					$('.isover').html("已成功导出" + successnum + "个合成图，失败了" + errornums + "个合成图");
+					$('.isover').css('display', "block");
+					$('.gotobtn').css('display', "block");
+					$(".ok").html("加载完成");
+					return;
+				}
+			}
 		}
-	if(zgi <= sunnum){
-		setTimeout("xh()",500)
-		zdadd(zgi);
-		zgi++;
+		function zdadd(zgi) {
+			var tiao = $(".tiao");
+			if (zgi == sunnum) {
+				var xy = parseInt(Math.random() * 10 + 90);
+				tiao.css("width", xy + "%").html(xy + "%");
+			} else {
+				tiao.css("width", parseInt(zgi / sunnum * 100) + "%").html(parseInt(zgi / sunnum * 100) + "%");
+			}
+
 		}
-}
-	function gotowhile(){
-		$('#jindu').modal('hide');
-		window.external.overstring();
-		confirmdelete("","search","已成功导出"+successnum+"个合成图，失败了"+errornum+"个合成图");
-	}
+		function xh() {
+			if (zgi > sunnum) {
+				$(".tiao").css("width", parseInt(jindunnum / sunnum * 100) + "%");
+				$(".tiao").html(parseInt(jindunnum / sunnum * 100) + "%");
+				errornums = sunnum - successnum;
+				$('.isover').html("已成功导出" + successnum + "个合成图，失败了" + errornums + "个合成图");
+				$('.isover').css('display', "block");
+				$('.gotobtn').css('display', "block");
+				$(".ok").html("加载完成");
+				return;
+			}
+			if (zgi <= sunnum) {
+				setTimeout("xh()", 500)
+				zdadd(zgi);
+				zgi++;
+			}
+		}
+		function gotowhile() {
+			$('#jindu').modal('hide');
+			window.external.overstring();
+			confirmdelete("", "search", "已成功导出" + successnum + "个合成图，失败了" + errornum + "个合成图");
+		}
 // $("#confirmdelete").bind('hide.bs.modal',function(){
 //   $(".modal-backdrop").remove();
 //  })
-</script>
+	</script>
 </body>
+
 </html>

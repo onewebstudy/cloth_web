@@ -2,7 +2,7 @@
 	<span class="comeback" onclick="comeback()"><img src="../build/img/back.png">返回</span>
 	<div class="centername">温州赫斯服装生产库存管理系统</div>
 	<div class="mainmenu" onclick="showmenu()">
-		<span class="toshow" >菜单<img src="../build/img/blue_unfold.png"></span>
+		<span class="toshow">菜单<img src="../build/img/blue_unfold.png"></span>
 		<ul class="mainul">
 			<li><a href="../views/index.html">首页</a></li>
 			<!-- <li><a href="../views/newwork.html">创建工单</a></li> -->
@@ -10,7 +10,7 @@
 		</ul>
 	</div>
 	<div class="scstatus" id="scstatus">
-		
+
 	</div>
 	<script id="headrst" type="text/html">
 	<span class="scgreen"></span>
@@ -27,172 +27,175 @@
 	</script>
 </div>
 <script>
-//扫码枪状态
-var Scavestaus=0;
-$(function(){
-	getheard();
-})
-function printas(){
-	window.external.OpenForm("31");
-	window.external.givesize("A小猪长袖","小猪配企","XXL","1",'1','22');
-	window.external.islood("Gprinter GP-1524T");
-	window.external.printjs(1,"Gprinter GP-1524T");
-}
-function comeback() {
-	window.history.go(-1);
-}
-function getheard(){
-	var myDate = new Date();
-	$.ajax({
-		url:headurl+"/userController/gettamp?URL="+myDate.getMinutes()+myDate.getSeconds(),
-		success:function(data){
-			var data1={status:data};
-			Scavestaus = data;
-			var html = template('headrst',data1);
-			document.getElementById('scstatus').innerHTML = html;
-		}
+	//扫码枪状态
+	var Scavestaus = 0;
+	$(function () {
+		getheard();
 	})
-}
-function showmenu(){
-	 $('.mainul').css('display','block');
- }
- function scalabel(id){
-	// window.external.OpenForm("31");
-	// window.external.givesize("A小猪长袖","小猪配企","XXL","1",'1','22');
-	// window.external.islood("Gprinter GP-1524T");
-	// window.external.printjs(1,"Gprinter GP-1524T");
-	var myDate = new Date();
+	function printas() {
+		window.external.OpenForm("31");
+		window.external.givesize("A小猪长袖", "小猪配企", "XXL", "1", '1', '22','43','34');
+		window.external.islood("Gprinter GP-1524T");
+		window.external.printjs(1, "Gprinter GP-1524T");
+	}
+	function comeback() {
+		window.history.go(-1);
+	}
+	function getheard() {
+		var myDate = new Date();
+		$.ajax({
+			url: headurl + "/userController/gettamp?URL=" + myDate.getMinutes() + myDate.getSeconds(),
+			success: function (data) {
+				var data1 = { status: data };
+				Scavestaus = data;
+				var html = template('headrst', data1);
+				document.getElementById('scstatus').innerHTML = html;
+			}
+		})
+	}
+	function showmenu() {
+		$('.mainul').css('display', 'block');
+	}
+	function scalabel(id) {
+		// window.external.OpenForm("31");
+		// window.external.givesize("A小猪长袖","小猪配企","XXL","1",'1','22');
+		// window.external.islood("Gprinter GP-1524T");
+		// window.external.printjs(1,"Gprinter GP-1524T");
+		var myDate = new Date();
 		window.external.OpenForm(id);
 		//$('#sweepcode').modal('hide');
 		//$('#sortcode').modal('hide');
-		if(Scavestaus == 1){
-				$.ajax({
-				url:headurl+"/OrderController/labelproduct?roid="+id+"&URL="+myDate.getMinutes()+myDate.getSeconds(),
-				success:function(data){
+		if (Scavestaus == 1) {
+			$.ajax({
+				url: headurl + "/OrderController/labelproduct?roid=" + id + "&URL=" + myDate.getMinutes() + myDate.getSeconds(),
+				success: function (data) {
 					var data = eval('(' + data + ')');
-					if(data.success==1){
+					if (data.success == 1) {
 						showlabel(id);
 						$.ajax({
-							url:headurl+"/OrderController/runOrderdetail?roid="+id+"&URL="+myDate.getMinutes()+myDate.getSeconds(),
-							success:function(data){
+							url: headurl + "/OrderController/runOrderdetail?roid=" + id + "&URL=" + myDate.getMinutes() + myDate.getSeconds(),
+							success: function (data) {
 								var data = eval('(' + data + ')');
-								if(data.success==1){
+								if (data.success == 1) {
 									var e = data.body.itemnum[0];
 									var a = data.body.itemnum;
 									var b = data.body.stname;
 									var c = data.body.size;
 									var d = data.body.num;
-									window.external.givesize(a,b,c,d,e);
-									window.external.printjs(1,"Gprinter GP-1524T");
-								}else {
-										tipError1(data.msg);
-									}
+									var colorname = data.body.colorname;
+									var sizename = data.body.sizename;
+									var stylename = data.body.stylename;
+									window.external.givesize(a, b, c, d, e, colorname, sizename, stylename);
+									window.external.printjs(1, "Gprinter GP-1524T");
+								} else {
+									tipError1(data.msg);
+								}
 							}
 						})
-					}else{
+					} else {
 						tipError1(data.msg);
 					}
 				}
 			})
-			
-		}else if(Scavestaus == 2){
+
+		} else if (Scavestaus == 2) {
 			$.ajax({
-				url:headurl+"/OrderController/pickproduct?roid="+id+"&Warehouse_no=wdt-wh2"+"&URL="+myDate.getMinutes()+myDate.getSeconds(),
-				success:function(data){
+				url: headurl + "/OrderController/pickproduct?roid=" + id + "&Warehouse_no=wdt-wh2" + "&URL=" + myDate.getMinutes() + myDate.getSeconds(),
+				success: function (data) {
 					var data = eval('(' + data + ')');
-					if(data.success==1){
+					if (data.success == 1) {
 						showpick(id);
-					}else{
+					} else {
 						tipError1(data.msg);
 					}
-					
+
 				}
 			})
 		}
-		else if(Scavestaus == 3){
+		else if (Scavestaus == 3) {
 			$.ajax({
-				url:headurl+"/OrderController/runOrderdetail?roid="+id+"&URL="+myDate.getMinutes()+myDate.getSeconds(),
-				success:function(data){
+				url: headurl + "/OrderController/runOrderdetail?roid=" + id + "&URL=" + myDate.getMinutes() + myDate.getSeconds(),
+				success: function (data) {
 					var data = eval('(' + data + ')');
-					if(data.success==1){
+					if (data.success == 1) {
 						var filepath = data.body.filepath;
 						var num = data.body.num;
-						window.external.cprintv(filepath,num);
-					}else {
-							tipError1(data.msg);
-						}
+						window.external.cprintv(filepath, num);
+					} else {
+						tipError1(data.msg);
+					}
 				}
 			})
 		}
-		else if(Scavestaus == 0){
+		else if (Scavestaus == 0) {
 			tipError1('扫码枪处于空闲状态');
 		}
- }
- //改变扫码枪状态，从而改变打印机
- function Printerch(type){
-	$.ajax({
-		url:headurl+"/userController/savetamp?status="+type,
-		type:'post',
-		success:function(data){
-			getheard();
-		}
-	})
- }
- //显示扫码贴标的界面
- function showlabel(id){
-	var myDate = new Date();
-	$.ajax({
-		url:headurl+"/OrderController/buyOrderdetail?roid="+id+"&URL="+myDate.getMinutes()+myDate.getSeconds(),
-		success:function(data){
-			var data = eval('(' + data + ')');
-			var html = template('labelsmodal',data.body);
-			document.getElementById('sweepcode').innerHTML = html;
-			$('#sweepcode').modal('show');
-		}
-	})
- }
- //显示扫码分拣的界面
- function showpick(id){
-	var myDate = new Date();
-	$.ajax({
-		url:headurl+"/OrderController/buyOrderdetail?roid="+id+"&URL="+myDate.getMinutes()+myDate.getSeconds(),
-		success:function(data){
-			var data = eval('(' + data + ')');
-			var html = template('pickmodal',data.body);
-			document.getElementById('sortcode').innerHTML = html;
-			$('#sortcode').modal('show');
-			// if(data.body.workstaus == 3){
-			// 	var boid = data.body.boid;
-			// 	gotoprint(boid);
-			// }
-		}
-	})
- }
- //打印页面
- function gotoprint(boid){
-	window.open('../views/printer.html?boid='+boid);
-}
-//处理键盘事件 禁止后退键（Backspace）密码或单行、多行文本框除外       
-function forbidBackSpace(e) {            
-    var ev = e || window.event; //获取event对象          
-  var obj = ev.target || ev.srcElement; //获取事件源             
-  var t = obj.type || obj.getAttribute('type'); 
-  //获取事件源类型            
-  //获取作为判断条件的事件类型          
-  var vReadOnly = obj.readOnly;            
-  var vDisabled = obj.disabled;            
-  //处理undefined值情况            
-  vReadOnly = (vReadOnly == undefined) ? false : vReadOnly;          
-  vDisabled = (vDisabled == undefined) ? true : vDisabled;            
-  //当敲Backspace键时，事件源类型为密码或单行、多行文本的，             
-  //并且readOnly属性为true或disabled属性为true的，则退格键失效            
-  var flag1 = ev.keyCode == 8 && (t == "password" || t == "text" || t == "textarea") && (vReadOnly == true || vDisabled == true);            
-  //当敲Backspace键时，事件源类型非密码或单行、多行文本的，则退格键失效           
-  var flag2 = ev.keyCode == 8 && t != "password" && t != "text" && t != "textarea";           
-  //判断           
-  if (flag2 || flag1) return false;      
-  }              
-//禁止后退键  作用于IE、Chrome       
-document.onkeydown = forbidBackSpace; 
+	}
+	//改变扫码枪状态，从而改变打印机
+	function Printerch(type) {
+		$.ajax({
+			url: headurl + "/userController/savetamp?status=" + type,
+			type: 'post',
+			success: function (data) {
+				getheard();
+			}
+		})
+	}
+	//显示扫码贴标的界面
+	function showlabel(id) {
+		var myDate = new Date();
+		$.ajax({
+			url: headurl + "/OrderController/buyOrderdetail?roid=" + id + "&URL=" + myDate.getMinutes() + myDate.getSeconds(),
+			success: function (data) {
+				var data = eval('(' + data + ')');
+				var html = template('labelsmodal', data.body);
+				document.getElementById('sweepcode').innerHTML = html;
+				$('#sweepcode').modal('show');
+			}
+		})
+	}
+	//显示扫码分拣的界面
+	function showpick(id) {
+		var myDate = new Date();
+		$.ajax({
+			url: headurl + "/OrderController/buyOrderdetail?roid=" + id + "&URL=" + myDate.getMinutes() + myDate.getSeconds(),
+			success: function (data) {
+				var data = eval('(' + data + ')');
+				var html = template('pickmodal', data.body);
+				document.getElementById('sortcode').innerHTML = html;
+				$('#sortcode').modal('show');
+				// if(data.body.workstaus == 3){
+				// 	var boid = data.body.boid;
+				// 	gotoprint(boid);
+				// }
+			}
+		})
+	}
+	//打印页面
+	function gotoprint(boid) {
+		window.open('../views/printer.html?boid=' + boid);
+	}
+	//处理键盘事件 禁止后退键（Backspace）密码或单行、多行文本框除外       
+	function forbidBackSpace(e) {
+		var ev = e || window.event; //获取event对象          
+		var obj = ev.target || ev.srcElement; //获取事件源             
+		var t = obj.type || obj.getAttribute('type');
+		//获取事件源类型            
+		//获取作为判断条件的事件类型          
+		var vReadOnly = obj.readOnly;
+		var vDisabled = obj.disabled;
+		//处理undefined值情况            
+		vReadOnly = (vReadOnly == undefined) ? false : vReadOnly;
+		vDisabled = (vDisabled == undefined) ? true : vDisabled;
+		//当敲Backspace键时，事件源类型为密码或单行、多行文本的，             
+		//并且readOnly属性为true或disabled属性为true的，则退格键失效            
+		var flag1 = ev.keyCode == 8 && (t == "password" || t == "text" || t == "textarea") && (vReadOnly == true || vDisabled == true);
+		//当敲Backspace键时，事件源类型非密码或单行、多行文本的，则退格键失效           
+		var flag2 = ev.keyCode == 8 && t != "password" && t != "text" && t != "textarea";
+		//判断           
+		if (flag2 || flag1) return false;
+	}
+	//禁止后退键  作用于IE、Chrome       
+	document.onkeydown = forbidBackSpace;
 
 </script>
