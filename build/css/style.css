@@ -225,6 +225,10 @@ p{
 	font-weight:bold;
 	margin:0;
 }
+.indexul ul li img{
+	width: 100px;
+	height: 100px;
+}
 .indexul ul li:hover{
 	background:#f8f8f8;
 }
@@ -581,6 +585,10 @@ td .exename {
 	font-size: 12px;
 	color: #000;
 	padding-left:8px;
+}
+.leftadd p input.danxuan {
+	width:20px;
+	height: 20px;
 }
 .leftadd p select {
 	background: #FFFFFF;

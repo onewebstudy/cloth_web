@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<!-- saved from url=(0016)http://localhost -->
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>编码管理</title>
+    <link rel="shortcut  icon" type="image/x-icon" href="/iext/favicon.ico" media="screen" />
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../build/css/bootstrap.css">
+    <link rel="stylesheet" href="../build/css/index.css">
+    <link rel="stylesheet" href="../build/css/style.css">
+    <link rel="stylesheet" href="../build/css/main.css">
+    <link rel="stylesheet" href="../build/css/pageNav.css">
+    <link href="../build/css/blue.css" rel="stylesheet">
+    <script src="../build/js/jquery-1.11.3.min.js"></script>
+    <script src="../build/js/art-template.js"></script>
+</head>
+
+<body>
+    <div class="link">
+    </div>
+    <div class="head">
+    </div>
+    <div class="indexbody" id="indexbody">
+
+    </div>
+    <script id="executions" type="text/html">
+	<div class="bread">
+			<a href="../views/index.html">首页</a>>><a href="../views/bianma.html">编码管理</a>
+		</div>
+		<div class="searchdiv clearfix">
+			<!-- <span class="production" onclick="ifproduction()" style="margin-right: 16px;"><img src="../build/img/delete.png">删除</span> -->
+			<span class="production" onclick="exportimgs()" style="margin-left:16px;"><img src="../build/img/publish.png">上传编码</span>
+			<div class="searchmin">
+				<input type="text" placeholder="根据印花名字搜索" id="text" value="{{text}}">
+				<img src="../build/img/search.png" class="searchimg" onclick="search()">
+			</div>
+		</div>
+		<div class="tablediv">
+			<table>
+				<tr>
+                    <th style="width: 10%;">序号</th>
+					<th style="width: 10%;">类型</th>
+					<th style="width: 20%;">货号编号</th>
+					<th style="width: 10%;">名称</th>
+					<th style="width: 10%;">操作</th>
+				</tr>
+				{{if pagelist.total>0}}
+				{{each pagelist.result as value i}}
+				<tr>
+                    <td>{{i+1}}</td>
+					<td>{{if value.type == 1}}尺寸{{/if}}{{if value.type == 2}}款式{{/if}}{{if value.type == 3}}颜色{{/if}}</td>
+					<td>{{value.number}}</td>
+					<td>{{value.name}}</td>
+					<td><span class="delectework" style="margin-right:8px;" onclick="eaitimg({{value.icid}}, '{{value.type}}','{{value.number}}','{{value.name}}')">编辑</span></td>
+				</tr>
+				{{/each}}
+				{{/if}}
+			</table>
+			{{if pagelist.total>0}}<nav aria-label="Page navigation" class="page-nav-outer" id="PageNavId"></nav>{{/if}}
+			{{if pagelist.total<=0}}
+				<div class="emptyContent">
+					<img src="../build/img/no_no.png">
+					<p>暂无编码相关内容</p>
+				</div>
+			{{/if}}
+		</div>
+	</script>
+
+    <!-- 新建印花 -->
+    <div class="modal fade tipModal" id="addprintmo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+
+    </div><!-- /.modal弹框 -->
+    <script type="text/html" id="imgdetail">
+	<div class="modal-dialog" style="width:375px;">
+		<div class="modal-content">
+		   <div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img src="../build/img/win_close.png"></button>
+			  <div class="modal-title" style="padding-top: 14px;padding-left: 16px;color: #666;font-weight:bold;">新建编码<span class="inforn">填写编码信息</span></div>
+		   </div>
+		   <div class="modal-body clearfix bottomlen" style="padding-bottom:0;">
+			   <div class="inforbody clearfix">
+				   <div class="leftadd">
+                       <input type="hidden" id="editicid" value="{{icid}}">
+                       <p><span>类型：</span>
+                        <label for=""><input type="radio" name="aa" value="1" {{if type == 1}}checked{{/if}} class="danxuan">尺寸</label>
+                        <label for=""><input type="radio" name='aa' value="2" {{if type == 2}}checked{{/if}} class="danxuan">款式</label>
+                        <label for=""><input type="radio" name='aa' value="3" {{if type == 3}}checked{{/if}} class="danxuan">颜色</label>
+                    </p>
+					   <p><span>编码：</span><input type="text" placeholder="请输入货号编码" id="icnumber" value="{{number}}"></p>
+					   <p><span>名称：</span><input type="text" placeholder="请输入名称：" id="icname" value="{{name}}"></p>
+				   </div>
+			   </div>
+		   </div>
+		   <div class="btdiv clearfix">
+			   <span class="modalimgerror"></span>
+			  <button class="btn btn-blue yesbtn" onclick="addbianma()">确定</button>
+			  <a class="btn btn-default nobtn" data-dismiss="modal"  aria-hidden="true">取 消</a>
+		  </div>
+		</div><!-- /.modal-content -->
+	 </div><!-- /.modal-dialog -->
+</script>
+    <!-- 批量新建印花 -->
+    <div class="modal fade tipModal" id="ssprintmo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" style="width:375px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img src="../build/img/win_close.png"></button>
+                    <div class="modal-title" style="padding-top: 14px;padding-left: 16px;color: #666;font-weight:bold;">导入编码</div>
+                </div>
+                <div class="modal-body clearfix bottomlen" style="padding-bottom:0;">
+                    <div class="inforbody clearfix">
+                        <div class="leftadd" style="float: inherit;">
+                            <p style="position: relative;display: flex;"><span>文件：</span><input type="file" placeholder="请选择文件"
+                                    id="imgideas" value="" name="File"></p>
+                        </div>
+                        <div><p style="position: relative;display: flex;padding-bottom: 10px;"><span>模板：</span><button class="btn btn-blue" onclick="window.open('../build/img/模板(1).xls')" >下载模板</button></p></div>
+                    </div>
+                </div>
+                <div class="btdiv clearfix">
+                    <span class="modalimgerror"></span>
+                    <button class="btn btn-blue yesbtn" onclick="daoru()">确定</button>
+                    <a class="btn btn-default nobtn" data-dismiss="modal" aria-hidden="true">取 消</a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal弹框 myModal-delete删除 -->
+    <script src="../build/js/bootstrap.js"></script>
+    <script src="../build/js/jquery.icheck.min.js"></script>
+    <script src="../build/js/main.js"></script>
+    <script src="../build/js/pageNav.js"></script>
+    <script>
+        var imgpath2 = "";
+        var imgsizes = ["90"];
+        var xx;
+        var yy;
+        function givemeurl(url) {
+            imgpath2 = url;
+        }
+        var arr_tip_userid = new Array();
+        function search(pageNum) {
+            var myDate = new Date();
+            var text = $("#text").val();
+            var status = $("#status").val();
+            var type = $("#type").val();
+            $.ajax({
+                url: headurl + "/OrderController/configList?URL=" + myDate.getMinutes() + myDate.getSeconds(),
+                data: { text: text, pageNum: pageNum },
+                success: function (data) {
+                    var data = eval('(' + data + ')');
+                    if (data.success == 1) {
+                        var html = template('executions', data.body);
+                        document.getElementById('indexbody').innerHTML = html;
+                        if (data.body.pagelist.total > 0) {
+                            var pageNavObj = null;//用于储存分页对象
+                            pageNavObj = new PageNavCreate("PageNavId", { pageCount: data.body.pagelist.pages, currentPage: data.body.pagelist.pageNum, perPageNum: data.body.pagelist.pageSize });
+                            pageNavObj.afterClick(search);
+                        }
+                        icheckinit();
+                    } else {
+                        tipError(data.msg);
+                    }
+                }
+            })
+            arr_tip_userid = [];
+        }
+
+        function eaitimg(icid, type, number, name) {
+            var data = {
+                icid: icid,
+                type: type,
+                number: number,
+                name: name,
+            }
+            var html = template('imgdetail', data);
+            document.getElementById('addprintmo').innerHTML = html;
+            $('#addprintmo').modal('show');
+        }
+
+        $(function () {
+            var myDate = new Date();
+            $('.link').load('../views/link.html');
+            $('.head').load('../views/header2.html');
+            $.ajax({
+                url: headurl + "/OrderController/configList?URL=" + myDate.getMinutes() + myDate.getSeconds(),
+                success: function (data) {
+                    var data = eval('(' + data + ')');
+                    if (data.success == 1) {
+                        var html = template('executions', data.body);
+                        document.getElementById('indexbody').innerHTML = html;
+                        icheckinit();
+                        if (data.body.pagelist.total > 0) {
+                            var pageNavObj = null;//用于储存分页对象
+                            pageNavObj = new PageNavCreate("PageNavId", { pageCount: data.body.pagelist.pages, currentPage: data.body.pagelist.pageNum, perPageNum: data.body.pagelist.pageSize });
+                            pageNavObj.afterClick(search);
+                        }
+                    } else {
+                        tipError(data.msg);
+                    }
+                }
+            })
+        })
+        $('.tablediv td').hover(function () {
+            $(this).parents('tr').find('td').css('background', ' #E7F3FC');
+        }, function () {
+            $(this).parents('tr').find('td').css('background', ' #FFF')
+        });
+        $('.sizediv span').click(function () {
+            $('.sizediv span').removeClass('active');
+            $(this).addClass('active');
+        })
+
+        //批量上传印花
+        function exportimgs() {
+            $('#ssprintmo').find("input").val("");
+            $('#ssprintmo').modal('show');
+        }
+
+        //文件导入编码
+        function daoru() {
+            var filepath1 = $("#imgideas").val();
+            if (!filepath1) {
+                $("#ssprintmo").find('.modalimgerror').html('请选择文件');
+                return false;
+            } else {
+                $('#ssprintmo').modal('hide');
+                // var formData = new FormData();
+                // var file = document.getElementById("imgideas").files[0];
+                // formData.append("File", file);
+                var formData = new FormData();
+                formData.append("File", $("#imgideas")[0].files[0]);
+                $.ajax({
+                    url: headurl + "/OrderController/inputExcel",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    async: false,
+                    success: function (data) {
+                        if (data.success == 1) {
+                            tipSuccess('导入编码成功', 'search');
+                        } else {
+                            tipError(data.msg);
+                        }
+                    }
+                })
+            }
+
+        }
+
+        function addbianma() {
+            var number = $.trim($('#icnumber').val());
+            var name = $.trim($('#icname').val());
+            var icid = $('#editicid').val();
+            var type = $(".leftadd").find("input:radio:checked").val();
+            if (!type) {
+                $('.modalimgerror').html('编码类型不能为空');
+                return false;
+            }
+            if (!number) {
+                $('.modalimgerror').html('编码不能为空');
+                return false;
+            }
+            if (!name) {
+                $('.modalimgerror').html('编码名称不能为空');
+                return false;
+            }
+            $('#addprintmo').modal('hide');
+            $.ajax({
+                url: headurl + "/OrderController/editConfig",
+                type: 'post',
+                data: { icid: icid, name: name, number: number, type: type },
+                success: function (data) {
+                    var data = eval('(' + data + ')');
+                    if (data.success == 1) {
+                        tipSuccess('修改编码成功', 'search');
+
+                    } else {
+                        tipError(data.msg);
+                    }
+                }
+            })
+        }
+
+        //初始化选择框
+        function icheckinit() {
+            var tid = 0;
+            $("tr").hover(function () {
+                var _this = this;
+                tid = setTimeout(function () {
+                    $(_this).find('.exename').css('display', 'block');
+                }, 2000);
+            }, function () {
+                $(this).find('.exename').css('display', 'none');
+                clearTimeout(tid);//当在1秒内退出了hover事件就取消计时代码
+            });
+            $('.tablediv td').hover(function () {
+                $(this).parents('tr').find('td').css('background', ' #E7F3FC');
+            }, function () {
+                $(this).parents('tr').find('td').css('background', ' #FFF')
+            });
+            $('#text').bind('keypress', function (event) {
+                if (event.keyCode == "13") {
+                    search();
+                }
+            });
+        }
+
+    </script>
+
+
+
+</body>
+
+</html>

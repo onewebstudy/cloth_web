@@ -1,5 +1,5 @@
 // JavaScript Document
-var headurl = "";
+var headurl = "/api";
 $(document).ready(function(){
 	/*setTimeout(function () {
 	    pushHistory()

@@ -101,7 +101,6 @@ function showmenu(){
 				success:function(data){
 					var data = eval('(' + data + ')');
 					if(data.success==1){
-						debugger
 						showpick(id);
 					}else{
 						tipError1(data.msg);
