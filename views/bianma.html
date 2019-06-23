@@ -116,11 +116,17 @@
                 </div>
                 <div class="modal-body clearfix bottomlen" style="padding-bottom:0;">
                     <div class="inforbody clearfix">
-                        <div class="leftadd" style="float: inherit;">
-                            <p style="position: relative;display: flex;"><span>文件：</span><input type="file" placeholder="请选择文件"
-                                    id="imgideas" value="" name="file"></p>
+                        <form id="importform" name="importform" enctype="multipart/form-data" action="/OrderController/inputExcel"
+                            method="post" onsubmit="return false">
+                            <div class="leftadd" style="float: inherit;">
+                                <p style="position: relative;display: flex;"><span>文件：</span><input type="file"
+                                        placeholder="请选择文件" id="imgideas" name="file"></p>
+                            </div>
+                        </form>
+                        <div>
+                            <p style="position: relative;display: flex;padding-bottom: 10px;"><span>模板：</span><button
+                                    class="btn btn-blue" onclick="window.open('../build/img/模板(1).xls')">下载模板</button></p>
                         </div>
-                        <div><p style="position: relative;display: flex;padding-bottom: 10px;"><span>模板：</span><button class="btn btn-blue" onclick="window.open('../build/img/模板(1).xls')" >下载模板</button></p></div>
                     </div>
                 </div>
                 <div class="btdiv clearfix">
@@ -135,6 +141,7 @@
     <script src="../build/js/jquery.icheck.min.js"></script>
     <script src="../build/js/main.js"></script>
     <script src="../build/js/pageNav.js"></script>
+    <script src="../build/js/form.js"></script>
     <script>
         var imgpath2 = "";
         var imgsizes = ["90"];
@@ -229,27 +236,57 @@
                 $("#ssprintmo").find('.modalimgerror').html('请选择文件');
                 return false;
             } else {
-                $('#ssprintmo').modal('hide');
+                //$('#ssprintmo').modal('hide');
                 // var formData = new FormData();
                 // var file = document.getElementById("imgideas").files[0];
                 // formData.append("File", file);
-                var formData = new FormData();
-                formData.append("file", $("#imgideas")[0].files[0]);
-                $.ajax({
-                    url: headurl + "/OrderController/inputExcel",
-                    type: "POST",
-                    data: formData,
-                    processData: false,
+                // var formData = new FormData();
+                // formData.append("file", $("#imgideas")[0].files[0]);
+                // $.ajax({
+                //     url: headurl + "/OrderController/inputExcel",
+                //     type: "POST",
+                //     data: formData,
+                //     cache: false,
+                //     processData: false,
+                //     contentType: false,
+                //     success: function (data) {
+                //         if (data.success == 1) {
+                //             tipSuccess('导入编码成功', 'search');
+                //         } else {
+                //             tipError(data.msg);
+                //         }
+                //     }
+                // })
+                $('#ssprintmo').modal('hide');
+                var option = {
+                    url: '/OrderController/inputExcel',
+                    type: 'POST',
                     dataType: 'json',
-                    async: false,
+                    headers: { "ClientCallMode": "ajax" }, //添加请求头部
                     success: function (data) {
                         if (data.success == 1) {
-                            tipSuccess('导入编码成功', 'search');
+                            tipSuccess(data.msg);
                         } else {
                             tipError(data.msg);
                         }
+                    },
+                    error: function (data) {
+                        tipError(data.msg);
                     }
-                })
+                };
+                $("#importform").ajaxSubmit(option);
+                return false; //最好返回false，因为如果按钮类型是submit,则表单自己又会提交一次;返回false阻止表单再次提交
+                // $("#importform").ajaxSubmit({
+                //     success: function (data) {
+                //         $('#ssprintmo').modal('hide');
+                //         if (data.success == 1) {
+                //             tipSuccess(data.msg);
+                //         } else {
+                //             tipError(data.msg);
+                //         }
+                //     }
+                // });
+
             }
 
         }

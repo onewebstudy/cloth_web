@@ -184,7 +184,7 @@
 <script src="../build/js/pageNav.js"></script>
 <script>
 var imgpath2="";
-var imgsizes=["90"];
+var imgsizes=[""];
 var xx;
 var yy;
 function givemeurl(url){
@@ -422,16 +422,7 @@ function fuzhiimg(){
 	// 	size = $('#imgsize').val();
 	// }
 	if(!size){
-		size = name.substr(name.length-2,1)
-	}
-	if(!angle){
-		angle=0;
-	}
-	if(!imgx){
-		imgx=0;
-	}
-	if(!imgy){
-		imgy=0;
+		size = name.substr(name.length-2,2)
 	}
 	if(!name){
 		$('.modalimgerror').html('印花编码不能为空');
@@ -441,9 +432,10 @@ function fuzhiimg(){
 		$('.modalimgerror').html('印花文件路径不能为空');
 		return false;
 	}
-	for(var i =0 ;i<imgsizes.length;i++){
-		window.external.copyimg(rfurl,imgsizes[i]);
-	}
+	window.external.copyimg(rfurl,size);
+	// for(var i =0 ;i<imgsizes.length;i++){
+	// 	window.external.copyimg(rfurl,imgsizes[i]);
+	// }
 	$("#imgpath").val(imgpath2);
 	saveimg();
 }
@@ -451,7 +443,7 @@ function fuzhiimg(){
 function saveimg(){
 	var name = $.trim($('#imgname').val());
 	var rfurl = $('#imgidea').val();
-	//var size = $('#addprintmo').find('.sizediv').find('span.active').html();
+	var size = $.trim($('#imgsize').val());
 	var imgx = $.trim($('#imgx').val());
 	var imgy = $.trim($('#imgy').val());
 	var stid = $('#editstid').val();
@@ -468,7 +460,19 @@ function saveimg(){
     else if (paths == "arx4")
     {
         str2 = "C";
-    }
+	}
+	if(!angle){
+		angle=0;
+	}
+	if(!imgx){
+		imgx=0;
+	}
+	if(!imgy){
+		imgy=0;
+	}
+	if(!size){
+		size = name.substr(name.length-2,2)
+	}
 	// for(var i =0;i<imgsizes.length;i++){
 	// 	if(i==0){
 	// 		var sizestr="?size="+imgsizes[i];
@@ -478,9 +482,9 @@ function saveimg(){
 	// }
 	$('#addprintmo').modal('hide');
 	$.ajax({
-		url:headurl+"/StampController/uploadImgInfo"+sizestr,
+		url:headurl+"/StampController/uploadImgInfo",
 		type:'post',
-		data:{name:name,filepath:imgpath,x:imgx,y:imgy,stid:stid,angle:angle,type:str2},
+		data:{name:name,filepath:imgpath,x:imgx,y:imgy,stid:stid,angle:angle,type:str2,size: size},
 		success:function(data){
 			var data = eval('(' + data + ')');
 			if(data.success==1){
