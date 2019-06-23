@@ -118,7 +118,7 @@
                     <div class="inforbody clearfix">
                         <div class="leftadd" style="float: inherit;">
                             <p style="position: relative;display: flex;"><span>文件：</span><input type="file" placeholder="请选择文件"
-                                    id="imgideas" value="" name="File"></p>
+                                    id="imgideas" value="" name="file"></p>
                         </div>
                         <div><p style="position: relative;display: flex;padding-bottom: 10px;"><span>模板：</span><button class="btn btn-blue" onclick="window.open('../build/img/模板(1).xls')" >下载模板</button></p></div>
                     </div>
@@ -234,13 +234,12 @@
                 // var file = document.getElementById("imgideas").files[0];
                 // formData.append("File", file);
                 var formData = new FormData();
-                formData.append("File", $("#imgideas")[0].files[0]);
+                formData.append("file", $("#imgideas")[0].files[0]);
                 $.ajax({
                     url: headurl + "/OrderController/inputExcel",
                     type: "POST",
                     data: formData,
                     processData: false,
-                    contentType: false,
                     dataType: 'json',
                     async: false,
                     success: function (data) {

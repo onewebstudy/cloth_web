@@ -115,9 +115,9 @@
 					   <input type="hidden" id="editstid" value="{{stid}}">
 					   <p><span>印花：</span><input type="text" placeholder="请输入印花" id="imgname" value="{{name}}"></p>
 					   <div>
-						   <span style="position: relative;top: -116px;">尺寸：</span>
+						   <span>尺寸：</span>
 						   <div class="sizediv">
-							   <span class="active">01</span>
+							   <!-- <span>01</span>
 							   <span>02</span>
 							   <span>03</span>
 							   <span>04</span>
@@ -131,7 +131,7 @@
 							   <span>12</span>
 							   <span>13</span>
 							   <span>14</span>
-							   <span>15</span>
+							   <span>15</span> -->
 							   <input type="text" placeholder="自定义" class="sizeinput" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5\.]/g,'')" id="imgsize"value="{{size}}">
 						   </div>
 					   </div>
@@ -236,17 +236,17 @@ function eaitimg(stid){
 				$('.modalimgerror').html('');
 				$('#imgidea').val($("#fileSlect")[0].value);
 			})
-			$('#addprintmo').find('.sizediv').find('span').removeClass('active');
-			$('#addprintmo').find('.sizediv').find('span').click(function(){
-				$(this).siblings().removeClass('active');
-				$(this).addClass('active');
-				imgsizes=[$(this).html()];
-				$('#addprintmo').find('.sizediv').find('input').val("");
-			})
-			$('#addprintmo').find('.sizediv').find('input').change(function(){
-				$(this).siblings().removeClass('active');
-				imgsizes=[];
-			})
+			// $('#addprintmo').find('.sizediv').find('span').removeClass('active');
+			// $('#addprintmo').find('.sizediv').find('span').click(function(){
+			// 	$(this).siblings().removeClass('active');
+			// 	$(this).addClass('active');
+			// 	imgsizes=[$(this).html()];
+			// 	$('#addprintmo').find('.sizediv').find('input').val("");
+			// })
+			// $('#addprintmo').find('.sizediv').find('input').change(function(){
+			// 	$(this).siblings().removeClass('active');
+			// 	imgsizes=[];
+			// })
 			}else {
 					tipError(data.msg);
 				}
@@ -307,7 +307,7 @@ function toshowbig(_this){
 function exportimg(){
 	xx=$("#xx").val();
 	yy=$("#yy").val();
-	imgsizes=["01"];
+	imgsizes=[""];
 	data={
 		"name":"",
 		"size":"",
@@ -320,17 +320,17 @@ function exportimg(){
 	document.getElementById('addprintmo').innerHTML = html;
 	$('.modalimgerror').html('');
 	$('#addprintmo').modal('show');
-	$('#addprintmo').find('.sizediv').find('span').click(function(){
-		if($(this).hasClass('active')){
-			$(this).removeClass('active');
-			imgsizes.remove($(this).html());
-		}else{
-			$(this).addClass('active');
-			imgsizes.push($(this).html());
-		}
-	})
-	$('#addprintmo').find('.sizediv').find('span').removeClass('active');
-	$('#addprintmo').find('.sizediv').children("span:first-child").addClass('active');
+	// $('#addprintmo').find('.sizediv').find('span').click(function(){
+	// 	if($(this).hasClass('active')){
+	// 		$(this).removeClass('active');
+	// 		imgsizes.remove($(this).html());
+	// 	}else{
+	// 		$(this).addClass('active');
+	// 		imgsizes.push($(this).html());
+	// 	}
+	// })
+	// $('#addprintmo').find('.sizediv').find('span').removeClass('active');
+	// $('#addprintmo').find('.sizediv').children("span:first-child").addClass('active');
 	/*Ajax上传至后台并返回文件的url*/
     $("#fileSlect").change(function () {
         $('.modalimgerror').html('');
@@ -409,55 +409,36 @@ function fuzhiimg(){
 	var stid = $('#editstid').val();
 	var size = $.trim($('#imgsize').val());
 	var angle = $.trim($('#imgangle').val());
-	if(size){
-		for(var i=0;i<imgsizes.length;i++){
-			if(imgsizes[i]==size){
-				$('.modalimgerror').html('印花尺寸不能一样');
-				return false;
-			}
-		}
-		imgsizes.push(size);
-	}
+	// if(size){
+	// 	for(var i=0;i<imgsizes.length;i++){
+	// 		if(imgsizes[i]==size){
+	// 			$('.modalimgerror').html('印花尺寸不能一样');
+	// 			return false;
+	// 		}
+	// 	}
+	// 	imgsizes.push(size);
+	// }
 	// if(!size){
 	// 	size = $('#imgsize').val();
 	// }
+	if(!size){
+		size = name.substr(name.length-2,1)
+	}
 	if(!angle){
 		angle=0;
 	}
-	if(imgsizes.length <= 0){
-		$('.modalimgerror').html('印花尺寸不能为空');
-		return false;
+	if(!imgx){
+		imgx=0;
+	}
+	if(!imgy){
+		imgy=0;
 	}
 	if(!name){
 		$('.modalimgerror').html('印花编码不能为空');
 		return false;
 	}
-	if(name.length>5){
-		$('.modalimgerror').html('印花编码不能超过5个字');
-		return false;
-	}
 	if(!rfurl){
 		$('.modalimgerror').html('印花文件路径不能为空');
-		return false;
-	}
-	if(!imgx){
-		$('.modalimgerror').html('信息标识码位置不能为空');
-		return false;
-	}
-	if(!imgy){
-		$('.modalimgerror').html('信息标识码位置不能为空');
-		return false;
-	}
-	if(!checkFloat(imgx)){
-		$('.modalimgerror').html('信息标识码位置必须为数字');
-		return false;
-	}
-	if(!checkFloat(imgy)){
-		$('.modalimgerror').html('信息标识码位置必须为数字');
-		return false;
-	}
-	if(!checkFloat(angle)){
-		$('.modalimgerror').html('角度必须为数字');
 		return false;
 	}
 	for(var i =0 ;i<imgsizes.length;i++){
@@ -488,13 +469,13 @@ function saveimg(){
     {
         str2 = "C";
     }
-	for(var i =0;i<imgsizes.length;i++){
-		if(i==0){
-			var sizestr="?size="+imgsizes[i];
-		}else{
-			sizestr +="&size="+imgsizes[i];
-		}
-	}
+	// for(var i =0;i<imgsizes.length;i++){
+	// 	if(i==0){
+	// 		var sizestr="?size="+imgsizes[i];
+	// 	}else{
+	// 		sizestr +="&size="+imgsizes[i];
+	// 	}
+	// }
 	$('#addprintmo').modal('hide');
 	$.ajax({
 		url:headurl+"/StampController/uploadImgInfo"+sizestr,
