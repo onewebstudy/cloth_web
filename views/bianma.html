@@ -34,7 +34,8 @@
 		</div>
 		<div class="searchdiv clearfix">
 			<!-- <span class="production" onclick="ifproduction()" style="margin-right: 16px;"><img src="../build/img/delete.png">删除</span> -->
-			<span class="production" onclick="exportimgs()" style="margin-left:16px;"><img src="../build/img/publish.png">上传编码</span>
+            <!-- <span class="production" onclick="exportimgs()" style="margin-left:16px;"><img src="../build/img/publish.png">上传编码</span> -->
+            <span class="production" onclick="addimg()" style="margin-left:16px;"><img src="../build/img/publish.png">添加编码</span>
 			<div class="searchmin">
 				<input type="text" placeholder="根据印花名字搜索" id="text" value="{{text}}">
 				<img src="../build/img/search.png" class="searchimg" onclick="search()">
@@ -190,6 +191,14 @@
             $('#addprintmo').modal('show');
         }
 
+        function addimg() {
+            var data = {
+            }
+            var html = template('imgdetail', data);
+            document.getElementById('addprintmo').innerHTML = html;
+            $('#addprintmo').modal('show');
+        }
+
         $(function () {
             var myDate = new Date();
             $('.link').load('../views/link.html');
@@ -316,8 +325,11 @@
                 success: function (data) {
                     var data = eval('(' + data + ')');
                     if (data.success == 1) {
-                        tipSuccess('修改编码成功', 'search');
-
+                        if(icid){
+                            tipSuccess('修改编码成功', 'search');
+                        }else{
+                            tipSuccess('添加编码成功', 'search');
+                        }
                     } else {
                         tipError(data.msg);
                     }
