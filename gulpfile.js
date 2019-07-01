@@ -15,7 +15,7 @@ connect.server({
     middleware: function(connect, opt) {
          return [
             proxy(["/api"], {
-                target: 'http://cloth.dev.idaqi.com',
+                target: 'http://clath.dev.idaqi.com',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/api': '/'

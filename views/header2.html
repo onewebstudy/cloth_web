@@ -28,6 +28,16 @@
 	</script>
 </div>
 <script>
+
+	$(function () {
+		// $.ajax({
+		// 	url: headurl + "/OrderController/warehouseQuery",
+		// 	success: function (data) {
+		// 		console.log(data)
+
+		// 	}
+		// })
+	})
 	//扫码枪状态
 	var Scavestaus = 0;
 	$(function () {
@@ -35,7 +45,7 @@
 	})
 	function printas() {
 		window.external.OpenForm("31");
-		window.external.givesize("A小猪长袖", "小猪配企", "XXL", "1", '1', '22','43','34');
+		window.external.givesize("A小猪长袖", "小猪配企", "XXL", "1", '1', '22', '43', '34');
 		window.external.islood("Gprinter GP-1524T");
 		window.external.printjs(1, "Gprinter GP-1524T");
 	}
@@ -101,7 +111,7 @@
 
 		} else if (Scavestaus == 2) {
 			$.ajax({
-				url: headurl + "/OrderController/pickproduct?roid=" + id + "&Warehouse_no=wdt-wh2" + "&URL=" + myDate.getMinutes() + myDate.getSeconds(),
+				url: headurl + "/OrderController/pickproduct?roid=" + id + "&Warehouse_no=01" + "&URL=" + myDate.getMinutes() + myDate.getSeconds(),
 				success: function (data) {
 					var data = eval('(' + data + ')');
 					if (data.success == 1) {
