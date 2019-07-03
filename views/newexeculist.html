@@ -385,7 +385,7 @@
 											}
 											add();
 										} else {
-											changestatus(id);
+											changestatus(prolist[i].roid);
 										}
 									} else if (e == "E") {
 										window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename);
@@ -443,7 +443,7 @@
 												}
 												add();
 											} else {
-												changestatus(id);
+												changestatus(prolist[i].roid);
 											}
 
 										} else if (e == "E") {
@@ -545,7 +545,7 @@
 										window.external.printjs2(1, "Gprinter GP-1524T");
 									}
 								} else {
-									changestatus(id);
+									changestatus(roids[i]);
 								}
 							} else if (e == "E") {
 								window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename);
@@ -810,12 +810,13 @@
 				success: function (data) {
 					var data = eval('(' + data + ')');
 					if (data.success == 1) {
+						showshuju(data.body)
 						var e = data.body.itemnum[0];
 						var a = data.body.itemnum;
 						var b = data.body.stname;
 						var c = data.body.size;
 						var d = data.body.num;
-
+						
 						var colorname = data.body.colorname;
 						var sizename = data.body.sizename;
 						var stylename = data.body.stylename;

@@ -7,8 +7,14 @@
 			<li><a href="../views/index.html">首页</a></li>
 			<li><a href="../views/login.html">登录</a></li>
 			<!-- <li><a href="../views/newwork.html">创建工单</a></li> -->
-			<!-- <li onclick="showpick(10)">调整打印</li> -->
+			<li onclick="printas()">调整打印</li>
 		</ul>
+	</div>
+	<div class="myshow">
+		<div id="guanbi">关闭</div>
+		<div id="showcontent">
+
+		</div>
 	</div>
 	<div class="scstatus" id="scstatus">
 
@@ -46,7 +52,6 @@
 	function printas() {
 		window.external.OpenForm("31");
 		window.external.givesize("A小猪长袖", "小猪配企", "XXL", "1", '1', '22', '43', '34');
-		window.external.islood("Gprinter GP-1524T");
 		window.external.printjs(1, "Gprinter GP-1524T");
 	}
 	function comeback() {
@@ -208,5 +213,15 @@
 	}
 	//禁止后退键  作用于IE、Chrome       
 	document.onkeydown = forbidBackSpace;
+
+
+	//显示数据
+	function showshuju(text) {
+		$("#showcontent").html(JSON.stringify(text));
+		$(".myshow").show();
+	}
+	$("#guanbi").click(function(){
+		$(".myshow").hide();
+	})
 
 </script>

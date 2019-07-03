@@ -871,3 +871,15 @@ font-family:Tahoma; font-size:18px; line-height:48px;}
 .stockerror {
 	color:#FC5D20;
 }
+
+.myshow {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 500px;
+	background: #ffffff;
+	height: 500px;
+	overflow: auto;
+	z-index: 100;
+	display: none;
+}
