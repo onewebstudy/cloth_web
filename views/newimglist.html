@@ -339,13 +339,8 @@ function exportimg(){
 }
 //批量上传印花
 function exportimgs(){
-	// $('#ssprintmo').find("input").val("");
-	// $('#ssprintmo').modal('show');
-	for(var i = 0;i<10;i++) {
-		setTimeout(function () { 
-						tipSuccess('添加印花成功','search');
-	}, 100);
-	}
+	$('#ssprintmo').find("input").val("");
+	$('#ssprintmo').modal('show');
 }
 //选择文件夹
 function browseFolder() {
