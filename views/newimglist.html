@@ -393,7 +393,7 @@ function morepath(name,sizestring,xystring,right90,type){
 			success:function(data){
 				var data = eval('(' + data + ')');
 				if(data.success==1){
-						tipSuccess('添加印花成功');
+						tipSuccess('添加印花成功 ');
 				}else {
 						tipError(data.msg);
 					}
