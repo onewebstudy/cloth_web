@@ -111,7 +111,7 @@
 		   </div>
 		   <div class="modal-body clearfix bottomlen" style="padding-bottom:0;">
 			   <div class="inforbody clearfix">
-				   <div class="leftadd">
+				   <div class="leftaddbox">
 					   <input type="hidden" id="editstid" value="{{stid}}">
 					   <p><span>印花：</span><input type="text" placeholder="请输入印花" id="imgname" value="{{name}}"></p>
 					   <div>
@@ -163,7 +163,7 @@
 		   </div>
 		   <div class="modal-body clearfix bottomlen" style="padding-bottom:0;">
 			   <div class="inforbody clearfix">
-				   <div class="leftadd">
+				   <div class="leftaddbox">
 					   <p style="position: relative"><span>路径：</span><input type="text" placeholder="请选择路径" id="imgideas" value="" onclick="browseFolder()"></p>
 				   </div>
 				   <div class="rightadd">
@@ -339,8 +339,13 @@ function exportimg(){
 }
 //批量上传印花
 function exportimgs(){
-	$('#ssprintmo').find("input").val("");
-	$('#ssprintmo').modal('show');
+	// $('#ssprintmo').find("input").val("");
+	// $('#ssprintmo').modal('show');
+	for(var i = 0;i<10;i++) {
+		setTimeout(function () { 
+						tipSuccess('添加印花成功','search');
+	}, 100);
+	}
 }
 //选择文件夹
 function browseFolder() {
@@ -388,14 +393,14 @@ function morepath(name,sizestring,xystring,right90,type){
 			success:function(data){
 				var data = eval('(' + data + ')');
 				if(data.success==1){
-						tipSuccess('添加印花成功','search');
+						tipSuccess('添加印花成功');
 				}else {
 						tipError(data.msg);
 					}
 			}
 		})
 	}, 100);
-	
+	$('#tipSuccess').modal('hide');
 }
 function clearspan(_this){
 	$(_this).siblings().removeClass('active');

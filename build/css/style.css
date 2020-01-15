@@ -565,18 +565,18 @@ td .exename {
 	height:28px;
 	padding-left:8px;
 }
-.inforbody .leftadd {
+.inforbody .leftaddbox {
 	margin-right:32px;
 	float:left;
 }
-.inforbody .leftadd p {
+.inforbody .leftaddbox p {
 	margin-bottom:16px;
 }
-.leftadd p span {
+.leftaddbox p span {
 	font-size: 14px;
 	color: #666666;
 }
-.leftadd p input {
+.leftaddbox p input {
 	background: #FFFFFF;
 	border: 1px solid #D9D9D9;
 	border-radius: 4px;
@@ -586,11 +586,11 @@ td .exename {
 	color: #000;
 	padding-left:8px;
 }
-.leftadd p input.danxuan {
+.leftaddbox p input.danxuan {
 	width:20px;
 	height: 20px;
 }
-.leftadd p select {
+.leftaddbox p select {
 	background: #FFFFFF;
 	border: 1px solid #D9D9D9;
 	border-radius: 4px;
@@ -608,7 +608,7 @@ td .exename {
 	height:100px;
 	border-radius: 4px;
 }
-.leftadd .printul {
+.leftaddbox .printul {
 	padding-left:42px;
 	position: absolute;
     width: 258px;

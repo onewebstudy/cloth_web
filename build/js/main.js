@@ -1,5 +1,5 @@
 // JavaScript Document
-var headurl = "";
+var headurl = "/shop";
 $(document).ready(function(){
 	/*setTimeout(function () {
 	    pushHistory()
@@ -65,7 +65,6 @@ $(function(){
 			}
 		}
 	})*/
-	$('.Specialname').empty().html('企U智慧工业云');
 })
 //返回之前没页面则返回首页
 /*function pushHistory() {

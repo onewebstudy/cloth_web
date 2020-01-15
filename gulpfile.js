@@ -15,7 +15,8 @@ connect.server({
     middleware: function(connect, opt) {
          return [
             proxy(["/api"], {
-                target: 'http://clath.dev.idaqi.com',
+                //target: 'http://clath.dev.idaqi.com',
+                target: 'http://121.40.185.94:8111',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/api': '/'
