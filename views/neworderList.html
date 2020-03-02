@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>订单管理</title>
-	<link rel="shortcut  icon" type="image/x-icon" href="/iext/favicon.ico" media="screen"  />
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="../build/css/bootstrap.css">
-    <link rel="stylesheet" href="../build/css/index.css">
-    <link rel="stylesheet" href="../build/css/style.css">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+	<title>订单管理</title>
+	<link rel="shortcut  icon" type="image/x-icon" href="/iext/favicon.ico" media="screen" />
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="../build/css/bootstrap.css">
+	<link rel="stylesheet" href="../build/css/index.css">
+	<link rel="stylesheet" href="../build/css/style.css">
 	<link rel="stylesheet" href="../build/css/main.css">
 	<link rel="stylesheet" href="../build/css/pageNav.css">
-    <link href="../build/css/blue.css" rel="stylesheet">
+	<link href="../build/css/blue.css" rel="stylesheet">
 	<script src="../build/js/jquery-1.11.3.min.js"></script>
 	<script src="../build/js/art-template.js"></script>
 
 </head>
+
 <body>
 	<div class="link">
 	</div>
@@ -33,6 +35,7 @@
 		<div class="searchdiv clearfix">
 			<span class="production" onclick="ifproduction()"><img src="../build/img/produce.png">生产</span>
 			<span class="production" onclick="confirmdelete('2','allproducts','是否进行全部订单生产？');" style="left: 24px;"><img src="../build/img/produce.png">全部生产</span>
+			<span class="production" onclick="reloadlist()" style="left: 40px;">刷新</span>
 			<div class="searchmin">
 				
 				<span>生产状态：</span>
@@ -115,11 +118,12 @@
 			{{/if}}
 		</div>
 	</script>
-<!-- 多个生产报错 -->
-<div class="modal fade tipModal" id="startmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	
-</div><!-- /.modal弹框 myModal-delete删除 -->
-<script type="text/html" id="startcontent">
+	<!-- 多个生产报错 -->
+	<div class="modal fade tipModal" id="startmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+
+	</div><!-- /.modal弹框 myModal-delete删除 -->
+	<script type="text/html" id="startcontent">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -136,12 +140,13 @@
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </script>
-<!-- 图片信息 -->
-<!-- 全部生产报错 -->
-<div class="modal fade tipModal" id="startmodal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	
-</div><!-- /.modal弹框 myModal-delete删除 -->
-<script type="text/html" id="startcontent1">
+	<!-- 图片信息 -->
+	<!-- 全部生产报错 -->
+	<div class="modal fade tipModal" id="startmodal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+
+	</div><!-- /.modal弹框 myModal-delete删除 -->
+	<script type="text/html" id="startcontent1">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -158,271 +163,303 @@
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </script>
-<!-- 图片信息 -->
-<div class="modal fade tipModal hiddenimg" id="logininghow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog" style="width:400px;height:300px;margin-top: 20%;">
-		<div class="modal-content">
-			<img src="../build/img/logining.gif">
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal弹框 myModal-delete删除 -->
-<script src="../build/js/bootstrap.js"></script>
-<script src="../build/js/jquery.icheck.min.js"></script>
-<script src="../build/js/main.js"></script>
-<script src="../build/js/pageNav.js"></script>
-<script>
-var kucunisok = []; 
-var myorderid;
-var arr_tip_userid = new Array();
-//进入加载
-$(function(){
-	var myDate = new Date();
-	$.ajax({
-		url:headurl+"/OrderController/OrderList?URL=" + myDate.getMinutes()+myDate.getSeconds(),
-		data:{workstatus:1},
-		success:function(data){
-			var data = eval('(' + data + ')');
-			var html = template('tpl',data.body);
-			document.getElementById('indexbody').innerHTML = html;
-			icheckinit();
-			if(data.body.total>0){
-				var pageNavObj = null;//用于储存分页对象
-				pageNavObj = new PageNavCreate("PageNavId",{ pageCount:data.body.pages, currentPage:data.body.pageNum, perPageNum:data.body.pageSize});
-				pageNavObj.afterClick(search);
-			}
-		}
-	})
-	$('.link').load('../views/link.html');
-	$('.head').load('../views/header2.html');
-	icheckinit();
-})
-function search(pageNum){
-	var myDate = new Date();
-	var text=$("#text").val();
-	var workstatus=$("#workstatus").val();
-	$.ajax({
-		url:headurl+"/OrderController/OrderList?URL="+myDate.getMinutes()+myDate.getSeconds(),
-		data:{text:text,workstatus:workstatus,pageNum:pageNum},
-		success:function(data){
-			var data = eval('(' + data + ')');
-			var html = template('tpl',data.body);
-			document.getElementById('indexbody').innerHTML = html;
-			icheckinit();
-			if(data.body.total>0){
-				var pageNavObj = null;//用于储存分页对象
-				pageNavObj = new PageNavCreate("PageNavId",{ pageCount:data.body.pages, currentPage:data.body.pageNum, perPageNum:data.body.pageSize});
-				pageNavObj.afterClick(search);
-			}
-		}
-	})
-}
-
-//全部生产
-function allproducts(type){
-	$("#startmodal1").modal('hide');
-	kucunisok = [];
-	$("#logininghow").modal('show');
-	$.ajax({
-		url:headurl+"/OrderController/allStart",
-		type:'post',
-		data:{type:type},
-		success:function(data){
-			$("#logininghow").modal('hide');
-			var data = eval('(' + data + ')');
-			if(data.success==1){
-				tipSuccess('生产成功了'+data.body.normalcount+"个订单，生产失败了"+data.body.exceptioncount+"个订单",'search');
-			}else{
-				//tipError(data.msg);
-				var html = template('startcontent1',{id:data.body.itemnum});
-				document.getElementById('startmodal1').innerHTML = html;
-				$("#startmodal1").modal('show');
-			}
-		}
-	})
-}
-//生产
-function product(boid){
-	kucunisok = []; 
-	$.ajax({
-		url:headurl+"/OrderController/starOrder",
-		type:'post',
-		data:{boid:boid,type:2},
-		success:function(data){
-			var data = eval('(' + data + ')');
-			debugger
-			if(data.success==1){
-				tipSuccess('生产成功了'+data.body.normalcount+"个订单，生产失败了"+data.body.exceptioncount+"个订单",'search');
-			}else{
-				tipError(data.msg);
-			}
-		}
-	})
-}
-//生产
-function products(boids){
-	var boidst="";
-	for(var i = 0;i<boids.length;i++){
-		if(i==0){
-			boidst += boids[i];
-		}else {
-			boidst += "&boid="+boids[i];
-		}
-	}
-	$.ajax({
-		url:headurl+"/OrderController/starOrder?boid="+boidst,
-		type:'post',
-		data:{type:2},
-		success:function(data){
-			var data = eval('(' + data + ')');
-			if(data.success==1){
-				tipSuccess('生产成功了'+data.body.normalcount+"个订单，生产失败了"+data.body.exceptioncount+"个订单",'search');
-			}else{
-				//tipError(data.msg);
-				var html = template('startcontent',{id:data.body.itemnum});
-				document.getElementById('startmodal').innerHTML = html;
-				$("#startmodal").modal('show');
-			}
-		}
-	})
-}
-//强制生产
-function qiangproducts(){
-	$("#startmodal").modal('hide');
-	var boidst="";
-	var boids = arr_tip_userid;
-	for(var i = 0;i<boids.length;i++){
-		if(i==0){
-			boidst += boids[i];
-		}else {
-			boidst += "&boid="+boids[i];
-		}
-	}
-	$.ajax({
-		url:headurl+"/OrderController/starOrder?boid="+boidst,
-		type:'post',
-		data:{type:1},
-		success:function(data){
-			var data = eval('(' + data + ')');
-			if(data.success==1){
-				tipSuccess('生产成功了'+data.body.normalcount+"个订单，生产失败了"+data.body.exceptioncount+"个订单",'search');
-			}else{
-				tipError(data.msg);
-			}
-		}
-	})
-}
-//停止生产
-function stopproduct(boid){
-	$.ajax({
-		url:headurl+"/OrderController/stopOrder",
-		type:'post',
-		data:{boid:boid},
-		success:function(data){
-			var data = eval('(' + data + ')');
-			if(data.success==1){
-				tipSuccess('操作成功','search');
-			}else{
-				tipError(data.msg);
-			}
-		}
-	})
-}
-//添加工单
-// function creatwork(orderid){
-// 	location.href="../views/newwork.html?orderid="+orderid;
-// }
-//工单详情
-function gowork(boid){
-	location.href="../views/newworkorder.html?boid="+boid;
-}
-
-//判断选择框是否为空
-function ifproduction(){
-	if(arr_tip_userid.length>0){
-		confirmdelete(arr_tip_userid,'products','是否进行该订单生产？');
-	}else{
-		tipError('请选择订单');
-	}
-}
-//初始化选择框
-function icheckinit(){
-	arr_tip_userid=[];
-	$('.form-checkbox input').iCheck({
-		checkboxClass: 'icheckbox_square-blue',
-		increaseArea: '20%'
-	});
-	/*全选  取消全选*/
-    var flagChecked=false;
-	var checkboxnum=$('.tablediv .form-checkbox').size()-1;
-    $('.tablediv .form-checkbox').on('ifChecked',function(e){
-        if($(this).hasClass('checkbox-all')){
-			$('.tablediv .form-checkbox').iCheck('check');
-			arr_tip_userid=[];
-			flagChecked=true;
-			$('.tablediv .form-checkbox').each(function(i){
-				if(i!=0){
-					arr_tip_userid.push($(this).find('input').val());
+	<!-- 图片信息 -->
+	<div class="modal fade tipModal hiddenimg" id="logininghow" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" style="width:400px;height:300px;margin-top: 20%;">
+			<div class="modal-content">
+				<img src="../build/img/logining.gif">
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal弹框 myModal-delete删除 -->
+	<script src="../build/js/bootstrap.js"></script>
+	<script src="../build/js/jquery.icheck.min.js"></script>
+	<script src="../build/js/main.js"></script>
+	<script src="../build/js/pageNav.js"></script>
+	<script>
+		var kucunisok = [];
+		var myorderid;
+		var arr_tip_userid = new Array();
+		//进入加载
+		$(function () {
+			var myDate = new Date();
+			$.ajax({
+				url: headurl + "/OrderController/OrderList?URL=" + myDate.getMinutes() + myDate.getSeconds(),
+				data: { workstatus: 1 },
+				success: function (data) {
+					var data = eval('(' + data + ')');
+					var html = template('tpl', data.body);
+					document.getElementById('indexbody').innerHTML = html;
+					icheckinit();
+					if (data.body.total > 0) {
+						var pageNavObj = null;//用于储存分页对象
+						pageNavObj = new PageNavCreate("PageNavId", { pageCount: data.body.pages, currentPage: data.body.pageNum, perPageNum: data.body.pageSize });
+						pageNavObj.afterClick(search);
+					}
 				}
 			})
-        }else{
-        	if(checkboxnum==$('.tablediv input[name="square-checkbox"]:checked').size()){
-				arr_tip_userid=[];
-				$('.tablediv .form-checkbox').iCheck('check');
-			}else{
-				var input = $(this).find('input');
-				var val = input.val();
-				arr_tip_userid.push(val);
+			$('.link').load('../views/link.html');
+			$('.head').load('../views/header2.html');
+			icheckinit();
+		})
+		function search(pageNum) {
+			var myDate = new Date();
+			var text = $("#text").val();
+			var workstatus = $("#workstatus").val();
+			$.ajax({
+				url: headurl + "/OrderController/OrderList?URL=" + myDate.getMinutes() + myDate.getSeconds(),
+				data: { text: text, workstatus: workstatus, pageNum: pageNum },
+				success: function (data) {
+					var data = eval('(' + data + ')');
+					var html = template('tpl', data.body);
+					document.getElementById('indexbody').innerHTML = html;
+					icheckinit();
+					if (data.body.total > 0) {
+						var pageNavObj = null;//用于储存分页对象
+						pageNavObj = new PageNavCreate("PageNavId", { pageCount: data.body.pages, currentPage: data.body.pageNum, perPageNum: data.body.pageSize });
+						pageNavObj.afterClick(search);
+					}
+				}
+			})
+		}
+
+		//刷新
+		function reloadlist() {
+			var myDate = new Date();
+			var text = $("#text").val();
+			var workstatus = $("#workstatus").val();
+			$.ajax({
+				url: headurl + "/OrderController/getOrderBeanByHand?URL=" + myDate.getMinutes() + myDate.getSeconds(),
+				data: {},
+				success: function (data) {
+					search(1);
+				}
+			})
+		}
+
+		//全部生产
+		function allproducts(type) {
+			$("#startmodal1").modal('hide');
+			kucunisok = [];
+			$("#logininghow").modal('show');
+			$.ajax({
+				url: headurl + "/OrderController/allStart",
+				type: 'post',
+				data: { type: type },
+				success: function (data) {
+					$("#logininghow").modal('hide');
+					var data = eval('(' + data + ')');
+					if (data.success == 1) {
+						tipSuccess('生产成功了' + data.body.normalcount + "个订单，生产失败了" + data.body.exceptioncount + "个订单", 'search');
+					} else {
+						//tipError(data.msg);
+						var html = template('startcontent1', { id: data.body.itemnum });
+						document.getElementById('startmodal1').innerHTML = html;
+						$("#startmodal1").modal('show');
+					}
+				}
+			})
+		}
+		//生产
+		function product(boid) {
+			kucunisok = [];
+			$.ajax({
+				url: headurl + "/OrderController/starOrderPrepear",
+				type: 'post',
+				data: { boids: boid },
+				success: function (data) {
+					$.ajax({
+						url: headurl + "/OrderController/starOrder",
+						type: 'post',
+						data: { boid: boid, type: 2 },
+						success: function (data) {
+							var data = eval('(' + data + ')');
+							if (data.success == 1) {
+								tipSuccess('生产成功了' + data.body.normalcount + "个订单，生产失败了" + data.body.exceptioncount + "个订单", 'search');
+							} else {
+								tipError(data.msg);
+							}
+						}
+					})
+				}
+			})
+
+		}
+		//生产
+		function products(boids) {
+			var boidst = "";
+			var boidsts = "";
+			for (var i = 0; i < boids.length; i++) {
+				if (i == 0) {
+					boidst += boids[i];
+					boidsts += boids[i];
+				} else {
+					boidst += "&boid=" + boids[i];
+					boidsts += "&boids=" + boids[i];
+				}
+			}
+			$.ajax({
+				url: headurl + "/OrderController/starOrderPrepear?boids=" + boidsts,
+				type: 'post',
+				data: { },
+				success: function (data) {
+				}
+			})
+			$.ajax({
+				url: headurl + "/OrderController/starOrder?boid=" + boidst,
+				type: 'post',
+				data: { type: 2 },
+				success: function (data) {
+					var data = eval('(' + data + ')');
+					if (data.success == 1) {
+						tipSuccess('生产成功了' + data.body.normalcount + "个订单，生产失败了" + data.body.exceptioncount + "个订单", 'search');
+					} else {
+						//tipError(data.msg);
+						var html = template('startcontent', { id: data.body.itemnum });
+						document.getElementById('startmodal').innerHTML = html;
+						$("#startmodal").modal('show');
+					}
+				}
+			})
+		}
+		//强制生产
+		function qiangproducts() {
+			$("#startmodal").modal('hide');
+			var boidst = "";
+			var boids = arr_tip_userid;
+			for (var i = 0; i < boids.length; i++) {
+				if (i == 0) {
+					boidst += boids[i];
+				} else {
+					boidst += "&boid=" + boids[i];
+				}
+			}
+			$.ajax({
+				url: headurl + "/OrderController/starOrder?boid=" + boidst,
+				type: 'post',
+				data: { type: 1 },
+				success: function (data) {
+					var data = eval('(' + data + ')');
+					if (data.success == 1) {
+						tipSuccess('生产成功了' + data.body.normalcount + "个订单，生产失败了" + data.body.exceptioncount + "个订单", 'search');
+					} else {
+						tipError(data.msg);
+					}
+				}
+			})
+		}
+		//停止生产
+		function stopproduct(boid) {
+			$.ajax({
+				url: headurl + "/OrderController/stopOrder",
+				type: 'post',
+				data: { boid: boid },
+				success: function (data) {
+					var data = eval('(' + data + ')');
+					if (data.success == 1) {
+						tipSuccess('操作成功', 'search');
+					} else {
+						tipError(data.msg);
+					}
+				}
+			})
+		}
+		//添加工单
+		// function creatwork(orderid){
+		// 	location.href="../views/newwork.html?orderid="+orderid;
+		// }
+		//工单详情
+		function gowork(boid) {
+			location.href = "../views/newworkorder.html?boid=" + boid;
+		}
+
+		//判断选择框是否为空
+		function ifproduction() {
+			if (arr_tip_userid.length > 0) {
+				confirmdelete(arr_tip_userid, 'products', '是否进行该订单生产？');
+			} else {
+				tipError('请选择订单');
 			}
 		}
-    });
-    $('.tablediv .form-checkbox').on('ifUnchecked',function(e){
-    	if($(this).hasClass('checkbox-all')&&flagChecked){
-			$('.tablediv .form-checkbox').not('.checkbox-all').iCheck('uncheck');
-			flagChecked=false;
-			arr_tip_userid=[];
-    	}else{
-			flagChecked=false;
-			var input = $(this).find('input');
-	    	var val = input.val();
-	    	for (var i=0;i<arr_tip_userid.length;i++) {
-	    		if (arr_tip_userid[i] == val) {
-					arr_tip_userid.remove(val);
-	    			break;
-	    		}
-	    	}
-			$('.checkbox-all').iCheck('uncheck');
+		//初始化选择框
+		function icheckinit() {
+			arr_tip_userid = [];
+			$('.form-checkbox input').iCheck({
+				checkboxClass: 'icheckbox_square-blue',
+				increaseArea: '20%'
+			});
+			/*全选  取消全选*/
+			var flagChecked = false;
+			var checkboxnum = $('.tablediv .form-checkbox').size() - 1;
+			$('.tablediv .form-checkbox').on('ifChecked', function (e) {
+				if ($(this).hasClass('checkbox-all')) {
+					$('.tablediv .form-checkbox').iCheck('check');
+					arr_tip_userid = [];
+					flagChecked = true;
+					$('.tablediv .form-checkbox').each(function (i) {
+						if (i != 0) {
+							arr_tip_userid.push($(this).find('input').val());
+						}
+					})
+				} else {
+					if (checkboxnum == $('.tablediv input[name="square-checkbox"]:checked').size()) {
+						arr_tip_userid = [];
+						$('.tablediv .form-checkbox').iCheck('check');
+					} else {
+						var input = $(this).find('input');
+						var val = input.val();
+						arr_tip_userid.push(val);
+					}
+				}
+			});
+			$('.tablediv .form-checkbox').on('ifUnchecked', function (e) {
+				if ($(this).hasClass('checkbox-all') && flagChecked) {
+					$('.tablediv .form-checkbox').not('.checkbox-all').iCheck('uncheck');
+					flagChecked = false;
+					arr_tip_userid = [];
+				} else {
+					flagChecked = false;
+					var input = $(this).find('input');
+					var val = input.val();
+					for (var i = 0; i < arr_tip_userid.length; i++) {
+						if (arr_tip_userid[i] == val) {
+							arr_tip_userid.remove(val);
+							break;
+						}
+					}
+					$('.checkbox-all').iCheck('uncheck');
+				}
+			});
+			$('.tablediv td').hover(function () {
+				$(this).parents('tr').find('td').css('background', ' #E7F3FC');
+			}, function () {
+				$(this).parents('tr').find('td').css('background', ' #FFF')
+			});
+			$('#text').bind('keypress', function (event) {
+				if (event.keyCode == "13") {
+					search();
+				}
+			});
+			$('.tdtitle').each(function () {
+				if ($(this).html().length > 10) {
+					$(this).html($(this).html().substring(0, 10) + "..");
+				}
+			})
+			$('.showul').each(function () {
+				if ($(this).find('li').length <= 0) {
+					$(this).find('span').css("color", "#999")
+				}
+			})
 		}
-    });
-	$('.tablediv td').hover(function(){
-		$(this).parents('tr').find('td').css('background',' #E7F3FC');
-	},function(){
-		$(this).parents('tr').find('td').css('background',' #FFF')
-	});
-	$('#text').bind('keypress',function(event){
-            if(event.keyCode == "13")    
-            {
-                search();
-            }
-		});
-	$('.tdtitle').each(function(){
-		if($(this).html().length>10){
-			$(this).html($(this).html().substring(0,10)+"..");
-		}
-	})
-	$('.showul').each(function(){
-		if($(this).find('li').length<=0){
-			$(this).find('span').css("color","#999")
-		}
-	})
-}
 
-//ceshi
-function ceshi() {
-	window.external.OpenForm("31");
-	window.external.givesize("A小猪长袖","小猪配企","XXL","100");
-	window.external.islood("Gprinter GP-1524T");
-	window.external.printjs(1,"Gprinter GP-1524T");
-}
-</script>
+		//ceshi
+		function ceshi() {
+			window.external.OpenForm("31");
+			window.external.givesize("A小猪长袖", "小猪配企", "XXL", "100");
+			window.external.islood("Gprinter GP-1524T");
+			window.external.printjs(1, "Gprinter GP-1524T");
+		}
+	</script>
 </body>
+
 </html>

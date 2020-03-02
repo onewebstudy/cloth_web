@@ -189,7 +189,7 @@ function confirmdelete(id,callfun,msg){
 	$('#msgError').html(msg);
 	$('#tipError').modal('show');
 	//$('#tipError-btn').unbind('click');
-	var toWaitTime=2;
+	var toWaitTime=5;
 	var reWaitTime;
 	function towait() {
 	 	if(toWaitTime == 0){
@@ -215,7 +215,7 @@ function confirmdelete(id,callfun,msg){
 	 if(modaltype==1){
 		$('#tipError').modal('show');
 		//$('#tipError-btn').unbind('click');
-		var toWaitTime=2;
+		var toWaitTime=5;
 		var reWaitTime;
 		function towait() {
 			if(toWaitTime == 0){

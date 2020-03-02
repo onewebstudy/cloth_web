@@ -1,5 +1,6 @@
 // JavaScript Document
 var headurl = "/shop";
+// var headurl = "/api/shop";
 $(document).ready(function(){
 	/*setTimeout(function () {
 	    pushHistory()
