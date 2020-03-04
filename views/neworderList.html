@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="../build/css/style.css">
 	<link rel="stylesheet" href="../build/css/main.css">
 	<link rel="stylesheet" href="../build/css/pageNav.css">
+	<link rel="stylesheet" href="../build/css/jquery.datetimepicker.css">
 	<link href="../build/css/blue.css" rel="stylesheet">
 	<script src="../build/js/jquery-1.11.3.min.js"></script>
 	<script src="../build/js/art-template.js"></script>
@@ -36,8 +37,8 @@
 			<span class="production" onclick="ifproduction()"><img src="../build/img/produce.png">生产</span>
 			<span class="production" onclick="confirmdelete('2','allproducts','是否进行全部订单生产？');" style="left: 24px;"><img src="../build/img/produce.png">全部生产</span>
 			<span class="production" onclick="reloadlist()" style="left: 40px;">刷新</span>
+			<input id="datetimepicker" type="text" class="production" style="left: 80px;">
 			<div class="searchmin">
-				
 				<span>生产状态：</span>
 				<select id="workstatus" onchange="search()">
 					<option value="">全部</option>
@@ -176,6 +177,7 @@
 	<script src="../build/js/jquery.icheck.min.js"></script>
 	<script src="../build/js/main.js"></script>
 	<script src="../build/js/pageNav.js"></script>
+	<script src="../build/js/jquery.datetimepicker.full.min.js"></script>
 	<script>
 		var kucunisok = [];
 		var myorderid;
@@ -226,13 +228,26 @@
 		//刷新
 		function reloadlist() {
 			var myDate = new Date();
-			var text = $("#text").val();
-			var workstatus = $("#workstatus").val();
+			var timeDate = $("#datetimepicker").val();
+			var lastdate = '';
+			if(timeDate.length > 0) {
+				var Time = new Date(timeDate);
+				var timestemp = Time.getTime();
+				var lasttime = (timestemp + 1 * 60 * 60 * 1000)
+				var lastdate = formateDate(lasttime,'Y-M-D H:I');
+			}
+			
 			$.ajax({
 				url: headurl + "/OrderController/getOrderBeanByHand?URL=" + myDate.getMinutes() + myDate.getSeconds(),
-				data: {},
+				data: {startTime: timeDate,endTime: lastdate},
 				success: function (data) {
-					search(1);
+					if (data.success == 1) {
+						tipSuccess('刷新成功');
+						search(1);
+					}else{
+						tipError('刷新失败');
+					}
+					
 				}
 			})
 		}
@@ -301,7 +316,7 @@
 			$.ajax({
 				url: headurl + "/OrderController/starOrderPrepear?boids=" + boidsts,
 				type: 'post',
-				data: { },
+				data: {},
 				success: function (data) {
 				}
 			})
@@ -383,6 +398,13 @@
 		}
 		//初始化选择框
 		function icheckinit() {
+			$('#datetimepicker').datetimepicker(
+				{
+					lang: "ch",
+					format: "Y-m-d H:i",      //格式化日期
+				}
+			);
+			$.datetimepicker.setLocale('ch');//设置中文
 			arr_tip_userid = [];
 			$('.form-checkbox input').iCheck({
 				checkboxClass: 'icheckbox_square-blue',
@@ -458,6 +480,34 @@
 			window.external.givesize("A小猪长袖", "小猪配企", "XXL", "100");
 			window.external.islood("Gprinter GP-1524T");
 			window.external.printjs(1, "Gprinter GP-1524T");
+		}
+
+		function formateDate(strTime, format, needMap) {
+			strTime = Number(strTime);
+			format = format || 'Y-M-D H:I:S';
+			var date = new Date(strTime);
+			var dateMap = {
+				y: (date.getFullYear() + '').slice(2),
+				Y: date.getFullYear(),
+				M: date.getMonth() > 8 ? date.getMonth() + 1 : ('0' + (date.getMonth() + 1)),
+				D: date.getDate() > 9 ? date.getDate() : ('0' + date.getDate()),
+				h: date.getHours() % 12,
+				H: date.getHours(),
+				i: date.getMinutes(),
+				s: date.getSeconds(),
+				I: date.getMinutes() > 9 ? date.getMinutes() : ('0' + date.getMinutes()),
+				S: date.getSeconds() > 9 ? date.getSeconds() : ('0' + date.getSeconds()),
+				A: date.getHours() >= 12 ? 'pm' : 'am',
+				w: date.getDay(),
+				W: ['日', '一', '二', '三', '四', '五', '六'][date.getDay()]
+			};
+			for (var k in dateMap) {
+				format = format.replace(new RegExp(k, 'g'), dateMap[k]);
+			}
+			if (needMap) {
+				return dateMap;
+			}
+			return format;
 		}
 	</script>
 </body>
