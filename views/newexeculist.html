@@ -257,6 +257,34 @@
 			})
 			arr_tip_userid = [];
 		}
+		function search1(pageNum) {
+			window.external.overstring();
+			var myDate = new Date();
+			var text = $("#text").val();
+			var status = $("#status").val();
+			var type = $("#type").val();
+			var isexport = $("#isexport").val();
+			$.ajax({
+				url: headurl + "/OrderController/runOrderList?woid=" + woid + "&boid=" + boid + "&URL=" + myDate.getMinutes() + myDate.getSeconds(),
+				data: { text: text, status: status, type: type, pageNum: pageNum, isexport: isexport },
+				success: function (data) {
+					var data = eval('(' + data + ')');
+					if (data.success == 1) {
+						var html = template('executions', data.body);
+						document.getElementById('indexbody').innerHTML = html;
+						icheckinit();
+						if (data.body.pagelist.total > 0) {
+							var pageNavObj = null;//用于储存分页对象
+							pageNavObj = new PageNavCreate("PageNavId", { pageCount: data.body.pagelist.pages, currentPage: data.body.pagelist.pageNum, perPageNum: data.body.pagelist.pageSize });
+							pageNavObj.afterClick(search);
+						}
+					} else {
+						tipError(data.msg);
+					}
+				}
+			})
+			arr_tip_userid = [];
+		}
 		$(function () {
 			$('.link').load('../views/link.html');
 			$('.head').load('../views/header2.html');
@@ -338,6 +366,7 @@
 								if (jindunnum == i) {
 									var e = prolist[i].itemnum[0];
 									window.external.OpenForm2(prolist[i].roid);
+									window.external.CreateBarcodePicture(prolist[i].roid,200,80);
 									var a = prolist[i].itemnum;
 									var c = prolist[i].size;
 									var d = prolist[i].num;
@@ -496,6 +525,7 @@
 			errornum = 0;
 			for (var i = 0; i < roids.length; i++) {
 				window.external.OpenForm2(roids[i]);
+				window.external.CreateBarcodePicture(roids[i],200,80);
 				$.ajax({
 					url: headurl + "/OrderController/runOrderdetail?roid=" + roids[i] + "&URL=" + myDate.getMinutes() + myDate.getSeconds(),
 					async: false,
@@ -880,8 +910,7 @@
 		}
 		function gotowhile() {
 			$('#jindu').modal('hide');
-			window.external.overstring();
-			confirmdelete("", "search", "已成功导出" + successnum + "个合成图，失败了" + errornum + "个合成图");
+			confirmdelete("", "search1", "已成功导出" + successnum + "个合成图，失败了" + errornum + "个合成图");
 		}
 // $("#confirmdelete").bind('hide.bs.modal',function(){
 //   $(".modal-backdrop").remove();
