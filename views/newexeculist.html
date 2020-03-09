@@ -614,6 +614,7 @@
 		function exporicode(id) {
 			var myDate = new Date();
 			window.external.OpenForm2(id);
+			window.external.CreateBarcodePicture(id,200,80);
 			successnum = 1;
 			errornum = 0;
 			$.ajax({
@@ -910,7 +911,7 @@
 		}
 		function gotowhile() {
 			$('#jindu').modal('hide');
-			confirmdelete("", "search1", "已成功导出" + successnum + "个合成图，失败了" + errornum + "个合成图");
+			confirmdelete("", "search1", "已成功导出" + successnum + "个合成图或打印成功，失败了" + errornum + "个合成图");
 		}
 // $("#confirmdelete").bind('hide.bs.modal',function(){
 //   $(".modal-backdrop").remove();
