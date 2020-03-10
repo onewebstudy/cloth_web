@@ -135,7 +135,7 @@
 	</script>
 	<!-- 图片信息 -->
 	<div class="modal fade tipModal hiddenimg" id="imgshow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-	 aria-hidden="true">
+		aria-hidden="true">
 		<div class="modal-dialog" style="width:447px;height:291px;">
 			<div class="modal-content">
 				<img class="maximg" src="">
@@ -144,7 +144,7 @@
 	</div><!-- /.modal弹框 myModal-delete删除 -->
 	<!-- 进度条信息 -->
 	<div class="modal fade tipModal hiddenimg" id="jindu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-	 aria-hidden="true">
+		aria-hidden="true">
 		<div class="modal-dialog" style="width:447px;height:291px;margin-top: 25%;">
 			<div class="modal-content">
 				<div class="box">
@@ -159,7 +159,8 @@
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal弹框 myModal-delete删除 -->
 	<!-- 停产信息 -->
-	<div class="modal fade tipModal" id="stopmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade tipModal" id="stopmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
 
 	</div><!-- /.modal弹框 myModal-delete删除 -->
 	<script type="text/html" id="stopmodalmin">
@@ -195,8 +196,8 @@
    </div><!-- /.modal-dialog -->
 </script>
 	<!--旋转-->
-	<div class="modal fade tipModal hiddenimg" id="logininghow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-	 aria-hidden="true">
+	<div class="modal fade tipModal hiddenimg" id="logininghow" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog" style="width:400px;height:300px;margin-top: 20%;">
 			<div class="modal-content">
 				<img src="../build/img/logining.gif">
@@ -366,7 +367,7 @@
 								if (jindunnum == i) {
 									var e = prolist[i].itemnum[0];
 									window.external.OpenForm2(prolist[i].roid);
-									window.external.CreateBarcodePicture(prolist[i].roid,200,80);
+									window.external.CreateBarcodePicture(prolist[i].roid, 200, 80);
 									var a = prolist[i].itemnum;
 									var c = prolist[i].size;
 									var d = prolist[i].num;
@@ -385,7 +386,11 @@
 										y = prolist[i].y;
 										angle = prolist[i].angle;
 									}
-
+									if (e != "E" && (g == undefined || !g)) {
+										tipError(a + "印花不存在");
+										changestatus(prolist[i].roid);
+										return false;
+									}
 									if (e == "A" || e == "B") {
 										if (g) {
 											window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename);
@@ -444,6 +449,11 @@
 											x = prolist[i].x;
 											y = prolist[i].y;
 											angle = prolist[i].angle;
+										}
+										if (e != "E" && (g == undefined || !g)) {
+											tipError(a + "印花不存在");
+											changestatus(prolist[i].roid);
+											return false;
 										}
 										if (e == "A" || e == "B") {
 											if (g) {
@@ -525,7 +535,7 @@
 			errornum = 0;
 			for (var i = 0; i < roids.length; i++) {
 				window.external.OpenForm2(roids[i]);
-				window.external.CreateBarcodePicture(roids[i],200,80);
+				window.external.CreateBarcodePicture(roids[i], 200, 80);
 				$.ajax({
 					url: headurl + "/OrderController/runOrderdetail?roid=" + roids[i] + "&URL=" + myDate.getMinutes() + myDate.getSeconds(),
 					async: false,
@@ -550,6 +560,11 @@
 								x = data.body.x;
 								y = data.body.y;
 								angle = data.body.angle;
+							}
+							if (e != "E" && (g == undefined || !g)) {
+								tipError(a + "印花不存在");
+								changestatus(roids[i]);
+								return false;
 							}
 							if (e == "A" || e == "B") {
 								if (g) {
@@ -613,8 +628,8 @@
 		//导出标识
 		function exporicode(id) {
 			var myDate = new Date();
-			window.external.OpenForm2(id);
-			window.external.CreateBarcodePicture(id,200,80);
+			// window.external.OpenForm2(id);
+			// window.external.CreateBarcodePicture(id,200,80);
 			successnum = 1;
 			errornum = 0;
 			$.ajax({
@@ -641,6 +656,11 @@
 							x = data.body.x;
 							y = data.body.y;
 							angle = data.body.angle;
+						}
+						if (e != "E" && (g == undefined || !g)) {
+							tipError(a + "印花不存在");
+							changestatus(id);
+							return false;
 						}
 						if (e == "A" || e == "B") {
 							if (g) {
@@ -847,7 +867,7 @@
 						var b = data.body.stname;
 						var c = data.body.size;
 						var d = data.body.num;
-						
+
 						var colorname = data.body.colorname;
 						var sizename = data.body.sizename;
 						var stylename = data.body.stylename;
