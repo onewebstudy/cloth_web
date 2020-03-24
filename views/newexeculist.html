@@ -379,6 +379,8 @@
 									var colorname = prolist[i].colorname;
 									var sizename = prolist[i].sizename;
 									var stylename = prolist[i].stylename;
+									var boid = prolist[i].boid ? prolist[i].boid : 0;
+									var sumnum = prolist[i].sumnum ? prolist[i].sumnum : 0;
 									if (e != "E") {
 										b = prolist[i].stname;
 										g = prolist[i].filepath;
@@ -393,7 +395,7 @@
 									}
 									if (e == "A" || e == "B") {
 										if (g) {
-											window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename);
+											window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
 											window.external.cexptai();
 											//changestatus(prolist[i].roid);
 										} else {
@@ -402,7 +404,7 @@
 										}
 									} else if (e == "D") {
 										if (g) {
-											window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename);
+											window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
 											window.external.cexptyunatu();
 											for (var i = 0; i < d; i++) {
 												window.external.printjs2(1, "Gprinter GP-1524T");
@@ -413,7 +415,8 @@
 										}
 									} else if (e == "C") {
 										if (g) {
-											window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename);
+											window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+											window.external.cprintv();
 											for (var i = 0; i < d; i++) {
 												window.external.printjs2(1, "Gprinter GP-1524T");
 											}
@@ -422,7 +425,7 @@
 											changestatus(prolist[i].roid);
 										}
 									} else if (e == "E") {
-										window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename);
+										window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
 										for (var i = 0; i < d; i++) {
 											window.external.printjs2(1, "Gprinter GP-1524T");
 										}
@@ -435,6 +438,7 @@
 									if (jindunnum == i) {
 										var e = prolist[i].itemnum[0];
 										window.external.OpenForm2(prolist[i].roid);
+										window.external.CreateBarcodePicture(prolist[i].roid, 200, 80);
 										var a = prolist[i].itemnum;
 										var c = prolist[i].size;
 										var d = prolist[i].num;
@@ -443,6 +447,11 @@
 										var x = 0;
 										var y = 0;
 										var angle = 0;
+										var colorname = prolist[i].colorname;
+										var sizename = prolist[i].sizename;
+										var stylename = prolist[i].stylename;
+										var boid = prolist[i].boid ? prolist[i].boid : 0;
+										var sumnum = prolist[i].sumnum ? prolist[i].sumnum : 0;
 										if (e != "E") {
 											b = prolist[i].stname;
 											g = prolist[i].filepath;
@@ -457,7 +466,7 @@
 										}
 										if (e == "A" || e == "B") {
 											if (g) {
-												window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename);
+												window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
 												window.external.cexptai();
 											} else {
 												changestatus(prolist[i].roid);
@@ -465,7 +474,7 @@
 											}
 										} else if (e == "D") {
 											if (g) {
-												window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename);
+												window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
 												window.external.cexptyunatu();
 												for (var i = 0; i < d; i++) {
 													window.external.printjs2(1, "Gprinter GP-1524T");
@@ -476,7 +485,8 @@
 											}
 										} else if (e == "C") {
 											if (g) {
-												window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename);
+												window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+												window.external.cprintv();
 												for (var i = 0; i < d; i++) {
 													window.external.printjs2(1, "Gprinter GP-1524T");
 												}
@@ -486,7 +496,7 @@
 											}
 
 										} else if (e == "E") {
-											window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename);
+											window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
 											for (var i = 0; i < d; i++) {
 												window.external.printjs2(1, "Gprinter GP-1524T");
 											}
@@ -554,6 +564,8 @@
 							var colorname = data.body.colorname;
 							var sizename = data.body.sizename;
 							var stylename = data.body.stylename;
+							var boid = data.body.boid ? data.body.boid : 0;
+							var sumnum = data.body.sumnum ? data.body.sumnum : 0;
 							if (e != "E") {
 								b = data.body.stname;
 								g = data.body.filepath;
@@ -568,14 +580,14 @@
 							}
 							if (e == "A" || e == "B") {
 								if (g) {
-									window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename);
+									window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
 									window.external.cexptai();
 								} else {
 									changestatus(roids[i]);
 								}
 							} else if (e == "D") {
 								if (g) {
-									window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename);
+									window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
 									window.external.cexptyunatu();
 									for (var i = 0; i < d; i++) {
 										window.external.printjs2(1, "Gprinter GP-1524T");
@@ -585,7 +597,8 @@
 								}
 							} else if (e == "C") {
 								if (g) {
-									window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename);
+									window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+									window.external.cprintv();
 									for (var i = 0; i < d; i++) {
 										window.external.printjs2(1, "Gprinter GP-1524T");
 									}
@@ -593,7 +606,7 @@
 									changestatus(roids[i]);
 								}
 							} else if (e == "E") {
-								window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename);
+								window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
 								for (var i = 0; i < d; i++) {
 									window.external.printjs2(1, "Gprinter GP-1524T");
 								}
@@ -628,8 +641,8 @@
 		//导出标识
 		function exporicode(id) {
 			var myDate = new Date();
-			// window.external.OpenForm2(id);
-			// window.external.CreateBarcodePicture(id,200,80);
+			window.external.OpenForm2(id);
+			window.external.CreateBarcodePicture(id,200,80);
 			successnum = 1;
 			errornum = 0;
 			$.ajax({
@@ -650,6 +663,8 @@
 						var colorname = data.body.colorname;
 						var sizename = data.body.sizename;
 						var stylename = data.body.stylename;
+						var boid = data.body.boid ? data.body.boid : 0;
+						var sumnum = data.body.sumnum ?  data.body.sumnum : 0;
 						if (e != "E") {
 							b = data.body.stname;
 							g = data.body.filepath;
@@ -664,14 +679,14 @@
 						}
 						if (e == "A" || e == "B") {
 							if (g) {
-								window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename);
+								window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
 								window.external.cexptai();
 							} else {
 								changestatus(id);
 							}
 						} else if (e == "D") {
 							if (g) {
-								window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename);
+								window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
 								window.external.cexptyunatu();
 								for (var i = 0; i < d; i++) {
 									window.external.printjs2(1, "Gprinter GP-1524T");
@@ -681,7 +696,8 @@
 							}
 						} else if (e == "C") {
 							if (g) {
-								window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename);
+								window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+								window.external.cprintv();
 								for (var i = 0; i < d; i++) {
 									window.external.printjs2(1, "Gprinter GP-1524T");
 								}
@@ -689,7 +705,7 @@
 								changestatus(id);
 							}
 						} else if (e == "E") {
-							window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename);
+							window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
 							for (var i = 0; i < d; i++) {
 								window.external.printjs2(1, "Gprinter GP-1524T");
 							}
@@ -871,7 +887,9 @@
 						var colorname = data.body.colorname;
 						var sizename = data.body.sizename;
 						var stylename = data.body.stylename;
-						window.external.givesize(a, b, c, d, e, colorname, sizename, stylename);
+						var boid = data.body.boid ? data.body.boid : 0;
+						var sumnum = data.body.sumnum ? data.body.sumnum : 0;
+						window.external.givesize(a, b, c, d, e, colorname, sizename, stylename,boid,sumnum);
 						window.external.printjs(1, "Gprinter GP-1524T");
 						search();
 					} else {

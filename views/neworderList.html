@@ -57,6 +57,7 @@
 				<tr>
 					<th style="width: 5%;"><div class="form-checkbox checkbox-all"><input type="checkbox"  name="square-checkbox"></div></th>
 					<th style="width: 5%;">序号</th>
+					<th style="width: 5%;">订单编号</th>
 					<th style="width: 10%;">订单号</th>
 					<th style="width: 10%;">创建日期</th>
 					<th style="width: 10%;">订单状态</th>
@@ -74,6 +75,7 @@
                    	</div>
 					</td>
 					<td>{{i+1}}</td>
+					<td>{{value.boid}}</td>
 					<td>{{value.orderid}}</td>
 					<td>{{value.createtime}}</td>
 					<td>{{if value.status==1}}待付款{{/if}}
@@ -99,7 +101,7 @@
 						<div class="showul">
 							<span>操作</span>
 							<ul>
-								<li onclick="confirmdelete('{{value.boid}}','product','是否进行该订单生产？')">生产</li>
+								<li onclick="confirmdelete('{{value.boid}}','product','是否进行该订单生产？')">强制生产</li>
 								<li onclick="confirmdelete('{{value.boid}}','stopproduct','是否停止该订单生产？')">停产</li>
 								<li onclick="gowork('{{value.boid}}')">查看工单</li>
 							</ul>
@@ -234,7 +236,7 @@
 				var Time = new Date(timeDate);
 				var timestemp = Time.getTime();
 				var lasttime = (timestemp + 1 * 60 * 60 * 1000)
-				var lastdate = formateDate(lasttime,'Y-M-D H:I');
+				var lastdate = formateDate(lasttime,'Y-M-D H:I:S');
 			}
 			
 			$.ajax({
@@ -286,7 +288,7 @@
 					$.ajax({
 						url: headurl + "/OrderController/starOrder",
 						type: 'post',
-						data: { boid: boid, type: 2 },
+						data: { boid: boid, type: 1 },
 						success: function (data) {
 							var data = eval('(' + data + ')');
 							if (data.success == 1) {
@@ -401,7 +403,7 @@
 			$('#datetimepicker').datetimepicker(
 				{
 					lang: "ch",
-					format: "Y-m-d H:i",      //格式化日期
+					format: "Y-m-d H:i:s",      //格式化日期
 				}
 			);
 			$.datetimepicker.setLocale('ch');//设置中文

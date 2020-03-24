@@ -114,27 +114,12 @@
 				   <div class="leftaddbox">
 					   <input type="hidden" id="editstid" value="{{stid}}">
 					   <p><span>印花：</span><input type="text" placeholder="请输入印花" id="imgname" value="{{name}}"></p>
-					   <div>
+					   <!-- <div>
 						   <span>尺寸：</span>
 						   <div class="sizediv">
-							   <!-- <span>01</span>
-							   <span>02</span>
-							   <span>03</span>
-							   <span>04</span>
-							   <span>05</span>
-							   <span>06</span>
-							   <span>07</span>
-							   <span>08</span>
-							   <span>09</span>
-							   <span>10</span>
-							   <span>11</span>
-							   <span>12</span>
-							   <span>13</span>
-							   <span>14</span>
-							   <span>15</span> -->
 							   <input type="text" placeholder="自定义" class="sizeinput" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5\.]/g,'')" id="imgsize"value="{{size}}">
 						   </div>
-					   </div>
+					   </div> -->
 					   <p style="position: relative"><span>路径：</span><input type="text" placeholder="请选择路径" id="imgidea" value="{{filepath}}"><input id="fileSlect" class="filestyle" type="file" accept="ai"></p>
 					   <input type="hidden" id="imgpath" value="{{filepath}}"></input>
 					   <p><span>x轴：</span><input type="text" placeholder="请输入x轴" id="imgx" style="margin-left: 6px;"value="{{x}}"></p>
@@ -407,7 +392,8 @@ function fuzhiimg(){
 	var imgx = $.trim($('#imgx').val());
 	var imgy = $.trim($('#imgy').val());
 	var stid = $('#editstid').val();
-	var size = $.trim($('#imgsize').val());
+	//var size = $.trim($('#imgsize').val());
+	var size = name.substr(name.length - 2,2);
 	var angle = $.trim($('#imgangle').val());
 	// if(size){
 	// 	for(var i=0;i<imgsizes.length;i++){
@@ -421,9 +407,9 @@ function fuzhiimg(){
 	// if(!size){
 	// 	size = $('#imgsize').val();
 	// }
-	if(!size){
-		size = name.substr(name.length-2,2)
-	}
+	// if(!size){
+	// 	size = name.substr(name.length-2,2)
+	// }
 	if(!name){
 		$('.modalimgerror').html('印花编码不能为空');
 		return false;
@@ -443,7 +429,8 @@ function fuzhiimg(){
 function saveimg(){
 	var name = $.trim($('#imgname').val());
 	var rfurl = $('#imgidea').val();
-	var size = $.trim($('#imgsize').val());
+	var size = name.substr(name.length - 2,2);
+	//var size = $.trim($('#imgsize').val());
 	var imgx = $.trim($('#imgx').val());
 	var imgy = $.trim($('#imgy').val());
 	var stid = $('#editstid').val();
@@ -469,9 +456,6 @@ function saveimg(){
 	}
 	if(!imgy){
 		imgy=0;
-	}
-	if(!size){
-		size = name.substr(name.length-2,2)
 	}
 	$('#addprintmo').modal('hide');
 	$.ajax({
