@@ -50,9 +50,8 @@
 		getheard();
 	})
 	function printas() {
-		window.external.OpenForm("31");
-		window.external.givesize("A小猪长袖", "小猪配企", "XXL", "1", '1', '22', '43', '34');
-		window.external.printjs(1, "Gprinter GP-1524T");
+		window.external.OpenForm2(129);
+		window.external.uiExport("12332141234123\r\n黑色 213 加黑色的");
 	}
 	function comeback() {
 		window.history.go(-1);
@@ -75,8 +74,8 @@
 	function scalabel(id) {
 		// window.external.OpenForm("31");
 		// window.external.givesize("A小猪长袖","小猪配企","XXL","1",'1','22');
-		// window.external.islood("Gprinter GP-1524T");
-		// window.external.printjs(1,"Gprinter GP-1524T");
+		// window.external.islood("Godex EZ920");
+		// window.external.printjs(1,"Godex EZ920");
 		var myDate = new Date();
 		window.external.OpenForm(id);
 		//$('#sweepcode').modal('hide');
@@ -104,7 +103,7 @@
 									var boid = data.body.boid ? data.body.boid : 0;
 									var sumnum = data.body.sumnum ? data.body.boid : 0;
 									window.external.givesize(a, b, c, d, e, colorname, sizename, stylename, boid, sumnum);
-									window.external.printjs(1, "Gprinter GP-1524T");
+									window.external.printjs(1, "Godex EZ920");
 								} else {
 									tipError1(data.msg);
 								}

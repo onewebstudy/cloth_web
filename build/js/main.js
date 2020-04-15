@@ -1,6 +1,8 @@
 // JavaScript Document
-var headurl = "/shop";
-// var headurl = "/api/shop";
+// var headurl = "/shop";
+
+// Gprinter GP-1524T
+var headurl = "/api/shop";
 $(document).ready(function(){
 	/*setTimeout(function () {
 	    pushHistory()
