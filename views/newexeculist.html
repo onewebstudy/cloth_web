@@ -195,15 +195,9 @@
       </div><!-- /.modal-content -->
    </div><!-- /.modal-dialog -->
 </script>
-	<!--旋转-->
-	<div class="modal fade tipModal hiddenimg" id="logininghow" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog" style="width:400px;height:300px;margin-top: 20%;">
-			<div class="modal-content">
-				<img src="../build/img/logining.gif">
-			</div><!-- /.modal-content -->
-		</div><!-- /.modal-dialog -->
-	</div><!-- /.modal弹框 myModal-delete删除 -->
+	<div id="logininghow" style="position: fixed;top: 0;left: 0;right: 0;bottom: 0;display: none;text-align: center;">
+		<img src="../build/img/logining.gif" style="width:400px;height:300px;margin-top: 20%;">
+	</div>
 	<script src="../build/js/bootstrap.js"></script>
 	<script src="../build/js/jquery.icheck.min.js"></script>
 	<script src="../build/js/main.js"></script>
@@ -537,7 +531,7 @@
 		}
 		//导出多个标识
 		function exporicodes(roids) {
-			$("#confirmdelete").modal('hide');
+			$("#logininghow").css("display","block")
 			var myDate = new Date();
 			successnum = roids.length;
 			errornum = 0;
@@ -615,6 +609,7 @@
 				})
 			}
 			gotowhile();
+			$("#logininghow").css("display","none")
 			// if((successnum+errornum) == roids.length){
 			// 	tipSuccess("已成功导出"+successnum+"个合成图，失败了"+errornum+"个合成图","search");
 			// }
