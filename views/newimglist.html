@@ -360,26 +360,24 @@ function fuzhiimgs(){
 	$('#ssprintmo').modal('hide');
 }
 //c#传到这边来
-function morepath(name,sizestring,xystring,right90,type){
+function morepath(name,sizestring,xystring,right90,type,imgpath){
 	var xyarr = xystring.split(",");
 	var imgx = xyarr[0];
 	var imgy = xyarr[1];
-	var imgpath = imgpath2;
-	setTimeout(function () { 
-			$.ajax({
-			url:headurl+"/StampController/uploadImgInfo",
-			type:'post',
-			data:{name:name,filepath:imgpath,x:imgx,y:imgy,size:sizestring,angle:right90,type:type},
-			success:function(data){
-				var data = eval('(' + data + ')');
-				if(data.success==1){
-						tipSuccess('添加印花成功 ');
-				}else {
-						tipError(data.msg);
-					}
-			}
-		})
-	}, 100);
+	$.ajax({
+		url:headurl+"/StampController/uploadImgInfo",
+		type:'post',
+		async: false,
+		data:{name:name,filepath:imgpath,x:imgx,y:imgy,size:sizestring,angle:right90,type:type},
+		success:function(data){
+			var data = eval('(' + data + ')');
+			if(data.success==1){
+				// tipSuccess('添加印花成功 ');
+			}else {
+					tipError(data.msg);
+				}
+		}
+	})
 	$('#tipSuccess').modal('hide');
 }
 function clearspan(_this){
@@ -488,8 +486,8 @@ function delectimg(stid){
 			if(data.success==1){
 				tipSuccess('删除印花成功','search');
 			}else {
-					tipError(data.msg);
-				}
+				tipError(data.msg);
+			}
 		}
 	})
 }

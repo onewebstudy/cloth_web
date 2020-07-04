@@ -36,6 +36,7 @@
 		<div class="searchdiv clearfix">
 			<span class="production" onclick="ifproduction()"><img src="../build/img/produce.png">生产</span>
 			<span class="production" onclick="confirmdelete('2','allproducts','是否进行全部订单生产？');" style="left: 24px;"><img src="../build/img/produce.png">全部生产</span>
+			<span class="production" onclick="ifdelete()" style="left: 24px;"><img src="../build/img/stop.png">删除</span>
 			<span class="production" onclick="reloadlist()" style="left: 40px;">刷新</span>
 			<input id="datetimepicker" type="text" class="production" style="left: 80px;">
 			<div class="searchmin">
@@ -104,6 +105,7 @@
 								<li onclick="confirmdelete('{{value.boid}}','product','是否进行该订单生产？')">强制生产</li>
 								<li onclick="confirmdelete('{{value.boid}}','stopproduct','是否停止该订单生产？')">停产</li>
 								<li onclick="gowork('{{value.boid}}')">查看工单</li>
+								<li onclick="confirmdelete('{{value.boid}}','deleteproduct','是否删除该订单？')">删除</li>
 							</ul>
 						</div>
 					</td>
@@ -302,6 +304,43 @@
 			})
 
 		}
+		function deleteproduct(boid) {
+			$.ajax({
+				url: headurl + "/OrderController/deleteOrder?orderid=" + boid,
+				type: 'post',
+				data: {},
+				success: function (data) {
+					if(data.success==1){
+						tipSuccess('订单删除成功','search');
+					}else {
+							tipError(data.msg);
+						}
+				}
+			})
+		}
+		//删除deleteid
+		function deleteid(boids) {
+			var boidst = "";
+			for (var i = 0; i < boids.length; i++) {
+				if (i == 0) {
+					boidst += boids[i];
+				} else {
+					boidst += "&orderid=" + boids[i];
+				}
+			}
+			$.ajax({
+				url: headurl + "/OrderController/deleteOrder?orderid=" + boidst,
+				type: 'post',
+				data: {},
+				success: function (data) {
+					if(data.success==1){
+						tipSuccess('订单删除成功','search');
+					}else {
+							tipError(data.msg);
+						}
+				}
+			})
+		}
 		//生产
 		function products(boids) {
 			var boidst = "";
@@ -394,6 +433,13 @@
 		function ifproduction() {
 			if (arr_tip_userid.length > 0) {
 				confirmdelete(arr_tip_userid, 'products', '是否进行该订单生产？');
+			} else {
+				tipError('请选择订单');
+			}
+		}
+		function ifdelete() {
+			if (arr_tip_userid.length > 0) {
+				confirmdelete(arr_tip_userid, 'deleteid', '是否进行该订单删除？');
 			} else {
 				tipError('请选择订单');
 			}
