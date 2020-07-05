@@ -57,16 +57,21 @@
 		window.history.go(-1);
 	}
 	function getheard() {
-		var myDate = new Date();
-		$.ajax({
-			url: headurl + "/userController/gettamp?URL=" + myDate.getMinutes() + myDate.getSeconds(),
-			success: function (data) {
-				var data1 = { status: data };
-				Scavestaus = data;
-				var html = template('headrst', data1);
-				document.getElementById('scstatus').innerHTML = html;
-			}
-		})
+		Scavestaus = localStorage.getItem("Scavestaus") || 0;
+		var data1 = { status: Scavestaus };
+		var html = template('headrst', data1);
+		document.getElementById('scstatus').innerHTML = html;
+
+		// var myDate = new Date();
+		// $.ajax({
+		// 	url: headurl + "/userController/gettamp?URL=" + myDate.getMinutes() + myDate.getSeconds(),
+		// 	success: function (data) {
+		// 		var data1 = { status: data };
+		// 		Scavestaus = data;
+		// 		var html = template('headrst', data1);
+		// 		document.getElementById('scstatus').innerHTML = html;
+		// 	}
+		// })
 	}
 	function showmenu() {
 		$('.mainul').css('display', 'block');
@@ -74,8 +79,8 @@
 	function scalabel(id) {
 		// window.external.OpenForm("31");
 		// window.external.givesize("A小猪长袖","小猪配企","XXL","1",'1','22');
-		// window.external.islood("Godex EZ920");
-		// window.external.printjs(1,"Godex EZ920");
+		// window.external.islood(dayinurl);
+		// window.external.printjs(1,dayinurl);
 		var myDate = new Date();
 		window.external.OpenForm(id);
 		//$('#sweepcode').modal('hide');
@@ -103,7 +108,7 @@
 									var boid = data.body.boid ? data.body.boid : 0;
 									var sumnum = data.body.sumnum ? data.body.sumnum : 0;
 									window.external.givesize(a, b, c, d, e, colorname, sizename, stylename, boid, sumnum);
-									window.external.printjs(1, "Godex EZ920");
+									window.external.printjs(1, dayinurl);
 								} else {
 									tipError1(data.msg);
 								}
@@ -150,13 +155,15 @@
 	}
 	//改变扫码枪状态，从而改变打印机
 	function Printerch(type) {
-		$.ajax({
-			url: headurl + "/userController/savetamp?status=" + type,
-			type: 'post',
-			success: function (data) {
-				getheard();
-			}
-		})
+		localStorage.setItem("Scavestaus", type);
+		getheard();
+		// $.ajax({
+		// 	url: headurl + "/userController/savetamp?status=" + type,
+		// 	type: 'post',
+		// 	success: function (data) {
+		// 		getheard();
+		// 	}
+		// })
 	}
 	//显示扫码贴标的界面
 	function showlabel(id) {
