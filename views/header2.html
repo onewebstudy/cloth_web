@@ -44,6 +44,7 @@
 				</div>
 				<div class="modal-body clearfix bottomlen">
 					<div style="display: flex; padding: 20px;">文件路径: <input type="file" id="exportku" name="file" multiple="multiple"/></div>
+					<div style="display: flex; padding: 20px;">模板: <a href="../build/img/1.xls">模板下载</a></div>
 				</div>
 				<div class="btdiv clearfix">
 					<button class="btn btn-blue yesbtn" onclick="postData()">确定</button>
@@ -83,15 +84,18 @@
 			processData: false,
 			contentType: false,
 			success: function (data) {
+				$('#exportmodal').modal('hide');
 				var data = eval('(' + data + ')');
 				if (data.success == 1) {
-					$('#exportmodal').modal('hide');
 					tipSuccess("导入成功");
 				} else {
 					$('#msgError').html(data.msg);
-					$('#exportmodal').modal('hide');
 					tipError(data.msg);
 				}
+			},
+			error:function(err) {
+				$('#exportmodal').modal('hide');
+				tipError(err || '请求失败');
 			}
 		})
 		$("#exportku").val('')
