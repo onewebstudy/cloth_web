@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+	<title>温州赫斯服装生产库存管理系统</title>
+	<link rel="shortcut  icon" type="image/x-icon" href="/iext/favicon.ico" media="screen" />
+	<!-- Bootstrap -->
+	<link href="../build/css/bootstrap.css" rel="stylesheet">
+	<link rel="stylesheet" href="../build/css/index.css">
+	<link rel="stylesheet" href="../build/css/style.css">
+	<link rel="stylesheet" href="../build/css/main.css">
+	<script src="../build/js/jquery-1.11.3.min.js"></script>
+	<script src="../build/js/art-template.js"></script>
+</head>
+
+<body>
+	<div class="link">
+	</div>
+	<div class="head">
+	</div>
+	<div class="indexbody">
+		<div class="indexul">
+			<ul class="clearfix">
+				<li onclick="location.href='../views/neworderList.html'">
+					<p><img src="../build/img/dingdan.png"></p>
+					<p><span>订单管理</span></p>
+				</li>
+				<li onclick="location.href='../views/newworkorder.html'">
+					<p><img src="../build/img/gongdan.png"></p>
+					<p><span>工单管理</span></p>
+				</li>
+				<li onclick="location.href='../views/newexeculist.html'">
+					<p><img src="../build/img/zhixingdan.png"></p>
+					<p><span>生产执行单</span></p>
+				</li>
+				<!-- <li onclick="location.href='../views/stocklist.html'">
+					<p><img src="../build/img/wuliu.png"></p>
+					<p><span>库存管理</span></p>
+				</li> -->
+				<li>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<script src="../build/js/bootstrap.js"></script>
+	<script src="../build/js/jquery.icheck.min.js"></script>
+	<script src="../build/js/main.js"></script>
+	<script>
+		$(function () {
+			$('.link').load('../views/link.html');
+			$('.head').load('../views/header3.html');
+			//window.external.printjs(); 
+		})
+	</script>
+</body>
+
+</html>

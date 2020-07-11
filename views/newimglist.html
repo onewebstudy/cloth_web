@@ -163,6 +163,9 @@
 		</div><!-- /.modal-content -->
 	 </div><!-- /.modal-dialog -->
 </div><!-- /.modal弹框 myModal-delete删除 -->
+<div id="logininghow" style="position: fixed;top: 0;left: 0;right: 0;bottom: 0;display: none;text-align: center;">
+	<img src="../build/img/logining.gif" style="width:400px;height:300px;margin-top: 20%;">
+</div>
 <script src="../build/js/bootstrap.js"></script>
 <script src="../build/js/jquery.icheck.min.js"></script>
 <script src="../build/js/main.js"></script>
@@ -356,8 +359,15 @@ function fuzhiimgs(){
 		$("#ssprintmo").find('.modalimgerror').html('请选择文件夹');
 		return false;
 	}
-	window.external.poFileName(filepath1);
 	$('#ssprintmo').modal('hide');
+	$("#logininghow").css("display","block")
+	setTimeout(function() {
+		window.external.poFileName(filepath1);
+	},1000)
+}
+function hideshow() {
+	$("#logininghow").css("display","none");
+	tipSuccess("印花上传成功",'search');
 }
 //c#传到这边来
 function morepath(name,sizestring,xystring,right90,type,imgpath){

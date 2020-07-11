@@ -342,10 +342,10 @@
 			$('.isover').css('display', "none");
 			$('.gotobtn').css('display', "none");
 			jindunnum = 0;
-			setTimeout(function () {
-				zgi = 0;
-				xh();
-			}, 0);
+			// setTimeout(function () {
+			// 	zgi = 0;
+			// 	xh();
+			// }, 0);
 			allpr = setTimeout(function () {
 				var myDate = new Date();
 				$.ajax({
@@ -385,7 +385,6 @@
 									if (e != "E" && (g == undefined || !g)) {
 										tipError(a + "印花不存在");
 										changestatus(prolist[i].roid);
-										return false;
 									}
 									if (e == "A" || e == "B") {
 										if (g) {
@@ -455,7 +454,6 @@
 										if (e != "E" && (g == undefined || !g)) {
 											tipError(a + "印花不存在");
 											changestatus(prolist[i].roid);
-											return false;
 										}
 										if (e == "A" || e == "B") {
 											if (g) {
@@ -568,7 +566,6 @@
 							if (e != "E" && (g == undefined || !g)) {
 								tipError(a + "印花不存在");
 								changestatus(roids[i]);
-								return false;
 							}
 							if (e == "A" || e == "B") {
 								if (g) {
@@ -667,7 +664,6 @@
 						if (e != "E" && (g == undefined || !g)) {
 							tipError(a + "印花不存在");
 							changestatus(id);
-							return false;
 						}
 						if (e == "A" || e == "B") {
 							if (g) {
@@ -713,7 +709,6 @@
 			$.ajax({
 				url: headurl + "/OrderController/changeRunOrderStatus",
 				type: 'post',
-				async: false,
 				data: { roid: id },
 				success: function (data) {
 					successnum = successnum - 1;
@@ -898,17 +893,16 @@
 			jindunnum++;
 			//$(".tiao").css("width",parseInt(jindunnum/sunnum*100)+"%");
 			//$(".tiao").html(parseInt(jindunnum/sunnum*100)+"%")
-			if (zgi == sunnum) {
-				if (jindunnum >= sunnum) {
-					$(".tiao").css("width", parseInt(jindunnum / sunnum * 100) + "%");
-					$(".tiao").html(parseInt(jindunnum / sunnum * 100) + "%");
-					errornums = sunnum - successnum;
-					$('.isover').html("已成功导出" + successnum + "个合成图，失败了" + errornums + "个合成图");
-					$('.isover').css('display', "block");
-					$('.gotobtn').css('display', "block");
-					$(".ok").html("加载完成");
-					return;
-				}
+			zdadd(jindunnum)
+			if (jindunnum >= sunnum) {
+				$(".tiao").css("width", parseInt(jindunnum / sunnum * 100) + "%");
+				$(".tiao").html(parseInt(jindunnum / sunnum * 100) + "%");
+				errornums = sunnum - successnum;
+				$('.isover').html("已成功导出" + successnum + "个合成图，失败了" + errornums + "个合成图");
+				$('.isover').css('display', "block");
+				$('.gotobtn').css('display', "block");
+				$(".ok").html("加载完成");
+				return;
 			}
 		}
 		function zdadd(zgi) {

@@ -6,27 +6,6 @@ var dayinurl = 'Godex EZ920'; //正式
 
 // Gprinter GP-1524T
 $(document).ready(function(){
-	/*setTimeout(function () {
-	    pushHistory()
-	    window.addEventListener("popstate", function (e) {
-	      lll("popstate"+window.history.state)
-	      if (window.history.state != null && window.history.state.url != "") {
-	        location.href = window.history.state.url
-	      }
-	    });
-	  }, 300);*/
-	/*$('table tr').each(function(i,o){
-	    var $t=$(o).find('td:not(:last)');
-	    for(var i=0;i<$t.length;i++){
-	    	var content=$.trim($($t[i]).html());
-	    	if(content.length>20){
-	    		$($t[i]).addClass('tdactive');
-			}
-			if($($t[i]).hasClass('tdactive')){
-				$($t[i]).attr("title",content)
-			}
-	    }
-	});*/
 	//table-hover 鼠标移动tr变色
 	$('.table-hover tr:not(:first)').hover(function(){
 		$(this).addClass('highlight');

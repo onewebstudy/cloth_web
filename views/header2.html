@@ -7,7 +7,7 @@
 			<li><a href="../views/index.html">首页</a></li>
 			<li><a href="../views/login.html">登录</a></li>
 			<!-- <li><a href="../views/newwork.html">创建工单</a></li> -->
-			<li onclick="printas()">调整打印</li>
+			<li onclick="exportkucun()">导入库存</li>
 		</ul>
 	</div>
 	<div class="myshow">
@@ -32,6 +32,26 @@
 			</ul>
 		</div>
 	</script>
+	<div class="modal fade tipModal" id="exportmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" style="width:520px;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img
+							src="../build/img/win_close.png"></button>
+					<div class="modal-title" style="padding-top: 14px;padding-left: 16px;color: #666;font-weight:bold;">
+						导入库存</div>
+				</div>
+				<div class="modal-body clearfix bottomlen">
+					<div style="display: flex; padding: 20px;">文件路径: <input type="file" id="exportku" name="file" multiple="multiple"/></div>
+				</div>
+				<div class="btdiv clearfix">
+					<button class="btn btn-blue yesbtn" onclick="postData()">确定</button>
+					<a class="btn btn-default nobtn" data-dismiss="modal" aria-hidden="true">取 消</a>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal弹框 myModal-delete删除 -->
 </div>
 <script>
 
@@ -49,9 +69,32 @@
 	$(function () {
 		getheard();
 	})
-	function printas() {
-		window.external.OpenForm2(129);
-		window.external.uiExport("12332141234123\r\n黑色 213 加黑色的");
+	function exportkucun() {
+		$('#exportmodal').modal('show');
+	}
+	function postData() {
+		var formData = new FormData();
+		formData.append("file", $("#exportku")[0].files[0]);
+		$.ajax({
+			url: headurl + '/OrderController/inputStore',
+			type: 'post',
+			data: formData,
+			cache: false,
+			processData: false,
+			contentType: false,
+			success: function (data) {
+				var data = eval('(' + data + ')');
+				if (data.success == 1) {
+					$('#exportmodal').modal('hide');
+					tipSuccess("导入成功");
+				} else {
+					$('#msgError').html(data.msg);
+					$('#exportmodal').modal('hide');
+					tipError(data.msg);
+				}
+			}
+		})
+		$("#exportku").val('')
 	}
 	function comeback() {
 		window.history.go(-1);

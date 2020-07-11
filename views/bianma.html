@@ -273,6 +273,7 @@
                     dataType: 'json',
                     headers: { "ClientCallMode": "ajax" }, //添加请求头部
                     success: function (data) {
+                        var data = eval('(' + data + ')');
                         if (data.success == 1) {
                             tipSuccess(data.msg);
                         } else {
