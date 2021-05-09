@@ -1,8 +1,8 @@
 // JavaScript Document
-var headurl = "/shop";
+// var headurl = "/shop"; // 测试
 var dayinurl = 'Godex EZ920'; //正式
-// var dayinurl = 'Gprinter GP-1524T';
-// var headurl = "/api/shop";
+// var dayinurl = 'Gprinter GP-1524T';// 开发
+var headurl = "/api/shop"; // 开发
 
 // Gprinter GP-1524T
 $(document).ready(function(){

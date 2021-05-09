@@ -1,5 +1,5 @@
 <!-- 确认是否删除 -->
-<div class="modal fade tipModal" id="confirmdelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade tipModal" id="confirmdelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
    <div class="modal-dialog" style="margin-top:200px;">
       <div class="modal-content">
          <div class="modal-header">
@@ -184,6 +184,7 @@ function confirmdelete(id,callfun,msg){
 		$('#tipSuccess').modal('hide');
 	}
 }
+
  /* 失败提示 */
  function tipError(msg,callback){
 	$('#msgError').html(msg);

@@ -6,7 +6,9 @@
     <div class="mainmenu" onclick="showmenu()">
         <span class="toshow">菜单<img src="../build/img/blue_unfold.png"></span>
         <ul class="mainul">
+            <li><a href="../views/index.html">首页</a></li>
             <li><a href="../views/login.html">登录</a></li>
+            <li onclick="changeSystem()">切换系统</li>
             <!-- <li><a href="../views/newwork.html">创建工单</a></li> -->
             <!-- <li onclick="showpick(10)">调整打印</li> -->
         </ul>
@@ -66,7 +68,11 @@
         // })
     }
     function showmenu() {
-        $('.mainul').css('display', 'block');
+        if($('.mainul').css('display') == 'block') {
+			$('.mainul').css('display', 'none');
+		}else{
+			$('.mainul').css('display', 'block');
+		}
     }
     function scalabel(id) {
         // window.external.OpenForm("31");
@@ -213,5 +219,17 @@
     }
     //禁止后退键  作用于IE、Chrome       
     document.onkeydown = forbidBackSpace;
+
+
+    // 切换系统
+	function changeSystem() {
+		if (localStorage.systemType == 1) {
+			localStorage.setItem("systemType", 0)
+			$(".centername").html('温州赫斯服装生产库存管理系统')
+		} else {
+			localStorage.setItem("systemType", 1)
+			$(".centername").html('温州赫斯服装生产库存管理系统（复制文件版）')
+		}
+	}
 
 </script>

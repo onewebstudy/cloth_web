@@ -29,7 +29,7 @@
 	</div>
 	<script id="executions" type="text/html">
 	<div class="bread">
-		<a href="../views/index.html">首页</a>{{if woid}}>><a href="../views/orderList.html">订单管理</a>{{/if}}{{if woid}}>><a href="../views/workorder.html?boid={{poid}}">工单管理</a>{{/if}}>><a href="../views/executionList.html?woid={{woid}}">生产执行单管理</a>
+		<a>首页</a>{{if woid}}>><a href="../views/neworderList.html">订单管理</a>{{/if}}{{if woid}}>><a href="../views/newworkorder.html?boid={{poid}}">工单管理</a>{{/if}}>><a href="../views/newexecutionList.html?woid={{woid}}">生产执行单管理</a>
 	</div>
 	<div class="searchdiv clearfix">
 		<span class="production" onclick="ifproduction()"><img src="../build/img/publish.png">导出图片</span>
@@ -336,12 +336,14 @@
 
 		//全部导出
 		function allprouct() {
+			allstnamestr = ''
 			var type = $("#type").val();
 			$('#jindu').modal('show');
 			$(".ok").html("正在导出，请稍后…");
 			$('.isover').css('display', "none");
 			$('.gotobtn').css('display', "none");
 			jindunnum = 0;
+			errornum = 0;
 			// setTimeout(function () {
 			// 	zgi = 0;
 			// 	xh();
@@ -361,7 +363,9 @@
 								if (jindunnum == i) {
 									var e = prolist[i].itemnum[0];
 									window.external.OpenForm2(prolist[i].roid);
-									window.external.CreateBarcodePicture(prolist[i].roid, 200, 80);
+									if (localStorage.systemType != 1) {
+										window.external.CreateBarcodePicture(prolist[i].roid, 200, 80);
+									}
 									var a = prolist[i].itemnum;
 									var c = prolist[i].size;
 									var d = prolist[i].num;
@@ -378,54 +382,71 @@
 									if (e != "E") {
 										b = prolist[i].stname;
 										g = prolist[i].filepath;
-										x = prolist[i].x;
-										y = prolist[i].y;
-										angle = prolist[i].angle;
+										x = prolist[i].x || 0;
+										y = prolist[i].y || 0;
+										angle = prolist[i].angle || 0;
 									}
 									if (e != "E" && (g == undefined || !g)) {
 										tipError(a + "印花不存在");
 										changestatus(prolist[i].roid);
-									}
-									if (e == "A" || e == "B") {
-										if (g) {
-											window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
-											window.external.cexptai();
-											//changestatus(prolist[i].roid);
-										} else {
-											changestatus(prolist[i].roid);
-											add();
-										}
-									} else if (e == "D") {
-										if (g) {
-											window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
-											window.external.cexptyunatu();
-											for (var i = 0; i < d; i++) {
-												window.external.printjs2(1, dayinurl);
+									} else {
+										if (localStorage.systemType == 1) {
+											if (g && e != "E") {
+												window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+												window.external.exportfuzhi();
+											} else if (e == "E") {
+												window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+												for (var i = 0; i < d; i++) {
+													window.external.printjs2(1, dayinurl);
+												}
+												add();
+											} else {
+												changestatus(prolist[i].roid);
 											}
 										} else {
-											changestatus(prolist[i].roid);
-											add();
-										}
-									} else if (e == "C") {
-										if (g) {
-											window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
-											for (var i = 0; i < d; i++) {
-												window.external.printjs2(1, dayinurl);
+											if (e == "A" || e == "B") {
+												if (g) {
+													window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+													window.external.cexptai();
+													//changestatus(prolist[i].roid);
+												} else {
+													changestatus(prolist[i].roid);
+													add();
+												}
+											} else if (e == "D") {
+												if (g) {
+													window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+													window.external.cexptyunatu();
+													for (var i = 0; i < d; i++) {
+														window.external.printjs2(1, dayinurl);
+													}
+												} else {
+													changestatus(prolist[i].roid);
+													add();
+												}
+											} else if (e == "C") {
+												if (g) {
+													window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+													for (var i = 0; i < d; i++) {
+														window.external.printjs2(1, dayinurl);
+													}
+													add();
+												} else {
+													changestatus(prolist[i].roid);
+												}
+											} else if (e == "E") {
+												window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+												for (var i = 0; i < d; i++) {
+													window.external.printjs2(1, dayinurl);
+												}
+												add();
 											}
-											add();
-										} else {
-											changestatus(prolist[i].roid);
 										}
-									} else if (e == "E") {
-										window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
-										for (var i = 0; i < d; i++) {
-											window.external.printjs2(1, dayinurl);
-										}
-										add();
 									}
 								} else {
 									whichgoto();
 								}
+
 								function whichgoto() {
 									if (jindunnum == i) {
 										var e = prolist[i].itemnum[0];
@@ -454,44 +475,61 @@
 										if (e != "E" && (g == undefined || !g)) {
 											tipError(a + "印花不存在");
 											changestatus(prolist[i].roid);
-										}
-										if (e == "A" || e == "B") {
-											if (g) {
-												window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
-												window.external.cexptai();
-											} else {
-												changestatus(prolist[i].roid);
-												add();
-											}
-										} else if (e == "D") {
-											if (g) {
-												window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
-												window.external.cexptyunatu();
-												for (var i = 0; i < d; i++) {
-													window.external.printjs2(1, dayinurl);
+										} else {
+											if (localStorage.systemType == 1) {
+												if (g && e != "E") {
+													window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+													window.external.exportfuzhi();
+												} else if (e == "E") {
+													window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+													for (var i = 0; i < d; i++) {
+														window.external.printjs2(1, dayinurl);
+													}
+													add();
+												} else {
+													changestatus(prolist[i].roid);
 												}
 											} else {
-												changestatus(prolist[i].roid);
-												add();
-											}
-										} else if (e == "C") {
-											if (g) {
-												window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
-												for (var i = 0; i < d; i++) {
-													window.external.printjs2(1, dayinurl);
-												}
-												add();
-											} else {
-												changestatus(prolist[i].roid);
-											}
+												if (e == "A" || e == "B") {
+													if (g) {
+														window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+														window.external.cexptai();
+													} else {
+														changestatus(prolist[i].roid);
+														add();
+													}
+												} else if (e == "D") {
+													if (g) {
+														window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+														window.external.cexptyunatu();
+														for (var i = 0; i < d; i++) {
+															window.external.printjs2(1, dayinurl);
+														}
+													} else {
+														changestatus(prolist[i].roid);
+														add();
+													}
+												} else if (e == "C") {
+													if (g) {
+														window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+														for (var i = 0; i < d; i++) {
+															window.external.printjs2(1, dayinurl);
+														}
+														add();
+													} else {
+														changestatus(prolist[i].roid);
+													}
 
-										} else if (e == "E") {
-											window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
-											for (var i = 0; i < d; i++) {
-												window.external.printjs2(1, dayinurl);
+												} else if (e == "E") {
+													window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+													for (var i = 0; i < d; i++) {
+														window.external.printjs2(1, dayinurl);
+													}
+													add();
+												}
 											}
-											add();
 										}
+
 									} else {
 										whichgoto();
 									}
@@ -502,7 +540,10 @@
 						}
 					}
 				})
+				confirmdelete("", "search1", allstnamestr + '的本地图库不存在');
+
 			}, 1000);
+
 		}
 		//判断是否有已导出
 		function isexporteds() {
@@ -529,13 +570,17 @@
 		}
 		//导出多个标识
 		function exporicodes(roids) {
-			$("#logininghow").css("display","block")
+			allstnamestr = ''
+			$("#logininghow").css("display", "block")
 			var myDate = new Date();
 			successnum = roids.length;
 			errornum = 0;
 			for (var i = 0; i < roids.length; i++) {
 				window.external.OpenForm2(roids[i]);
-				window.external.CreateBarcodePicture(roids[i], 200, 80);
+				if (localStorage.systemType != 1) {
+					window.external.CreateBarcodePicture(roids[i], 200, 80);
+				}
+
 				$.ajax({
 					url: headurl + "/OrderController/runOrderdetail?roid=" + roids[i] + "&URL=" + myDate.getMinutes() + myDate.getSeconds(),
 					async: false,
@@ -559,58 +604,84 @@
 							if (e != "E") {
 								b = data.body.stname;
 								g = data.body.filepath;
-								x = data.body.x;
-								y = data.body.y;
-								angle = data.body.angle;
+								x = data.body.x || 0;
+								y = data.body.y || 0;
+								angle = data.body.angle || 0;
 							}
 							if (e != "E" && (g == undefined || !g)) {
 								tipError(a + "印花不存在");
 								changestatus(roids[i]);
-							}
-							if (e == "A" || e == "B") {
-								if (g) {
-									window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
-									window.external.cexptai();
-								} else {
-									changestatus(roids[i]);
-								}
-							} else if (e == "D") {
-								if (g) {
-									window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
-									window.external.cexptyunatu();
-									for (var i = 0; i < d; i++) {
-										window.external.printjs2(1, dayinurl);
+							} else {
+								if (localStorage.systemType == 1) {
+									if (g && e != "E") {
+										window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+										window.external.exportfuzhi();
+									} else if (e == "E") {
+										window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+										for (var i = 0; i < d; i++) {
+											window.external.printjs2(1, dayinurl);
+										}
+									} else {
+										changestatus(roids[i]);
 									}
 								} else {
-									changestatus(roids[i]);
-								}
-							} else if (e == "C") {
-								if (g) {
-									window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
-									for (var i = 0; i < d; i++) {
-										window.external.printjs2(1, dayinurl);
+									if (e == "A" || e == "B") {
+										if (g) {
+											window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+											window.external.cexptai();
+										} else {
+											changestatus(roids[i]);
+										}
+									} else if (e == "D") {
+										if (g) {
+											window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+											window.external.cexptyunatu();
+											for (var i = 0; i < d; i++) {
+												window.external.printjs2(1, dayinurl);
+											}
+										} else {
+											changestatus(roids[i]);
+										}
+									} else if (e == "C") {
+										if (g) {
+											window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+											for (var i = 0; i < d; i++) {
+												window.external.printjs2(1, dayinurl);
+											}
+										} else {
+											changestatus(roids[i]);
+										}
+									} else if (e == "E") {
+										window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+										for (var i = 0; i < d; i++) {
+											window.external.printjs2(1, dayinurl);
+										}
 									}
-								} else {
-									changestatus(roids[i]);
-								}
-							} else if (e == "E") {
-								window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
-								for (var i = 0; i < d; i++) {
-									window.external.printjs2(1, dayinurl);
 								}
 							}
+
+
 						} else {
 							tipError(data.msg);
 						}
 					}
 				})
 			}
-			gotowhile();
-			$("#logininghow").css("display","none")
+			setTimeout(function () {
+				// gotowhile();
+				$('#jindu').modal('hide');
+				confirmdelete("", "search1", allstnamestr + '的本地图库不存在');
+			}, 1000)
+			$("#logininghow").css("display", "none")
 			// if((successnum+errornum) == roids.length){
 			// 	tipSuccess("已成功导出"+successnum+"个合成图，失败了"+errornum+"个合成图","search");
 			// }
 		}
+		var allstnamestr = ""
+		function givetipError(stname) {
+			allstnamestr += (stname + ' ')
+		}
+
 		//判断是否有已导出
 		function isexported(roid) {
 			var myDate = new Date();
@@ -629,9 +700,10 @@
 		}
 		//导出标识
 		function exporicode(id) {
+			allstnamestr = ''
 			var myDate = new Date();
 			window.external.OpenForm2(id);
-			window.external.CreateBarcodePicture(id,200,80);
+			window.external.CreateBarcodePicture(id, 200, 80);
 			successnum = 1;
 			errornum = 0;
 			$.ajax({
@@ -653,37 +725,24 @@
 						var sizename = data.body.sizename;
 						var stylename = data.body.stylename;
 						var boid = data.body.boid ? data.body.boid : 0;
-						var sumnum = data.body.sumnum ?  data.body.sumnum : 0;
+						var sumnum = data.body.sumnum ? data.body.sumnum : 0;
 						if (e != "E") {
 							b = data.body.stname;
 							g = data.body.filepath;
-							x = data.body.x;
-							y = data.body.y;
-							angle = data.body.angle;
+							x = data.body.x || 0;
+							y = data.body.y || 0;
+							angle = data.body.angle || 0;
 						}
 						if (e != "E" && (g == undefined || !g)) {
 							tipError(a + "印花不存在");
 							changestatus(id);
+							return false
 						}
-						if (e == "A" || e == "B") {
-							if (g) {
+						if (localStorage.systemType == 1) {
+							if (g && e != "E") {
 								window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
-								window.external.cexptai();
-							} else {
-								changestatus(id);
-							}
-						} else if (e == "D") {
-							if (g) {
-								window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
-								window.external.cexptyunatu();
-								for (var i = 0; i < d; i++) {
-									window.external.printjs2(1, dayinurl);
-								}
-							} else {
-								changestatus(id);
-							}
-						} else if (e == "C") {
-							if (g) {
+								window.external.exportfuzhi();
+							} else if (e == "E") {
 								window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
 								for (var i = 0; i < d; i++) {
 									window.external.printjs2(1, dayinurl);
@@ -691,19 +750,62 @@
 							} else {
 								changestatus(id);
 							}
-						} else if (e == "E") {
-							window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
-							for (var i = 0; i < d; i++) {
-								window.external.printjs2(1, dayinurl);
+						} else {
+							if (e == "A" || e == "B") {
+								if (g) {
+									window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+									window.external.cexptai();
+								} else {
+									changestatus(id);
+								}
+							} else if (e == "D") {
+								if (g) {
+									window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+									window.external.cexptyunatu();
+									for (var i = 0; i < d; i++) {
+										window.external.printjs2(1, dayinurl);
+									}
+								} else {
+									changestatus(id);
+								}
+							} else if (e == "C") {
+								if (g) {
+									window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+									for (var i = 0; i < d; i++) {
+										window.external.printjs2(1, dayinurl);
+									}
+								} else {
+									changestatus(id);
+								}
+							} else if (e == "E") {
+								window.external.giveaisize(a, b, c, d, e, g, x, y, angle, colorname, sizename, stylename, boid, sumnum);
+								for (var i = 0; i < d; i++) {
+									window.external.printjs2(1, dayinurl);
+								}
 							}
 						}
+
 					} else {
 						tipError(data.msg);
 					}
 				}
 			})
-			gotowhile();
+			setTimeout(function () {
+				confirmdelete("", "search1", allstnamestr ? allstnamestr : '没有一个印花' + '的本地图库不存在，已导出到当前日期的文件夹中');
+			}, 1000)
 		}
+
+		// 改变eRP备注
+		function changeFuzhiType(boid, hasPicture) {
+			$.ajax({
+				url: headurl + "/OrderController/editERPStatus",
+				type: 'get',
+				data: { boid: boid, hasPicture: hasPicture },
+				success: function (data) {
+				}
+			})
+		}
+
 		//改变状态
 		function changestatus(id) {
 			$.ajax({
@@ -875,7 +977,7 @@
 						var stylename = data.body.stylename;
 						var boid = data.body.boid ? data.body.boid : 0;
 						var sumnum = data.body.sumnum ? data.body.sumnum : 0;
-						window.external.givesize(a, b, c, d, e, colorname, sizename, stylename,boid,sumnum);
+						window.external.givesize(a, b, c, d, e, colorname, sizename, stylename, boid, sumnum);
 						window.external.printjs(1, dayinurl);
 						search();
 					} else {
@@ -895,14 +997,16 @@
 			//$(".tiao").html(parseInt(jindunnum/sunnum*100)+"%")
 			zdadd(jindunnum)
 			if (jindunnum >= sunnum) {
-				$(".tiao").css("width", parseInt(jindunnum / sunnum * 100) + "%");
-				$(".tiao").html(parseInt(jindunnum / sunnum * 100) + "%");
-				errornums = sunnum - successnum;
-				$('.isover').html("已成功导出" + successnum + "个合成图，失败了" + errornums + "个合成图");
-				$('.isover').css('display', "block");
-				$('.gotobtn').css('display', "block");
-				$(".ok").html("加载完成");
-				return;
+				setTimeout(function () {
+					$(".tiao").css("width", parseInt(jindunnum / sunnum * 100) + "%");
+					$(".tiao").html(parseInt(jindunnum / sunnum * 100) + "%");
+					errornums = sunnum - successnum;
+					$('.isover').html("已成功导出" + successnum + "个合成图，失败了" + errornums + "个合成图");
+					$('.isover').css('display', "block");
+					$('.gotobtn').css('display', "block");
+					$(".ok").html("加载完成");
+					return;
+				}, 2000)
 			}
 		}
 		function zdadd(zgi) {
