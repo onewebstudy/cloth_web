@@ -380,15 +380,19 @@
 									var boid = prolist[i].boid ? prolist[i].boid : 0;
 									var sumnum = prolist[i].sumnum ? prolist[i].sumnum : 0;
 									if (e != "E") {
-										b = prolist[i].stname;
-										g = prolist[i].filepath;
+										b = prolist[i].stname || '';
+										g = prolist[i].filepath || '';
 										x = prolist[i].x || 0;
 										y = prolist[i].y || 0;
 										angle = prolist[i].angle || 0;
 									}
 									if (e != "E" && (g == undefined || !g)) {
-										tipError(a + "印花不存在");
 										changestatus(prolist[i].roid);
+										if (localStorage.systemType == 1){
+											changeFuzhiType(prolist[i].roid,0)
+											givetipError(b)
+										}
+										tipError(a + "印花不存在");
 									} else {
 										if (localStorage.systemType == 1) {
 											if (g && e != "E") {
@@ -399,9 +403,12 @@
 												for (var i = 0; i < d; i++) {
 													window.external.printjs2(1, dayinurl);
 												}
+												changeFuzhiType(prolist[i].roid,1)
 												add();
 											} else {
 												changestatus(prolist[i].roid);
+												changeFuzhiType(prolist[i].roid,0)
+												givetipError(b)
 											}
 										} else {
 											if (e == "A" || e == "B") {
@@ -466,15 +473,19 @@
 										var boid = prolist[i].boid ? prolist[i].boid : 0;
 										var sumnum = prolist[i].sumnum ? prolist[i].sumnum : 0;
 										if (e != "E") {
-											b = prolist[i].stname;
-											g = prolist[i].filepath;
-											x = prolist[i].x;
-											y = prolist[i].y;
-											angle = prolist[i].angle;
+											b = prolist[i].stname || '';
+											g = prolist[i].filepath || '';
+											x = prolist[i].x || 0;
+											y = prolist[i].y || 0;
+											angle = prolist[i].angle || 0;
 										}
 										if (e != "E" && (g == undefined || !g)) {
-											tipError(a + "印花不存在");
 											changestatus(prolist[i].roid);
+											if (localStorage.systemType == 1){
+												changeFuzhiType(prolist[i].roid,0)
+												givetipError(b)
+											}
+											tipError(a + "印花不存在");
 										} else {
 											if (localStorage.systemType == 1) {
 												if (g && e != "E") {
@@ -485,9 +496,12 @@
 													for (var i = 0; i < d; i++) {
 														window.external.printjs2(1, dayinurl);
 													}
+													changeFuzhiType(prolist[i].roid,1)
 													add();
 												} else {
 													changestatus(prolist[i].roid);
+													changeFuzhiType(prolist[i].roid,0)
+													givetipError(b)
 												}
 											} else {
 												if (e == "A" || e == "B") {
@@ -540,7 +554,7 @@
 						}
 					}
 				})
-				confirmdelete("", "search1", allstnamestr + '的本地图库不存在');
+				confirmdelete("", "search1", (allstnamestr ? allstnamestr : '没有一个印花') + '的本地图库不存在，已导出到当前日期的文件夹中');
 
 			}, 1000);
 
@@ -602,15 +616,19 @@
 							var boid = data.body.boid ? data.body.boid : 0;
 							var sumnum = data.body.sumnum ? data.body.sumnum : 0;
 							if (e != "E") {
-								b = data.body.stname;
-								g = data.body.filepath;
+								b = data.body.stname || '';
+								g = data.body.filepath || '';
 								x = data.body.x || 0;
 								y = data.body.y || 0;
 								angle = data.body.angle || 0;
 							}
 							if (e != "E" && (g == undefined || !g)) {
-								tipError(a + "印花不存在");
 								changestatus(roids[i]);
+								if (localStorage.systemType == 1){
+									changeFuzhiType(roids[i],0)
+									givetipError(b)
+								}
+								tipError(a + "印花不存在");
 							} else {
 								if (localStorage.systemType == 1) {
 									if (g && e != "E") {
@@ -621,8 +639,11 @@
 										for (var i = 0; i < d; i++) {
 											window.external.printjs2(1, dayinurl);
 										}
+										changeFuzhiType(roids[i],1)
 									} else {
+										changeFuzhiType(roids[i],0)
 										changestatus(roids[i]);
+										givetipError(b)
 									}
 								} else {
 									if (e == "A" || e == "B") {
@@ -670,7 +691,7 @@
 			setTimeout(function () {
 				// gotowhile();
 				$('#jindu').modal('hide');
-				confirmdelete("", "search1", allstnamestr + '的本地图库不存在');
+				confirmdelete("", "search1", (allstnamestr ? allstnamestr : '没有一个印花') + '的本地图库不存在，已导出到当前日期的文件夹中');
 			}, 1000)
 			$("#logininghow").css("display", "none")
 			// if((successnum+errornum) == roids.length){
@@ -727,15 +748,19 @@
 						var boid = data.body.boid ? data.body.boid : 0;
 						var sumnum = data.body.sumnum ? data.body.sumnum : 0;
 						if (e != "E") {
-							b = data.body.stname;
-							g = data.body.filepath;
+							b = data.body.stname || '';
+							g = data.body.filepath || '';
 							x = data.body.x || 0;
 							y = data.body.y || 0;
 							angle = data.body.angle || 0;
 						}
 						if (e != "E" && (g == undefined || !g)) {
-							tipError(a + "印花不存在");
 							changestatus(id);
+							if (localStorage.systemType == 1){
+								changeFuzhiType(id,0)
+								givetipError(b)
+							}
+							tipError(a + "印花不存在");
 							return false
 						}
 						if (localStorage.systemType == 1) {
@@ -747,8 +772,11 @@
 								for (var i = 0; i < d; i++) {
 									window.external.printjs2(1, dayinurl);
 								}
+								changeFuzhiType(id,1)
 							} else {
 								changestatus(id);
+								changeFuzhiType(id,0)
+								givetipError(b)
 							}
 						} else {
 							if (e == "A" || e == "B") {
@@ -791,16 +819,16 @@
 				}
 			})
 			setTimeout(function () {
-				confirmdelete("", "search1", allstnamestr ? allstnamestr : '没有一个印花' + '的本地图库不存在，已导出到当前日期的文件夹中');
+				confirmdelete("", "search1", (allstnamestr ? allstnamestr : '没有一个印花') + '的本地图库不存在，已导出到当前日期的文件夹中');
 			}, 1000)
 		}
 
 		// 改变eRP备注
-		function changeFuzhiType(boid, hasPicture) {
+		function changeFuzhiType(roid , hasPicture) {
 			$.ajax({
 				url: headurl + "/OrderController/editERPStatus",
 				type: 'get',
-				data: { boid: boid, hasPicture: hasPicture },
+				data: { roid : roid , hasPicture: hasPicture },
 				success: function (data) {
 				}
 			})
@@ -968,13 +996,13 @@
 						//showshuju(data.body)
 						var e = data.body.itemnum[0];
 						var a = data.body.itemnum;
-						var b = data.body.stname;
-						var c = data.body.size;
-						var d = data.body.num;
+						var b = data.body.stname || '';
+						var c = data.body.size || '';
+						var d = data.body.num || '';
 
-						var colorname = data.body.colorname;
-						var sizename = data.body.sizename;
-						var stylename = data.body.stylename;
+						var colorname = data.body.colorname || '';
+						var sizename = data.body.sizename || '';
+						var stylename = data.body.stylename || '';
 						var boid = data.body.boid ? data.body.boid : 0;
 						var sumnum = data.body.sumnum ? data.body.sumnum : 0;
 						window.external.givesize(a, b, c, d, e, colorname, sizename, stylename, boid, sumnum);
